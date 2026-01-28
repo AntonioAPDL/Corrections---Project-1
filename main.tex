@@ -10,7 +10,6 @@
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
 \usepackage{booktabs}
-\usepackage{tabularx}
 \usepackage{array}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -18,8 +17,7 @@
 % Additions to ensure placeholders + long tracker table render reliably
 \usepackage{xcolor}
 \usepackage{mdframed}
-\usepackage{ltablex}
-\keepXColumns
+\usepackage{longtable}
 
 % ---------------------------
 % Unicode safety (prevents "missing later text" due to smart quotes/dashes)
@@ -52,11 +50,6 @@
 \titlespacing{\subsection}{0pt}{8pt}{4pt}
 
 % ---------------------------
-% TabularX column
-% ---------------------------
-\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-
-% ---------------------------
 % Minimal environments
 % ---------------------------
 \newcommand{\commentheading}[1]{%
@@ -72,9 +65,9 @@
 }
 \newenvironment{actiontable}{%
   \vspace{-2pt}
-  \begin{tabularx}{\linewidth}{@{}>{\bfseries}p{0.25\linewidth}Y@{}}
+  \begin{tabular}{@{}>{\bfseries}p{0.25\linewidth}p{0.70\linewidth}@{}}
 }{%
-  \end{tabularx}
+  \end{tabular}
 }
 \newcommand{\ActionTable}{%
   \begin{actionbox}
@@ -143,14 +136,14 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 \tableofcontents
 
 \section{Manuscript metadata}
-\begin{tabularx}{\linewidth}{@{}>{\bfseries}p{0.23\linewidth}Y@{}}
+\begin{tabular}{@{}>{\bfseries}p{0.23\linewidth}p{0.73\linewidth}@{}}
 Manuscript title: & Bayesian Quantile-Based Correction and Synthesis of River Flow Forecasts \\
 Journal: & \emph{Environmetrics} \\
 Manuscript ID: & 5228655 \\
 Decision letter date: & Sat, Jan 17, 2026 \\
 Corresp. author: & Antonio Aguirre (\texttt{jaguir26@ucsc.edu}) \\
 Co-authors: & Raquel Prado; Bruno Sans\'o \\
-\end{tabularx}
+\end{tabular}
 
 \section{Decision letter (verbatim)}
 % NOTE: This is the full letter text as pasted, including non-technical lines,
@@ -301,7 +294,10 @@ The pasted email ends at ``Page 1 of 2'' and does not include Reviewer 2 comment
 % Use ltablex so the tracker can span pages (tabularx cannot).
 \clearpage
 \small
-\begin{ltablex}{\linewidth}{@{}p{0.14\linewidth}p{0.22\linewidth}Xp{0.16\linewidth}@{}}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}%
+>{\raggedright\arraybackslash}p{0.22\linewidth}%
+>{\raggedright\arraybackslash}p{0.40\linewidth}%
+>{\raggedright\arraybackslash}p{0.16\linewidth}@{}}
 \toprule
 \textbf{ID} & \textbf{Location} & \textbf{Change summary} & \textbf{Status} \\
 \midrule
@@ -341,7 +337,7 @@ R1-m6 &  &  &  \\
 R1-m7 &  &  &  \\
 R1-m8 &  &  &  \\
 R1-m9 &  &  &  \\
-\end{ltablex}
+\end{longtable}
 \normalsize
 
 \end{document}
