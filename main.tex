@@ -161,7 +161,7 @@ You can also find free resources for writing and preparing your manuscript throu
 
 We appreciate you considering Environmetrics for the publication of your research.
 Kind regards,
-Alessandro Fass\`o
+Alessandro Fassò
 Environmetrics
 \end{commentblock}
 
@@ -184,31 +184,31 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 \subsection{Specific handling editor comments}
 
 \begin{commentresponse}[7]{\HE{1}}
-The abstract purports a fast approach to the proposed DQLM framework, but that doesn't seem to be verified anywhere in the manuscript -- what is the computational time and complexity of the proposed method? Once it is fitted, does it need to be reestimated in future months or years? Is it feasible to do so?
+- The abstract purports a fast approach to the proposed DQLM framework, but that doesn't seem to be verified anywhere in the manuscript -- what is the computational time and complexity of the proposed method? Once it is fitted, does it need to be reestimated in future months or years? Is it feasible to do so?
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{2}}
-One of the main issues with the paper is that the proposed method is not validated properly -- there are no competing alternatives (despite models, A, B and C being listed), the extended asymmetric Laplace is not really given validation either (how does this compare against just an asymmetric Laplace in this problem setting?). I imagine this hierarchical model is likely so complicated that no working hydrologists would understand, nor use it, without very clear evidence that it was substantially superior to other forecast products. The method should be validated against competing statistical models, as well as physical forecast ensembles to illustrate that the predictive distributions are sharper and better calibrated than simpler alternatives.
+- One of the main issues with the paper is that the proposed method is not validated properly -- there are no competing alternatives (despite models, A, B and C being listed), the extended asymmetric Laplace is not really given validation either (how does this compare against just an asymmetric Laplace in this problem setting?). I imagine this hierarchical model is likely so complicated that no working hydrologists would understand, nor use it, without very clear evidence that it was substantially superior to other forecast products. The method should be validated against competing statistical models, as well as physical forecast ensembles to illustrate that the predictive distributions are sharper and better calibrated than simpler alternatives.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{3}}
-This brings me to another point, in that the hierarchical model is fairly detailed. A necessary revision would be to implement versions of the model without various hierarchical pieces -- e.g., Model C, what if the AR trend piece were removed? Or, Model B, what if retrospective and/or all states autoregressions were removed? In the current manuscript, the results look decent, but it's not really clear which part of the model is giving the most "bang for your buck", which is critical for end users to understand.
+- This brings me to another point, in that the hierarchical model is fairly detailed. A necessary revision would be to implement versions of the model without various hierarchical pieces -- e.g., Model C, what if the AR trend piece were removed? Or, Model B, what if retrospective and/or all states autoregressions were removed? In the current manuscript, the results look decent, but it’s not really clear which part of the model is giving the most “bang for your buck”, which is critical for end users to understand.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{4}}
-Again, on validation: include (along with comparisons against alternative models) proper scores quantifying the quality of the predictive distributions. CRPS is used in model estimation, apparently, but why are CRPS scores not reported out for the forecasting exercise? And, how do they change depending on regime? Because this is a quantile-based method, it is fair to include quantile scores as well (see Gneiting and Raftery 2007 for details).
+- Again, on validation: include (along with comparisons against alternative models) proper scores quantifying the quality of the predictive distributions. CRPS is used in model estimation, apparently, but why are CRPS scores not reported out for the forecasting exercise? And, how do they change depending on regime? Because this is a quantile-based method, it is fair to include quantile scores as well (see Gneiting and Raftery 2007 for details).
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{5}}
-It would be helpful for the reader to have access to the estimation and forecasting code for use in other basin applications.
+- It would be helpful for the reader to have access to the estimation and forecasting code for use in other basin applications.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{6}}
-Something that wasn't clear to me in the application was: is this in-sample, or out-of-sample validation? It appears that the model was fit to the data that is being used in validation, which isn't realistic. Please perform an appropriate cross-validation study to investigate the approach's actual ability to forecast unseen data.
+- Something that wasn't clear to me in the application was: is this in-sample, or out-of-sample validation? It appears that the model was fit to the data that is being used in validation, which isn't realistic. Please perform an appropriate cross-validation study to investigate the approach's actual ability to forecast unseen data.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\HE{7}}
-The weighted combination of prior forecasts at differing horizons is curious to me. Presumably the most recent forecasts should be better with more available atmospheric data, whereas longer lead-time forecasts likely exhibit more bias. How does the model perform if you only use the most recent forecast (which I would expect to be the highest quality)?
+- The weighted combination of prior forecasts at differing horizons is curious to me. Presumably the most recent forecasts should be better with more available atmospheric data, whereas longer lead-time forecasts likely exhibit more bias. How does the model perform if you only use the most recent forecast (which I would expect to be the highest quality)?
 \end{commentresponse}
 
 \subsection{Handling editor transition line (verbatim)}
@@ -224,7 +224,7 @@ Reviewer comments:
 
 Reviewer 1 Comments to the Author
 
-This paper develops a Bayesian quantile regression approach, based on asymmetric Laplace distributions, to predict and forecast streamflow in the Santa Cruz region of the US. The work appears strong in the development of the Bayesian models and the novelty in the extension of inference methods is accepted. However, the improvement of forecasts through dynamical error correction is a common strategy and the novelty of this part may need to be elucidated further. The paper is framed as a forecasting paper, however the forecasting component is limited and robust forecast evaluation is absent. I recommend that some substantial revisions, mainly structural, are required before proceeding with publication. My comments below don't cover everything, but are intended as a push into reshaping:
+This paper develops a Bayesian quantile regression approach, based on asymmetric Laplace distributions, to predict and forecast streamflow in the Santa Cruz region of the US. The work appears strong in the development of the Bayesian models and the novelty in the extension of inference methods is accepted. However, the improvement of forecasts through dynamical error correction is a common strategy and the novelty of this part may need to be elucidated further. The paper is framed as a forecasting paper, however the forecasting component is limited and robust forecast evaluation is absent. I recommend that some substantial revisions, mainly structural, are required before proceeding with publication. My comments below don’t cover everything, but are intended as a push into reshaping:
 \end{commentresponse}
 
 \subsection{Summary of changes (Reviewer 1)}
@@ -233,63 +233,69 @@ This paper develops a Bayesian quantile regression approach, based on asymmetric
 \end{itemize}
 
 \subsection{Reviewer 1 --- Major comments (point-by-point)}
+\begin{commentblock}
+Major comments:
+\end{commentblock}
 
 \begin{commentresponse}[7]{\RoneM{1}}
-In the introduction and elsewhere, the "cascade of uncertainty" is not distinguished between meteorological uncertainty and hydrological uncertainty. This is not necessarily a major problem with a Bayesian model that combines sources of uncertainty, but I find the introduction and motivation less compelling when hydrological and meteorological concepts are mixed. For example, the paragraph that starts off "Hydrological predictions are often produced using physical models..." diverts to discussions of under-dispersion in ensembles and perturbation methods in weather forecasts. I would suggest restructuring the introduction to cover different sources of uncertainty before explaining how uncertainty can be consolidated in a Bayesian framework.
+1. In the introduction and elsewhere, the “cascade of uncertainty” is not distinguished between meteorological uncertainty and hydrological uncertainty. This is not necessarily a major problem with a Bayesian model that combines sources of uncertainty, but I find the introduction and motivation less compelling when hydrological and meteorological concepts are mixed. For example, the paragraph that starts off “Hydrological predictions are often produced using physical models…” diverts to discussions of under-dispersion in ensembles and perturbation methods in weather forecasts. I would suggest restructuring the introduction to cover different sources of uncertainty before explaining how uncertainty can be consolidated in a Bayesian framework.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\RoneM{2}}
-The links between the model formulation and the results are not clear to me. For example, three models (A, B and C) are developed in section 2. It would be helpful to explicitly link the models to the results being discussed in section 3.
+2. The links between the model formulation and the results are not clear to me. For example, three models (A, B and C) are developed in section 2. It would be helpful to explicitly link the models to the results being discussed in section 3.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\RoneM{3}}
-The paper is maths heavy, so it may be beneficial to reduce the equations and mathematical details. The amount of detail given may be highly suitable for a dissertation, but some details are not necessary for a paper. For example, in section 2.7, PITs are described in detail, however, it is followed that CRPS is chosen for model selection instead and PITs are not used. Suggest removing PITs in this case. As another example, no quantile crossing is observed, however a two-step method is presented to "resolve" quantile crossing. I suggest reconsidering how much detail is needed for the Posterior Predictive Synthesis part.
+3. The paper is maths heavy, so it may be beneficial to reduce the equations and mathematical details. The amount of detail given may be highly suitable for a dissertation, but some details are not necessary for a paper. For example, in section 2.7, PITs are described in detail, however, it is followed that CRPS is chosen for model selection instead and PITs are not used. Suggest removing PITs in this case. As another example, no quantile crossing is observed, however a two-step method is presented to “resolve” quantile crossing. I suggest reconsidering how much detail is needed for the Posterior Predictive Synthesis part.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\RoneM{4}}
-If I have not misunderstood, only one short forecast has been evaluated for a moderate flood from 2022-12-25 to 2023-01-22. Is it possible to provide more evidence for the use of the model for forecasting high, low and moderate events? Or the continuous period 2023 to present? Going to the previous comment, PITs and CRPS have been used for model selection (section 2.7) rather than forecast verification. I would suggest that in an expanded evaluation of forecast performance that CRPS and PITs would be useful tools.
+4. If I have not misunderstood, only one short forecast has been evaluated for a moderate flood from 2022-12-25 to 2023-01-22. Is it possible to provide more evidence for the use of the model for forecasting high, low and moderate events? Or the continuous period 2023 to present? Going to the previous comment, PITs and CRPS have been used for model selection (section 2.7) rather than forecast verification. I would suggest that in an expanded evaluation of forecast performance that CRPS and PITs would be useful tools.
 \end{commentresponse}
 
 \begin{commentresponse}[7]{\RoneM{5}}
-A robust discussion of how the method can be set up for fair forecast assessment using cross-validation might be required.
+5. A robust discussion of how the method can be set up for fair forecast assessment using cross-validation might be required.
 \end{commentresponse}
 
 \subsection{Reviewer 1 --- Minor comments (point-by-point)}
+\begin{commentblock}
+Minor comments:
+\end{commentblock}
 
 \begin{commentresponse}[5]{\Ronem{1}}
-Introduction: While it is true that "Hydrological predictions are often produced using physical models", it could be worthwhile noting that conceptual models are often more practical for prediction.
+1. Introduction: While it is true that “Hydrological predictions are often produced using physical models”, it could be worthwhile noting that conceptual models are often more practical for prediction.
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{2}}
-Section 2.1: I'm not familiar with the term "flexile quantile estimation". Would it be better to say "flexible quantile estimation"?
+2. Section 2.1: I’m not familiar with the term “flexile quantile estimation”. Would it be better to say “flexible quantile estimation”?
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{3}}
-Section 2.3: Agree reanalyses have fewer problems that forecasts in terms of data gaps and uncertainties; however, it is important to note that fields like rainfall in ERA5 are filled out with short-run forecasts and are not completely deterministic.
+3. Section 2.3: Agree reanalyses have fewer problems that forecasts in terms of data gaps and uncertainties; however, it is important to note that fields like rainfall in ERA5 are filled out with short-run forecasts and are not completely deterministic.
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{4}}
-Section 2.3: Introduce the USGS measurements and difference with reanalysis products. It may be useful to have a separate data and methodology section.
+4. Section 2.3: Introduce the USGS measurements and difference with reanalysis products. It may be useful to have a separate data and methodology section.
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{5}}
-How is non-zero precipitation handled, is it through data censoring?
+5. How is non-zero precipitation handled, is it through data censoring?
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{6}}
-Section 3: lagged forecasts are weighted into an ensemble forecast for the target time rather than using the latest available forecast. In my experience, this can have the effect of degrading skill. Did the authors find this was beneficial?
+6. Section 3: lagged forecasts are weighted into an ensemble forecast for the target time rather than using the latest available forecast. In my experience, this can have the effect of degrading skill. Did the authors find this was beneficial?
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{7}}
-Section 3.2: The title here is somewhat vague "General results". Given Section 3 is supposed to be on forecasting and these results appear to be about in-sample prediction, I suggest reorganising the headings and separating out model checking from forecasting.
+7. Section 3.2: The title here is somewhat vague “General results”. Given Section 3 is supposed to be on forecasting and these results appear to be about in-sample prediction, I suggest reorganising the headings and separating out model checking from forecasting.
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{8}}
-Table 1 and 2: Check captions, should it be posterior mean or median?
+8. Table 1 and 2: Check captions, should it be posterior mean or median?
 \end{commentresponse}
 
 \begin{commentresponse}[5]{\Ronem{9}}
-Figures 8 and 9: Suggest some explanation around the approx. constant variance in Figure 8 and variable predictive distributions in Figure 9.
+9. Figures 8 and 9: Suggest some explanation around the approx. constant variance in Figure 8 and variable predictive distributions in Figure 9.
 \end{commentresponse}
 
 \section{Reviewer 2 comments (placeholder)}
