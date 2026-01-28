@@ -58,25 +58,15 @@
 }
 \newenvironment{commentblock}{\begin{quote}\small\itshape}{\end{quote}}
 \newcommand{\responseheading}{%
-  \vspace{2pt}\noindent\textbf{Response (to be completed by authors)}\par
+  \vspace{2pt}\noindent\textbf{Response}\par
 }
-\newcommand{\actionheading}{%
-  \vspace{2pt}\noindent\textbf{Action / location / evidence / status (to be completed by authors)}\par
+\newcommand{\locationheading}{%
+  \vspace{2pt}\noindent\textbf{Location and evidence}\par
 }
-\newenvironment{actiontable}{%
-  \vspace{-2pt}
-  \begin{tabular}{@{}>{\bfseries}p{0.25\linewidth}p{0.70\linewidth}@{}}
-}{%
-  \end{tabular}
-}
-\newcommand{\ActionTable}{%
+\newcommand{\LocationLine}{%
   \begin{actionbox}
-  \begin{actiontable}
-  Action in revised manuscript: & \\
-  Location (sec./page/line): & \\
-  Evidence / new results: & \\
-  Status (Planned / In progress / Done): & \\
-  \end{actiontable}
+  \textit{Location:} Section \_\_\_; page \_\_\_; lines \_\_\_.\par
+  \textit{Evidence:} Figure \_\_\_ / Table \_\_\_ / Appendix \_\_\_.\par
   \end{actionbox}
 }
 % One environment to prevent broken/mismatched blocks for each comment.
@@ -88,8 +78,8 @@
   \end{commentblock}
   \responseheading
   \ResponsePlaceholder[\CommentResponseLines]
-  \actionheading
-  \ActionTable
+  \locationheading
+  \LocationLine
 }
 
 % ---------------------------
@@ -126,10 +116,10 @@
 % ---------------------------
 % Title
 % ---------------------------
-\title{\textbf{Point-by-Point Response Workbook}\\
+\title{\textbf{Point-by-Point Response to Reviewers}\\
 Manuscript ID: 5228655 (\emph{Environmetrics})}
 \author{Antonio Aguirre \and Raquel Prado \and Bruno Sans\'o}
-\date{Draft for internal coordination; to be adapted as the formal rebuttal upon resubmission}
+\date{Prepared January 2026}
 
 \begin{document}
 \maketitle
@@ -144,6 +134,9 @@ Decision letter date: & Sat, Jan 17, 2026 \\
 Corresp. author: & Antonio Aguirre (\texttt{jaguir26@ucsc.edu}) \\
 Co-authors: & Raquel Prado; Bruno Sans\'o \\
 \end{tabular}
+
+\section{How to read this response}
+Each reviewer comment is quoted verbatim and followed by a response. For each response, we indicate the location(s) of the corresponding changes in the manuscript and summarize the supporting evidence (figures, tables, or appendices) when applicable.
 
 \section{Decision letter (verbatim)}
 % NOTE: This is the full letter text as pasted, including non-technical lines,
@@ -173,6 +166,11 @@ Environmetrics
 \end{commentblock}
 
 \section{Handling editor comments (point-by-point)}
+
+\subsection{Summary of changes (handling editor)}
+\begin{itemize}
+\item [To be completed: brief summary of major revisions addressing the handling editor's concerns.]
+\end{itemize}
 
 \subsection{Handling editor text (verbatim preface)}
 \begin{commentblock}
@@ -226,6 +224,11 @@ Reviewer 1 Comments to the Author
 
 This paper develops a Bayesian quantile regression approach, based on asymmetric Laplace distributions, to predict and forecast streamflow in the Santa Cruz region of the US. The work appears strong in the development of the Bayesian models and the novelty in the extension of inference methods is accepted. However, the improvement of forecasts through dynamical error correction is a common strategy and the novelty of this part may need to be elucidated further. The paper is framed as a forecasting paper, however the forecasting component is limited and robust forecast evaluation is absent. I recommend that some substantial revisions, mainly structural, are required before proceeding with publication. My comments below don't cover everything, but are intended as a push into reshaping:
 \end{commentresponse}
+
+\subsection{Summary of changes (Reviewer 1)}
+\begin{itemize}
+\item [To be completed: brief summary of major revisions for Reviewer 1.]
+\end{itemize}
 
 \subsection{Reviewer 1 --- Major comments (point-by-point)}
 
@@ -289,6 +292,11 @@ Figures 8 and 9: Suggest some explanation around the approx. constant variance i
 
 \section{Reviewer 2 comments (placeholder)}
 The pasted email ends at ``Page 1 of 2'' and does not include Reviewer 2 comments. Insert Reviewer 2 comments verbatim here once available (e.g., from the second page of the email or the attachment \texttt{Revision\_Project\_1.pdf}).
+
+\subsection{Summary of changes (Reviewer 2)}
+\begin{itemize}
+\item [To be completed once Reviewer 2 comments are available.]
+\end{itemize}
 
 \section{Change log / tracker (to be maintained)}
 % Use ltablex so the tracker can span pages (tabularx cannot).
