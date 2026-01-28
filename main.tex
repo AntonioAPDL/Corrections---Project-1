@@ -88,12 +88,13 @@
 }
 % One environment to prevent broken/mismatched blocks for each comment.
 \newenvironment{commentresponse}[2][7]{%
+  \def\CommentResponseLines{#1}%
   \commentheading{#2}
   \begin{commentblock}
 }{%
   \end{commentblock}
   \responseheading
-  \ResponsePlaceholder[#1]
+  \ResponsePlaceholder[\CommentResponseLines]
   \actionheading
   \ActionTable
 }
