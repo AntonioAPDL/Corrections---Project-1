@@ -183,13 +183,95 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 \subsection{Specific handling editor comments}
 
-\begin{commentresponse}[7]{\HE{1}}
+\commentheading{\HE{1}}
+\begin{commentblock}
 - The abstract purports a fast approach to the proposed DQLM framework, but that doesn't seem to be verified anywhere in the manuscript -- what is the computational time and complexity of the proposed method? Once it is fitted, does it need to be reestimated in future months or years? Is it feasible to do so?
-\end{commentresponse}
+\end{commentblock}
 
-\begin{commentresponse}[7]{\HE{2}}
+\responseheading
+\begin{responsebox}
+We agree that computational feasibility must be stated explicitly, and we revised the manuscript accordingly.
+
+For our main model, let \(T\) be the historical length, \(H\) the forecast length, and \(d\) the latent-state dimension (here \(d=31\)). The dominant cost in iterative inference is repeated Kalman filtering/smoothing, with leading order
+\[
+O\!\left((T+H)\,d^{3}\right),
+\]
+plus lower-order observation-assimilation terms \(O((T+H)\,d^{2})\).
+
+Hence, for MCMC (burn-in \(B\), retained draws \(S\), thinning interval \(L\), and additional iterations for mixing \(M_{\text{mix}}\)):
+\[
+\mathcal{C}_{\text{MCMC}}
+=
+O\!\left((B+LS+M_{\text{mix}})\,(T+H)\,d^{3}\right).
+\]
+For VB-CAVI (with \(I_{\text{VB}}\) iterations to ELBO convergence):
+\[
+\mathcal{C}_{\text{VB}}
+=
+O\!\left(I_{\text{VB}}\,(T+H)\,d^{3}\right).
+\]
+This is the core reason we do not use full MCMC in the main operational analysis: MCMC must pay burn-in, retained-chain sampling, and often additional iterations when tail-quantile chains mix slowly, while VB requires convergence once and then allows posterior sampling at low incremental cost.
+
+In our production runs for this work, the seven quantile fits are launched in parallel (one per quantile). Therefore, wall time is controlled by the slowest quantile fit (typically an extreme tail quantile), not by the sum across quantiles. Empirically, in the most demanding cutoff, the slowest quantile converged in about \(31.82\)--\(31.94\) minutes. The synthesis step is then applied over a short forecast window (\(H=28\) days) and is also parallelizable. From start to finish, model fit plus synthesis is operationally around 35 minutes via VB.
+
+\textbf{TODO: This choice is also supported by our simulation study: preliminary univariate DQLM/exDQLM comparisons indicate VB is approximately 15x--24x faster than MCMC (reference and full details to be added in the revised manuscript).}
+
+Regarding re-estimation: yes, the model should be re-estimated as new forecast issuances arrive. From a practitioner viewpoint, this is expected and feasible at daily resolution. Example: at issuance date 2022-12-25, we use data up to 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions from 2022-12-26 to 2023-01-22. At issuance date 2022-12-26, the model is refit because inputs are updated: one new observation, one new retrospective value from each provider (NOAA/NWM and ECMWF/GloFAS), and a newly issued ensemble forecast set from each provider.
+
+A typical daily operational cycle is:
+\begin{enumerate}
+\item ingest retrospectives up to the current cutoff date (or append only the new day if historical data are already stored);
+\item ingest forecast ensembles from the same issue date (here, GloFAS horizon \(=28\) days and NWM horizon \(\approx 10\) days);
+\item ingest deterministic covariate forecasts up to the maximum synthesis horizon (for example, GEFS at 30 days, which exceeds the 28-day maximum ensemble horizon used here);
+\item fit the seven quantile models and synthesize the corrected predictive distribution (about 35 minutes for our model in the demanding case).
+\end{enumerate}
+
+With an established data pipeline, this full cycle is operationally feasible for daily updates.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} To be finalized after manuscript revision.\par
+\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\end{actionbox}
+
+\commentheading{\HE{2}}
+\begin{commentblock}
 - One of the main issues with the paper is that the proposed method is not validated properly -- there are no competing alternatives (despite models, A, B and C being listed), the extended asymmetric Laplace is not really given validation either (how does this compare against just an asymmetric Laplace in this problem setting?). I imagine this hierarchical model is likely so complicated that no working hydrologists would understand, nor use it, without very clear evidence that it was substantially superior to other forecast products. The method should be validated against competing statistical models, as well as physical forecast ensembles to illustrate that the predictive distributions are sharper and better calibrated than simpler alternatives.
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+We agree with this concern, and we have expanded the validation panel accordingly.
+
+In the revised manuscript, we now compare against both physical and statistical references. For clarity, the statistical models are ordered from simplest to most complex:
+\begin{enumerate}
+\item univariate NDLM with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
+\item multivariate NDLM without transfer function during the forecast window (no forecast soil/precipitation covariates required);
+\item multivariate NDLM with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
+\item univariate DQLM via AL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
+\item multivariate DQLM via AL likelihood without transfer function during the forecast window (no forecast soil/precipitation covariates required);
+\item multivariate DQLM via AL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
+\item univariate exDQLM via exAL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
+\item multivariate exDQLM via exAL likelihood without transfer function during the forecast window (no forecast soil/precipitation covariates required);
+\item multivariate exDQLM via exAL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS).
+\end{enumerate}
+In addition, we benchmark all statistical models against raw physical forecast ensembles (ECMWF/GloFAS and NOAA/NWM).
+
+To make model roles explicit: univariate models use observed discharge together with forecast soil/precipitation covariates and produce a direct 28-day-ahead probabilistic forecast; they do not use retrospective products or forecast ensembles as inputs. Multivariate models use observed discharge together with retrospective/forecast ensemble products from multiple providers; when transfer function is active during the forecast window, they also use forecast soil/precipitation covariates.
+
+All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
+
+This revision directly addresses the editor's point: the paper no longer relies only on internal variants of the proposed model. It includes simpler Bayesian alternatives (AL-DQLM and NDLM) and raw physical ensembles as explicit benchmarks, so readers can assess the practical gain from additional model complexity.
+
+Substantively, the new comparison framework allows a clear layered interpretation: physical ensemble baseline \(\rightarrow\) simpler Bayesian corrections \(\rightarrow\) extended exAL-based synthesis. The revised results section now makes these tradeoffs explicit for applied hydrology users.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} Revised model-comparison and validation subsections in Results; updated computational/implementation notes.\par
+\textit{Evidence:} Comparative CRPS tables (lead-wise and window-averaged) across all benchmark and proposed models; updated calibration/sharpness figures.
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{3}}
 - This brings me to another point, in that the hierarchical model is fairly detailed. A necessary revision would be to implement versions of the model without various hierarchical pieces -- e.g., Model C, what if the AR trend piece were removed? Or, Model B, what if retrospective and/or all states autoregressions were removed? In the current manuscript, the results look decent, but it’s not really clear which part of the model is giving the most “bang for your buck”, which is critical for end users to understand.
