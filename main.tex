@@ -262,6 +262,35 @@ To make model roles explicit: univariate models use observed discharge together 
 
 All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
 
+For transparency, the table below reports the mean CRPS over the forecast window for every model and every cutoff used in this validation exercise (bold indicates the lowest CRPS within each cutoff column).
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.4cm}rrrrr}
+\toprule
+Model & 20210123 & 20211112 & 20211221 & 20220511 & 20221225 \\
+\midrule
+\multicolumn{6}{l}{\textit{Raw physical ensembles}} \\
+Raw ECMWF/GloFAS ensemble & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
+Raw NOAA/NWM ensemble & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
+\addlinespace[2pt]
+\multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
+Univariate NDLM with transfer function during the forecast window & 0.5851 & 0.9105 & 0.6926 & 0.9125 & 1.1617 \\
+Multivariate NDLM without transfer function during the forecast window & 0.3599 & 0.3226 & 1.4536 & 0.5689 & 3.2322 \\
+Multivariate NDLM with transfer function during the forecast window & 4.4601 & 0.3557 & 1.4099 & 0.6278 & 2.8785 \\
+Univariate DQLM (AL likelihood) with transfer function during the forecast window & 0.2946 & 0.1333 & 1.0924 & 0.0714 & 1.0293 \\
+Multivariate DQLM (AL likelihood) without transfer function during the forecast window & 0.3252 & 0.2547 & 0.6714 & 0.0501 & 2.1955 \\
+Multivariate DQLM (AL likelihood) with transfer function during the forecast window & \textbf{0.1212} & 0.0237 & 0.2394 & \textbf{0.0178} & 0.6640 \\
+Univariate exDQLM (exAL likelihood) with transfer function during the forecast window & 0.2969 & 0.1350 & 1.1526 & 0.0738 & 0.9324 \\
+Multivariate exDQLM (exAL likelihood) without transfer function during the forecast window & 0.3315 & 0.2836 & 0.8313 & 0.0751 & 2.2785 \\
+Multivariate exDQLM (exAL likelihood) with transfer function during the forecast window & 0.1295 & \textbf{0.0201} & \textbf{0.1910} & \textbf{0.0178} & \textbf{0.5991} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The main signal is clear: multivariate synthesis models with transfer function active during the forecast window provide the strongest and most consistent CRPS performance. Specifically, the multivariate exDQLM with transfer function is strictly best in three cutoffs (and tied for best in one), while the multivariate AL-DQLM with transfer function is strictly best in one cutoff (and tied in one). Importantly, in all five cutoffs, the best corrected model improves upon the best raw physical ensemble baseline.
+
 This revision directly addresses the editor's point: the paper no longer relies only on internal variants of the proposed model. It includes simpler Bayesian alternatives (AL-DQLM and NDLM) and raw physical ensembles as explicit benchmarks, so readers can assess the practical gain from additional model complexity.
 
 Substantively, the new comparison framework allows a clear layered interpretation: physical ensemble baseline \(\rightarrow\) simpler Bayesian corrections \(\rightarrow\) extended exAL-based synthesis. The revised results section now makes these tradeoffs explicit for applied hydrology users.
