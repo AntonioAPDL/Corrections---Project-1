@@ -244,54 +244,62 @@ With an established data pipeline, this full cycle is operationally feasible for
 \begin{responsebox}
 We agree with this concern, and we have expanded the validation panel accordingly.
 
-In the revised manuscript, we now compare against both physical and statistical references. For clarity, the statistical models are ordered from simplest to most complex:
-\begin{enumerate}
-\item univariate NDLM with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
-\item multivariate NDLM without transfer function during the forecast window (no forecast soil/precipitation covariates required);
-\item multivariate NDLM with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
-\item univariate DQLM via AL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
-\item multivariate DQLM via AL likelihood without transfer function during the forecast window (no forecast soil/precipitation covariates required);
-\item multivariate DQLM via AL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
-\item univariate exDQLM via exAL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS);
-\item multivariate exDQLM via exAL likelihood without transfer function during the forecast window (no forecast soil/precipitation covariates required);
-\item multivariate exDQLM via exAL likelihood with transfer function during the forecast window (forecast soil/precipitation covariates required; in our setup from NOAA/GEFS).
-\end{enumerate}
-In addition, we benchmark all statistical models against raw physical forecast ensembles (ECMWF/GloFAS and NOAA/NWM).
-
-To make model roles explicit: univariate models use observed discharge together with forecast soil/precipitation covariates and produce a direct 28-day-ahead probabilistic forecast; they do not use retrospective products or forecast ensembles as inputs. Multivariate models use observed discharge together with retrospective/forecast ensemble products from multiple providers; when transfer function is active during the forecast window, they also use forecast soil/precipitation covariates.
-
-All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
-
-For transparency, the table below reports the mean CRPS over the forecast window for every model and every cutoff used in this validation exercise (bold indicates the lowest CRPS within each cutoff column).
+In the revised manuscript, we now compare both physical and statistical references using a unified modeling backbone. All nine Bayesian alternatives use the same linear dynamic specification (trend, seasonal, and transfer-function components) and Gaussian state-evolution noise; the differences are in the observation likelihood and in how external forecast information is integrated during the forecast window. We use the compact label \(L\)-\(S\)-\(T\): \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes extended DQLM (exDQLM) with extended asymmetric Laplace likelihood; \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM); \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window, and T1 means transfer function active during the forecast window (requiring forecast precipitation and soil-moisture covariates, here from NOAA/GEFS).
 
 \begin{center}
 \scriptsize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{>{\raggedright\arraybackslash}p{7.4cm}rrrrr}
+\begin{tabular}{>{\ttfamily}l >{\raggedright\arraybackslash}p{11cm}}
 \toprule
-Model & 20210123 & 20211112 & 20211221 & 20220511 & 20221225 \\
+Label & Specification (ordered from simplest to most complex) \\
 \midrule
-\multicolumn{6}{l}{\textit{Raw physical ensembles}} \\
-Raw ECMWF/GloFAS ensemble & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
-Raw NOAA/NWM ensemble & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
-\addlinespace[2pt]
-\multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
-Univariate NDLM with transfer function during the forecast window & 0.5851 & 0.9105 & 0.6926 & 0.9125 & 1.1617 \\
-Multivariate NDLM without transfer function during the forecast window & 0.3599 & 0.3226 & 1.4536 & 0.5689 & 3.2322 \\
-Multivariate NDLM with transfer function during the forecast window & 4.4601 & 0.3557 & 1.4099 & 0.6278 & 2.8785 \\
-Univariate DQLM (AL likelihood) with transfer function during the forecast window & 0.2946 & 0.1333 & 1.0924 & 0.0714 & 1.0293 \\
-Multivariate DQLM (AL likelihood) without transfer function during the forecast window & 0.3252 & 0.2547 & 0.6714 & 0.0501 & 2.1955 \\
-Multivariate DQLM (AL likelihood) with transfer function during the forecast window & \textbf{0.1212} & 0.0237 & 0.2394 & \textbf{0.0178} & 0.6640 \\
-Univariate exDQLM (exAL likelihood) with transfer function during the forecast window & 0.2969 & 0.1350 & 1.1526 & 0.0738 & 0.9324 \\
-Multivariate exDQLM (exAL likelihood) without transfer function during the forecast window & 0.3315 & 0.2836 & 0.8313 & 0.0751 & 2.2785 \\
-Multivariate exDQLM (exAL likelihood) with transfer function during the forecast window & 0.1295 & \textbf{0.0201} & \textbf{0.1910} & \textbf{0.0178} & \textbf{0.5991} \\
+N-U-T1 & Univariate NDLM with transfer function active during the forecast window \\
+N-M-T0 & Multivariate NDLM without transfer function during the forecast window \\
+N-M-T1 & Multivariate NDLM with transfer function active during the forecast window \\
+AL-U-T1 & Univariate DQLM (AL likelihood) with transfer function active during the forecast window \\
+AL-M-T0 & Multivariate DQLM (AL likelihood) without transfer function during the forecast window \\
+AL-M-T1 & Multivariate DQLM (AL likelihood) with transfer function active during the forecast window \\
+exAL-U-T1 & Univariate exDQLM (exAL likelihood) with transfer function active during the forecast window \\
+exAL-M-T0 & Multivariate exDQLM (exAL likelihood) without transfer function during the forecast window \\
+exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active during the forecast window \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The main signal is clear: multivariate synthesis models with transfer function active during the forecast window provide the strongest and most consistent CRPS performance. Specifically, the multivariate exDQLM with transfer function is strictly best in three cutoffs (and tied for best in one), while the multivariate AL-DQLM with transfer function is strictly best in one cutoff (and tied in one). Importantly, in all five cutoffs, the best corrected model improves upon the best raw physical ensemble baseline.
+In addition, we benchmark all Bayesian models against raw physical forecast ensembles (ECMWF/GloFAS and NOAA/NWM).
 
-This revision directly addresses the editor's point: the paper no longer relies only on internal variants of the proposed model. It includes simpler Bayesian alternatives (AL-DQLM and NDLM) and raw physical ensembles as explicit benchmarks, so readers can assess the practical gain from additional model complexity.
+All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
+
+For transparency, the table below reports the mean CRPS over the forecast window for every model and every cutoff used in this validation exercise (bold indicates the lowest CRPS within each cutoff column). The model labels follow the notation defined above.
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\ttfamily}l rrrrr}
+\toprule
+Model label & 20210123 & 20211112 & 20211221 & 20220511 & 20221225 \\
+\midrule
+\multicolumn{6}{l}{\textit{Raw physical ensembles}} \\
+RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
+RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
+\addlinespace[2pt]
+\multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
+N-U-T1 & 0.5851 & 0.9105 & 0.6926 & 0.9125 & 1.1617 \\
+N-M-T0 & 0.3599 & 0.3226 & 1.4536 & 0.5689 & 3.2322 \\
+N-M-T1 & 4.4601 & 0.3557 & 1.4099 & 0.6278 & 2.8785 \\
+AL-U-T1 & 0.2946 & 0.1333 & 1.0924 & 0.0714 & 1.0293 \\
+AL-M-T0 & 0.3252 & 0.2547 & 0.6714 & 0.0501 & 2.1955 \\
+AL-M-T1 & \textbf{0.1212} & 0.0237 & 0.2394 & \textbf{0.0178} & 0.6640 \\
+exAL-U-T1 & 0.2969 & 0.1350 & 1.1526 & 0.0738 & 0.9324 \\
+exAL-M-T0 & 0.3315 & 0.2836 & 0.8313 & 0.0751 & 2.2785 \\
+exAL-M-T1 & 0.1295 & \textbf{0.0201} & \textbf{0.1910} & \textbf{0.0178} & \textbf{0.5991} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; exAL-M-T1 is strictly best in three cutoffs (and tied in one), while AL-M-T1 is strictly best in one cutoff (and tied in one). Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, in all five cutoffs, the best corrected model improves on the best raw physical ensemble baseline.
+
+This revision addresses this concern directly: the paper no longer relies only on internal variants of the proposed method. It includes simpler Bayesian alternatives (NDLM and AL-DQLM) and raw physical ensembles as explicit benchmarks, so readers can assess the practical gain from additional model complexity.
 
 Substantively, the new comparison framework allows a clear layered interpretation: physical ensemble baseline \(\rightarrow\) simpler Bayesian corrections \(\rightarrow\) extended exAL-based synthesis. The revised results section now makes these tradeoffs explicit for applied hydrology users.
 \end{responsebox}
