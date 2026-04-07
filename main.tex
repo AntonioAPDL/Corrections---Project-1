@@ -462,9 +462,37 @@ An important component of the implementation effort is data engineering. In prac
 \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
 \end{actionbox}
 
-\begin{commentresponse}[7]{\HE{6}}
+\commentheading{\HE{6}}
+\begin{commentblock}
 - Something that wasn't clear to me in the application was: is this in-sample, or out-of-sample validation? It appears that the model was fit to the data that is being used in validation, which isn't realistic. Please perform an appropriate cross-validation study to investigate the approach's actual ability to forecast unseen data.
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+Thank you for raising this. Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript.
+
+For each cutoff date \(c\), we fit the model using only information available up to \(c\): observed discharge, retrospective/historical products, and forecast products issued at or before \(c\). No observed discharge after \(c\) is used in fitting, calibration, or synthesis. Verification is then performed only on post-cutoff USGS observations.
+
+The forecasting mechanism is not a static one-shot ``fit once, then forecast forever'' setup. It is a rolling-origin, cutoff-by-cutoff backtesting design. At quantile level \(\tau\), for each forecaster \(j\), we learn historical discrepancy structure up to cutoff through
+\[
+\mu_{j,t}^{(\tau)}=\mu_{\mathrm{USGS},t}^{(\tau)}+\delta_{j,t}^{(\tau)}+\varepsilon_{j,t}^{(\tau)},\quad t\le c.
+\]
+For \(t>c\), \(\mu_{\mathrm{USGS},t}^{(\tau)}\) is unobserved, so we recover posterior samples through the learned discrepancy relation, e.g.
+\[
+\mu_{\mathrm{USGS},t}^{(\tau,s)}=\mu_{j,t}^{(\tau,s)}-\delta_{j,t}^{(\tau,s)},
+\]
+then generate posterior predictive samples from the fitted exAL family at each \(\tau\), and finally synthesize across quantiles. Thus, future observations are never used to estimate post-cutoff latent states or predictive distributions.
+
+We agree that cutoff selection is itself a nontrivial part of fair out-of-sample design. Each cutoff must satisfy simultaneous availability and consistency constraints: (i) forecast ensembles that were available at that issuance date, (ii) compatible retrospective/historical products for discrepancy learning, and (iii) forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date/lead-time/target-date alignment.
+
+In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and temporal-alignment constraints are handled explicitly. We will revise the manuscript text to make this protocol and its constraints unambiguous.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} To be finalized after manuscript revision.\par
+\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{7}}
 - The weighted combination of prior forecasts at differing horizons is curious to me. Presumably the most recent forecasts should be better with more available atmospheric data, whereas longer lead-time forecasts likely exhibit more bias. How does the model perform if you only use the most recent forecast (which I would expect to be the highest quality)?
