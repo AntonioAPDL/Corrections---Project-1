@@ -443,9 +443,17 @@ Planned HE-5 deliverables (brief TODO list):
 \item Share the full modeling repository link (estimation, synthesis, post-processing, and orchestration code): \url{https://github.com/AntonioAPDL/Project1}.
 \end{itemize}
 
-We want to clarify what a reader needs to prepare to apply the model in a new basin. At minimum, one must build a site-and-cutoff input bundle including: (i) observed discharge, (ii) retrospective/historical streamflow products up to the cutoff, (iii) forecast ensembles available at the cutoff, and (iv) historical and forecast covariates for precipitation and soil moisture used by the transfer-function component. In addition, the bundle must store provenance metadata (site coordinates, cutoff, horizon, selected river/grid cell, units, and version choices) so the workflow is reproducible.
+To make cross-basin use explicit, we will state that a reader must prepare one reproducible site-and-cutoff bundle with:
+\begin{itemize}
+\item observed daily discharge at the target site;
+\item retrospective/historical streamflow products up to the cutoff date (center/version documented);
+\item forecast ensembles that were actually available at the cutoff date;
+\item historical and forecast precipitation/soil-moisture covariates used by the transfer-function component.
+\end{itemize}
 
-We will also state the main practical challenges explicitly. The limiting step is data engineering, not model code: data accessibility differs by center and product, version windows are asynchronous across retrospective and forecast products, temporal alignment (issue date, lead time, target date) must be handled carefully, and cross-source unit/format harmonization is required. For our application, this involved large archive processing (tens of thousands of forecast files across products) with explicit manifests, retries, and health checks before modeling. Therefore, transfer to a new basin is feasible and supported by the released workflow, but it requires prior planning and disciplined post-processing to preserve version consistency and forecast skill.
+We will also clarify the required provenance metadata and why it matters: site coordinates and selected river/grid cell (to make spatial extraction reproducible), cutoff date and forecast horizon (to define the exact forecasting task), units/transform conventions (to avoid scale mismatches), and model-version choices for each data center (to avoid mixing incompatible product generations). Without this metadata, results cannot be audited or replicated reliably.
+
+Most of the implementation effort is data engineering rather than model coding. In practice, the main challenges are: data accessibility differences across centers/products; asynchronous version windows between retrospective and forecast products; strict issue-date/lead-time/target-date alignment; and cross-source unit/format harmonization. For this study, data preparation required processing large archives (tens of thousands of forecast files across products), with explicit manifests, retry logic, and health checks before model fitting. Therefore, applying the workflow to a new basin is feasible, but it requires advance planning and disciplined post-processing to preserve version consistency and forecast skill.
 \end{responsebox}
 
 \locationheading
