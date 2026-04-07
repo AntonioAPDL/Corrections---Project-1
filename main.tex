@@ -438,12 +438,12 @@ AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[i
 \begin{responsebox}
 We agree. The full implementation can be shared, and we will include explicit reproducibility and portability documentation for external users.
 
-Planned HE-5 deliverables (brief TODO list):
+\textbf{TODO}:
 \begin{itemize}
 \item Share the full modeling repository link (estimation, synthesis, post-processing, and orchestration code): \url{https://github.com/AntonioAPDL/Project1}.
 \end{itemize}
 
-To make cross-basin use explicit, we will state that a reader must prepare one reproducible site-and-cutoff bundle with:
+We want to make the editor aware that a reader must prepare a site-and-cutoff bundle with in order to implement the model in a new basin:
 \begin{itemize}
 \item observed daily discharge at the target site;
 \item retrospective/historical streamflow products up to the cutoff date (center/version documented);
@@ -451,9 +451,9 @@ To make cross-basin use explicit, we will state that a reader must prepare one r
 \item historical and forecast precipitation/soil-moisture covariates used by the transfer-function component.
 \end{itemize}
 
-We will also clarify the required provenance metadata and why it matters: site coordinates and selected river/grid cell (to make spatial extraction reproducible), cutoff date and forecast horizon (to define the exact forecasting task), units/transform conventions (to avoid scale mismatches), and model-version choices for each data center (to avoid mixing incompatible product generations). Without this metadata, results cannot be audited or replicated reliably.
+Careful documentation about the basin is also required, specially regarding the following: site coordinates and selected river/grid cell (to make spatial extraction reproducible), cutoff date and forecast horizon (to define the exact forecasting task), units/transform conventions (to avoid scale mismatches), and model-version choices for each data center (to avoid mixing incompatible product generations).
 
-Most of the implementation effort is data engineering rather than model coding. In practice, the main challenges are: data accessibility differences across centers/products; asynchronous version windows between retrospective and forecast products; strict issue-date/lead-time/target-date alignment; and cross-source unit/format harmonization. For this study, data preparation required processing large archives (tens of thousands of forecast files across products), with explicit manifests, retry logic, and health checks before model fitting. Therefore, applying the workflow to a new basin is feasible, but it requires advance planning and disciplined post-processing to preserve version consistency and forecast skill.
+An important component of the implementation effort is data engineering. In practice, the main challenges are: differences in data accessibility across centers/products; asynchronous version windows between retrospective and forecast products; strict alignment of issue-date/lead-time/target-date; and cross-source unit/format harmonization. For this study, data preparation required processing large archives (tens of thousands of forecast files across products), with explicit manifests, retry logic, and health checks before model fitting. Therefore, applying the workflow to a new basin is feasible, but it requires advanced planning and disciplined post-processing to preserve version consistency and forecast skill.
 \end{responsebox}
 
 \locationheading
