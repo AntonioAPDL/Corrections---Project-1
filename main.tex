@@ -266,7 +266,7 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 \end{tabular}
 \end{center}
 
-In addition, we benchmark all Bayesian models against raw physical forecast ensembles (ECMWF/GloFAS and NOAA/NWM).
+In addition, we benchmark all Bayesian models against raw physical forecast ensembles: those produced by ECMWF/GloFAS and those produced by NOAA/NWM.
 
 All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
 
@@ -297,17 +297,17 @@ exAL-M-T1 & 0.1295 & \textbf{0.0201} & \textbf{0.1910} & \textbf{0.0178} & \text
 \end{tabular}
 \end{center}
 
-The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; exAL-M-T1 is strictly best in three cutoffs (and tied in one), while AL-M-T1 is strictly best in one cutoff (and tied in one). Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, in all five cutoffs, the best corrected model improves on the best raw physical ensemble baseline.
+The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; exAL-M-T1 is strictly best in three cutoffs (and tied in one), while AL-M-T1 is strictly best in one cutoff (and tied in one). Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model outperforms the best raw physical ensemble baseline.
 
-This revision addresses this concern directly: the paper no longer relies only on internal variants of the proposed method. It includes simpler Bayesian alternatives (NDLM and AL-DQLM) and raw physical ensembles as explicit benchmarks, so readers can assess the practical gain from additional model complexity.
+We strongly believe this revision directly addresses the editor's concern: the paper no longer relies solely on internal variants of the proposed method. It includes standard Bayesian alternatives (NDLM and AL-DQLM) and raw physical ensembles as explicit benchmarks, enabling readers to assess the practical gains from additional model complexity.
 
-Substantively, the new comparison framework allows a clear layered interpretation: physical ensemble baseline \(\rightarrow\) simpler Bayesian corrections \(\rightarrow\) extended exAL-based synthesis. The revised results section now makes these tradeoffs explicit for applied hydrology users.
+The revised results section now makes these tradeoffs explicit for applied hydrology users.
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} Revised model-comparison and validation subsections in Results; updated computational/implementation notes.\par
-\textit{Evidence:} Comparative CRPS tables (lead-wise and window-averaged) across all benchmark and proposed models; updated calibration/sharpness figures.
+\textit{Location:} To be finalized after manuscript revision.\par
+\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
 \end{actionbox}
 
 \begin{commentresponse}[7]{\HE{3}}
