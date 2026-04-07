@@ -429,9 +429,35 @@ AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[i
 \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
 \end{actionbox}
 
-\begin{commentresponse}[7]{\HE{5}}
+\commentheading{\HE{5}}
+\begin{commentblock}
 - It would be helpful for the reader to have access to the estimation and forecasting code for use in other basin applications.
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+We agree, and we now provide the estimation and forecasting implementation in version-controlled repositories, together with reproducibility documentation.
+
+\begin{itemize}
+\item Implementation repository (model fitting, synthesis, orchestration, validation): \url{https://github.com/AntonioAPDL/Project1}
+\item Manuscript/results repository (paper-facing figures/tables and manuscript assets): \url{https://github.com/AntonioAPDL/Evironmetrics---BAYESIAN-QUANTILE-BASED-CORRECTION-AND-SYNTHESIS-OF-RIVER-FLOW-FORECASTS}
+\item Reproducibility guides in the implementation repository: \texttt{repro/UNIFIED_WORKFLOW_README.md} and \texttt{repro/REPRODUCE\_PAPER.md}
+\end{itemize}
+
+To support reuse in other basins, we provide a configuration-driven workflow (template: \texttt{config/unified\_run.template.yaml}) with a single run entrypoint:
+\begin{verbatim}
+Rscript --vanilla scripts/unified_run.R --config <yaml>
+\end{verbatim}
+In practice, porting to another basin requires updating station/basin metadata and input paths, then supplying basin-specific retrospective series, forecast ensembles, and transfer-function covariate forecasts under the documented data contracts.
+
+We also include validation tooling (for run-level checks and reproducibility gates) documented in the same runbooks, so external users can verify that outputs are complete and internally consistent.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} Added ``Code and data availability'' statement in the revised manuscript, with repository links and workflow entrypoint.\par
+\textit{Evidence:} Repository URLs, reproducibility runbooks (\texttt{repro/UNIFIED\_WORKFLOW\_README.md}, \texttt{repro/REPRODUCE\_PAPER.md}), and config template/entrypoint references.
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{6}}
 - Something that wasn't clear to me in the application was: is this in-sample, or out-of-sample validation? It appears that the model was fit to the data that is being used in validation, which isn't realistic. Please perform an appropriate cross-validation study to investigate the approach's actual ability to forecast unseen data.
