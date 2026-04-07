@@ -355,9 +355,80 @@ This ablation directly addresses the ``bang-for-buck'' question by quantifying t
 \textit{Evidence:} Table HE3-A (mean CRPS by cutoff for full model vs ablations), plus corresponding discussion text.
 \end{actionbox}
 
-\begin{commentresponse}[7]{\HE{4}}
+\commentheading{\HE{4}}
+\begin{commentblock}
 - Again, on validation: include (along with comparisons against alternative models) proper scores quantifying the quality of the predictive distributions. CRPS is used in model estimation, apparently, but why are CRPS scores not reported out for the forecasting exercise? And, how do they change depending on regime? Because this is a quantile-based method, it is fair to include quantile scores as well (see Gneiting and Raftery 2007 for details).
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+We agree, and we have expanded the forecasting validation accordingly.
+
+First, CRPS is now reported explicitly for the forecasting exercise (not only for estimation), across all cutoffs and benchmark models (see HE-2 tables). This directly addresses the request for proper probabilistic forecast verification metrics.
+
+Second, we clarify why CRPS is our primary score for synthesized posterior predictive distributions. For predictive CDF \(F\), observation \(y\), and quantile function \(q_\tau=F^{-1}(\tau)\),
+\[
+\mathrm{CRPS}(F,y)=2\int_0^1 \rho_\tau(y-q_\tau)\,d\tau,\qquad
+\rho_\tau(u)=u\left(\tau-\mathbf{1}\{u<0\}\right),
+\]
+so CRPS is an integrated quantile-score criterion. In practice, with quantile levels \(\{\tau_k\}_{k=1}^K\), we use the standard discrete approximation
+\[
+\widehat{\mathrm{CRPS}}(F,y)\approx \frac{2}{K}\sum_{k=1}^K \rho_{\tau_k}(y-q_{\tau_k}).
+\]
+
+Third, to provide explicit quantile-level diagnostics as requested, we additionally report quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four key models:
+\texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}.
+
+Table HE4-B is the reporting template for these quantile diagnostics (lower is better). We report one panel per cutoff so regime dependence is explicit across windows.
+
+\begin{center}
+\tiny
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{>{\ttfamily}l rrrrrrr}
+\toprule
+Model & q0.05 & q0.20 & q0.35 & q0.50 & q0.65 & q0.80 & q0.95 \\
+\midrule
+\multicolumn{8}{l}{\textit{Cutoff 01/23/2021}} \\
+exAL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\addlinespace[1pt]
+\multicolumn{8}{l}{\textit{Cutoff 11/12/2021}} \\
+exAL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\addlinespace[1pt]
+\multicolumn{8}{l}{\textit{Cutoff 12/21/2021}} \\
+exAL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\addlinespace[1pt]
+\multicolumn{8}{l}{\textit{Cutoff 05/11/2022}} \\
+exAL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\addlinespace[1pt]
+\multicolumn{8}{l}{\textit{Cutoff 12/25/2022}} \\
+exAL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-M-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Together, these additions provide both an integrated proper score (CRPS) and quantile-specific diagnostics, while preserving a forecasting-focused evaluation of the synthesized predictive distributions.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} Revised forecast-validation subsection (proper scores) and added quantile-diagnostic subsection.\par
+\textit{Evidence:} CRPS comparison tables across cutoffs/models (HE-2) and Table HE4-B (quantile check losses by cutoff/model/quantile).
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{5}}
 - It would be helpful for the reader to have access to the estimation and forecasting code for use in other basin applications.
