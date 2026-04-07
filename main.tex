@@ -310,9 +310,50 @@ The revised results section now makes these tradeoffs explicit for applied hydro
 \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
 \end{actionbox}
 
-\begin{commentresponse}[7]{\HE{3}}
+\commentheading{\HE{3}}
+\begin{commentblock}
 - This brings me to another point, in that the hierarchical model is fairly detailed. A necessary revision would be to implement versions of the model without various hierarchical pieces -- e.g., Model C, what if the AR trend piece were removed? Or, Model B, what if retrospective and/or all states autoregressions were removed? In the current manuscript, the results look decent, but it’s not really clear which part of the model is giving the most “bang for your buck”, which is critical for end users to understand.
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+We agree with this point, and we added a targeted ablation analysis to identify which components contribute most to forecast skill.
+
+Following the main validation in HE-2, we selected the strongest configuration (exAL-M-T1) as the reference model and removed one structural block at a time, while keeping all other settings fixed (same cutoffs, preprocessing, hyperparameters, and evaluation protocol). This isolates the marginal contribution of each hierarchical component to out-of-sample forecast performance.
+
+We use the following labels in the ablation study:
+\begin{itemize}
+\item \texttt{exAL-M-T1} (full reference): trend + seasonal + transfer-function components; transfer function active in both historical fitting and forecast window;
+\item \texttt{exAL-M-T1-noTrend}: same as full model, but with trend component removed;
+\item \texttt{exAL-M-T1-noSeason}: same as full model, but with seasonal component removed;
+\item \texttt{exAL-M-noTF}: same as full model, but with transfer function removed from both historical fitting and forecast window.
+\end{itemize}
+
+Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower is better.
+
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{>{\ttfamily}l c c c c c}
+\toprule
+Ablation model & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
+\midrule
+exAL-M-T1 (full) & 0.1295 & 0.0201 & 0.1910 & 0.0178 & 0.5991 \\
+exAL-M-T1-noTrend & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-M-T1-noSeason & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-M-noTF & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+This ablation directly addresses the ``bang-for-buck'' question by quantifying the performance loss when each structural block is removed. In the revised Results section, we summarize these deltas per cutoff and identify which components are consistently high-impact versus optional under operational constraints.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} New ablation subsection in Results (component-removal study for exAL-M-T1).\par
+\textit{Evidence:} Table HE3-A (mean CRPS by cutoff for full model vs ablations), plus corresponding discussion text.
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{4}}
 - Again, on validation: include (along with comparisons against alternative models) proper scores quantifying the quality of the predictive distributions. CRPS is used in model estimation, apparently, but why are CRPS scores not reported out for the forecasting exercise? And, how do they change depending on regime? Because this is a quantile-based method, it is fair to include quantile scores as well (see Gneiting and Raftery 2007 for details).
