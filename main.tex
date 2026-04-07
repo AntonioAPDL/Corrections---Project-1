@@ -429,9 +429,34 @@ AL-U-T1 & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[i
 \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
 \end{actionbox}
 
-\begin{commentresponse}[7]{\HE{5}}
+\commentheading{\HE{5}}
+\begin{commentblock}
 - It would be helpful for the reader to have access to the estimation and forecasting code for use in other basin applications.
-\end{commentresponse}
+\end{commentblock}
+
+\responseheading
+\begin{responsebox}
+We agree. The full implementation can be shared, and we will include explicit reproducibility and portability documentation for external users.
+
+Planned HE-5 deliverables (brief TODO list):
+\begin{itemize}
+\item Share the full modeling repository link (estimation, synthesis, post-processing, and orchestration code): \url{https://github.com/AntonioAPDL/Project1}.
+\item Add a reproducibility README with end-to-end commands for the main workflow and expected outputs.
+\item Add a concise ``main model and workflow'' description (inputs, fit stage, synthesis stage, post stage).
+\item Add a ``new basin'' setup checklist specifying minimum required metadata: site/gage id, latitude/longitude, cutoff date, forecast horizon, domain availability, and point-vs-basin extraction choice.
+\item Add a version-matching guide for forecast/retrospective products (NWM and GLOFAS chronology rules) and require provenance logging of those choices.
+\item Add a standard input-bundle specification (observations, retrospective/historical products, forecast products, covariates, and \texttt{meta.yaml}).
+\item Add a short pitfalls section (coverage gaps, issue-date alignment, lead-time harmonization, spatial selection persistence, and unit conversions).
+\end{itemize}
+
+To avoid overpromising, we will state this clearly in the revision: transfer to a new basin is feasible with the released workflow, but it is not a one-click task. It requires planning and consistent post-processing to ensure correct version pairing, spatial extraction, temporal alignment, and data-contract compliance.
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} New ``Code and workflow availability'' statement and supplementary reproducibility notes.\par
+\textit{Evidence:} Repository link plus reproducibility/runbook documents (including \texttt{repro/UNIFIED\_WORKFLOW\_README.md}, \texttt{repro/REPRODUCE\_PAPER.md}, and data-audit/runbook files for versioning and input preparation).
+\end{actionbox}
 
 \begin{commentresponse}[7]{\HE{6}}
 - Something that wasn't clear to me in the application was: is this in-sample, or out-of-sample validation? It appears that the model was fit to the data that is being used in validation, which isn't realistic. Please perform an appropriate cross-validation study to investigate the approach's actual ability to forecast unseen data.
