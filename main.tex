@@ -65,8 +65,8 @@
 }
 \newcommand{\LocationLine}{%
   \begin{actionbox}
-  \textit{Location:} Section \_\_\_; page \_\_\_; lines \_\_\_.\par
-  \textit{Evidence:} Figure \_\_\_ / Table \_\_\_ / Appendix \_\_\_.\par
+  \textit{Location:} To be finalized after manuscript revision.\par
+  \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
   \end{actionbox}
 }
 % One environment to prevent broken/mismatched blocks for each comment.
@@ -441,15 +441,11 @@ We agree. The full implementation can be shared, and we will include explicit re
 Planned HE-5 deliverables (brief TODO list):
 \begin{itemize}
 \item Share the full modeling repository link (estimation, synthesis, post-processing, and orchestration code): \url{https://github.com/AntonioAPDL/Project1}.
-\item Add a reproducibility README with end-to-end commands for the main workflow and expected outputs.
-\item Add a concise ``main model and workflow'' description (inputs, fit stage, synthesis stage, post stage).
-\item Add a ``new basin'' setup checklist specifying minimum required metadata: site/gage id, latitude/longitude, cutoff date, forecast horizon, domain availability, and point-vs-basin extraction choice.
-\item Add a version-matching guide for forecast/retrospective products (NWM and GLOFAS chronology rules) and require provenance logging of those choices.
-\item Add a standard input-bundle specification (observations, retrospective/historical products, forecast products, covariates, and \texttt{meta.yaml}).
-\item Add a short pitfalls section (coverage gaps, issue-date alignment, lead-time harmonization, spatial selection persistence, and unit conversions).
 \end{itemize}
 
-To avoid overpromising, we will state this clearly in the revision: transfer to a new basin is feasible with the released workflow, but it is not a one-click task. It requires planning and consistent post-processing to ensure correct version pairing, spatial extraction, temporal alignment, and data-contract compliance.
+For transparency, we will clarify what a reader needs to prepare to apply the model in a new basin. At minimum, one must build a site-and-cutoff input bundle including: (i) observed discharge, (ii) retrospective/historical streamflow products up to the cutoff, (iii) forecast ensembles available at the cutoff, and (iv) historical and forecast covariates for precipitation and soil moisture used by the transfer-function component. In addition, the bundle must store provenance metadata (site coordinates, cutoff, horizon, selected river/grid cell, units, and version choices) so the workflow is reproducible.
+
+We will also state the main practical challenges explicitly. The limiting step is data engineering, not model code: data accessibility differs by center and product, version windows are asynchronous across retrospective and forecast products, temporal alignment (issue date, lead time, target date) must be handled carefully, and cross-source unit/format harmonization is required. For our application, this involved large archive processing (tens of thousands of forecast files across products) with explicit manifests, retries, and health checks before modeling. Therefore, transfer to a new basin is feasible and supported by the released workflow, but it requires prior planning and disciplined post-processing to preserve version consistency and forecast skill.
 \end{responsebox}
 
 \locationheading
