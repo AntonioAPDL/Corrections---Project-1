@@ -101,6 +101,7 @@
 \newenvironment{actionbox}{\begin{mdframed}[style=plainbox]}{\end{mdframed}}
 \newcommand{\ResponsePlaceholder}[1][7]{%
   \begin{responsebox}
+
   \textit{[Insert response here.}\par\vspace*{#1\baselineskip}
   \end{responsebox}
 }
@@ -227,6 +228,8 @@ A typical daily operational cycle is:
 \end{enumerate}
 
 With an established data pipeline, this full cycle is operationally feasible for daily updates.
+
+\textbf{TODO}: COLD WAMR STARTS FOR VB USE VB INITAL VALUES
 \end{responsebox}
 
 \locationheading
@@ -454,6 +457,8 @@ We want to make the editor aware that a reader must prepare a site-and-cutoff bu
 Careful documentation about the basin is also required, specially regarding the following: site coordinates and selected river/grid cell (to make spatial extraction reproducible), cutoff date and forecast horizon (to define the exact forecasting task), units/transform conventions (to avoid scale mismatches), and model-version choices for each data center (to avoid mixing incompatible product generations).
 
 An important component of the implementation effort is data engineering. In practice, the main challenges are: differences in data accessibility across centers/products; asynchronous version windows between retrospective and forecast products; strict alignment of issue-date/lead-time/target-date; and cross-source unit/format harmonization. For this study, data preparation required processing large archives (tens of thousands of forecast files across products), with explicit manifests, retry logic, and health checks before model fitting. Therefore, applying the workflow to a new basin is feasible, but it requires advanced planning and disciplined post-processing to preserve version consistency and forecast skill.
+
+\textbf{ToDo:} Comment what we did regarding other basins. Salinas, Russian, Sacramento, etc.. intervention and forecast qwuality pretty poor. Mention the R package Raquel!
 \end{responsebox}
 
 \locationheading
@@ -469,7 +474,7 @@ An important component of the implementation effort is data engineering. In prac
 
 \responseheading
 \begin{responsebox}
-Thank you for raising this. Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript.
+Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript.
 
 For each cutoff date \(c\), we fit the model using only information available up to \(c\): observed discharge, retrospective/historical products, and forecast products issued at or before \(c\). No observed discharge after \(c\) is used in fitting, calibration, or synthesis. Verification is then performed only on post-cutoff USGS observations.
 
@@ -486,6 +491,9 @@ then generate posterior predictive samples from the fitted exAL family at each \
 We agree that cutoff selection is itself a nontrivial part of fair out-of-sample design. Each cutoff must satisfy simultaneous availability and consistency constraints: (i) forecast ensembles that were available at that issuance date, (ii) compatible retrospective/historical products for discrepancy learning, and (iii) forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date/lead-time/target-date alignment.
 
 In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and temporal-alignment constraints are handled explicitly. We will revise the manuscript text to make this protocol and its constraints unambiguous.
+
+\textbf{ToDo:} Add version diagram to reflect the challenges. 
+
 \end{responsebox}
 
 \locationheading
@@ -497,6 +505,23 @@ In short, the evaluation is out-of-sample and operationally realistic, but only 
 \begin{commentresponse}[7]{\HE{7}}
 - The weighted combination of prior forecasts at differing horizons is curious to me. Presumably the most recent forecasts should be better with more available atmospheric data, whereas longer lead-time forecasts likely exhibit more bias. How does the model perform if you only use the most recent forecast (which I would expect to be the highest quality)?
 \end{commentresponse}
+
+\responseheading
+\begin{responsebox}
+\textbf{ToDo:} Agradecer ref 
+
+\textbf{ToDo:} Mention why only 5 cutoffs and not only several ones. 
+
+\textbf{ToDo:} Explain the work it requires the table crps
+
+\end{responsebox}
+
+\locationheading
+\begin{actionbox}
+\textit{Location:} To be finalized after manuscript revision.\par
+\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\end{actionbox}
+
 
 \subsection{Handling editor transition line (verbatim)}
 \begin{commentblock}
