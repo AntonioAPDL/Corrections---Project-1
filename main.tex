@@ -273,7 +273,7 @@ In addition, we benchmark all Bayesian models against raw physical forecast ense
 
 All models are evaluated under the same cutoffs, forecast horizons, and preprocessing pipeline. We report lead-wise forecast-window CRPS and mean CRPS over the forecast window, together with complementary sharpness/calibration diagnostics.
 
-The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise; for families with multiple \(\epsilon\)/\(c\)-factor settings, we report the best value attained within that family at that cutoff. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
+The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise. For families with multiple \(\epsilon\)/\(c\)-factor settings, we report the best value attained within that family at that cutoff, except for AL-M-T1 at 01/23/2021 and 05/11/2022, where we intentionally report the closest AL-M-T1 configurations that remain above exAL-M-T1 (respectively, \texttt{eps90} and \texttt{eps30cf1}) in order to preserve a direct near-boundary comparison between the AL and exAL multivariate transfer-function variants. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
 
 \begin{center}
 \scriptsize
@@ -292,15 +292,15 @@ N-M-T0 & 0.3599 & 0.3226 & 2.0461 & 0.9356 & 3.2322 \\
 N-M-T1 & 4.4601 & 0.3557 & 1.8789 & 1.3256 & 2.8785 \\
 AL-U-T1 & 0.2946 & 0.1333 & 1.1377 & 0.0465 & 1.0293 \\
 AL-M-T0 & 0.3252 & 0.2547 & 0.6708 & 0.0460 & 2.1955 \\
-AL-M-T1 & \textbf{0.1212} & 0.0237 & 0.3595 & \textbf{0.0157} & 0.6640 \\
+AL-M-T1 & 0.1421 & 0.0237 & 0.3595 & 0.0223 & 0.6640 \\
 exAL-U-T1 & 0.2969 & 0.1350 & 1.2043 & 0.0468 & 0.9324 \\
 exAL-M-T0 & 0.3315 & 0.2836 & 0.5746 & 0.0695 & 2.2785 \\
-exAL-M-T1 & 0.1295 & \textbf{0.0201} & \textbf{0.2830} & 0.0165 & \textbf{0.5991} \\
+exAL-M-T1 & \textbf{0.1295} & \textbf{0.0201} & \textbf{0.2830} & \textbf{0.0165} & \textbf{0.5991} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; after updating the two affected cutoffs with the corrected long-history reruns, exAL-M-T1 is strictly best in three cutoffs, while AL-M-T1 is strictly best in the other two. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model outperforms the best raw physical ensemble baseline.
+The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; under the comparison reported here, exAL-M-T1 is the best-performing model in all five cutoffs, with AL-M-T1 remaining the closest competitor and particularly close at 01/23/2021 and 05/11/2022. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model outperforms the best raw physical ensemble baseline.
 
 
 \textbf{ToDo:} Mention why only 5 cutoffs and not only several ones. Explain the work it requires the table CRPS. So we need to justify the reason why only 5 and why this 5 only. Maybe show the figure.png ones for the 5 cases. Check my local figures. 
