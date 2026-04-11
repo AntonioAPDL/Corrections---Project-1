@@ -2,6 +2,11 @@
 
 This repo contains the LaTeX workbook used to coordinate point-by-point responses to reviewer comments.
 
+## Revision Control Files
+
+- `tracker_master.csv`: canonical per-comment tracker (ID-level status across response/manuscript/evidence).
+- `WORKFLOW.md`: strict operating protocol to synchronize implementation evidence, response letter text, and manuscript edits.
+
 ## Build
 
 ### Overleaf
