@@ -209,7 +209,7 @@ O\!\left(I_{\mathrm{VB}}\,(T+H)\,d^{3}\right),
 \]
 where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO convergence. For the forecasting objective of this paper, this distinction is critical: once VB has converged, posterior samples can be generated at low incremental cost, whereas MCMC continues to pay the full state-smoothing cost at every retained iteration.
 
-In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. In the most demanding cutoff, the slowest quantile converged in about 32 minutes, and the subsequent synthesis over the 28-day forecast window was comparatively small and parallelizable. Thus, under our production setup, end-to-end wall time for fit plus synthesis was about 35 minutes.
+In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. Across different operational setups, the average wall time for model fitting is about 100 minutes, and the full post-processing stage requires roughly 20 additional minutes. Thus, under our production setup, average end-to-end wall time is about 120 minutes.
 
 This choice is also consistent with our simulation evidence: in a separate simulation study comparing VB and MCMC for univariate DQLM/exDQLM fits, VB was approximately 15x--24x faster in comparable settings.
 
