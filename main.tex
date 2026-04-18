@@ -191,45 +191,29 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 \responseheading
 \begin{responsebox}
-We agree that computational feasibility must be stated explicitly, and we revised the manuscript accordingly.
+We agree that the manuscript should make computational feasibility explicit, and we now state this more clearly.
 
-For our main model, let \(T\) be the historical length, \(H\) the forecast length, and \(d\) the latent-state dimension (here \(d=31\)). The dominant cost in iterative inference is repeated Kalman filtering/smoothing, with leading order
+For our main model, the dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
 \[
 O\!\left((T+H)\,d^{3}\right),
 \]
-plus lower-order observation-assimilation terms \(O((T+H)\,d^{2})\).
+with lower-order terms of order \(O((T+H)\,d^{2})\).
 
-Hence, for MCMC (burn-in \(B\), retained draws \(S\), thinning interval \(L\), and additional iterations for mixing \(M_{\text{mix}}\)):
+This immediately explains the practical difference between MCMC and VB. For full MCMC, the total cost scales as
 \[
-\mathcal{C}_{\text{MCMC}}
-=
-O\!\left((B+LS+M_{\text{mix}})\,(T+H)\,d^{3}\right).
+O\!\left(I_{\mathrm{MCMC}}\,(T+H)\,d^{3}\right),
 \]
-For VB-CAVI (with \(I_{\text{VB}}\) iterations to ELBO convergence):
+where \(I_{\mathrm{MCMC}}\) includes burn-in, retained iterations, and any additional iterations required for adequate mixing. For VB-CAVI, the total cost scales as
 \[
-\mathcal{C}_{\text{VB}}
-=
-O\!\left(I_{\text{VB}}\,(T+H)\,d^{3}\right).
+O\!\left(I_{\mathrm{VB}}\,(T+H)\,d^{3}\right),
 \]
-This is the core reason we do not use full MCMC in the main operational analysis: MCMC must pay burn-in, retained-chain sampling, and often additional iterations when tail-quantile chains mix slowly, while VB requires convergence once and then allows posterior sampling at low incremental cost.
+where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO convergence. For the forecasting objective of this paper, this distinction is critical: once VB has converged, posterior samples can be generated at low incremental cost, whereas MCMC continues to pay the full state-smoothing cost at every retained iteration.
 
-In our production runs for this work, the seven quantile fits are launched in parallel (one per quantile). Therefore, wall time is controlled by the slowest quantile fit (typically an extreme tail quantile), not by the sum across quantiles. Empirically, in the most demanding cutoff, the slowest quantile converged in about \(31.82\)--\(31.94\) minutes. The synthesis step is then applied over a short forecast window (\(H=28\) days) and is also parallelizable. From start to finish, model fit plus synthesis is operationally around 35 minutes via VB.
+In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. In the most demanding cutoff, the slowest quantile converged in about 32 minutes, and the subsequent synthesis over the 28-day forecast window was comparatively small and parallelizable. Thus, under our production setup, end-to-end wall time for fit plus synthesis was about 35 minutes.
 
-\textbf{TODO: This choice is also supported by our simulation study: preliminary univariate DQLM/exDQLM comparisons indicate VB is approximately 15x--24x faster than MCMC (reference and full details to be added in the revised manuscript).}
+This choice is also consistent with our simulation evidence: preliminary univariate DQLM/exDQLM comparisons indicate that VB is approximately 15x--24x faster than MCMC in comparable settings (full reference and details will be added in the revised manuscript).
 
-Regarding re-estimation: yes, the model should be re-estimated as new forecast issuances arrive. From a practitioner viewpoint, this is expected and feasible at daily resolution. Example: at issuance date 2022-12-25, we use data up to 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions from 2022-12-26 to 2023-01-22. At issuance date 2022-12-26, the model is refit because inputs are updated: one new observation, one new retrospective value from each provider (NOAA/NWM and ECMWF/GloFAS), and a newly issued ensemble forecast set from each provider.
-
-A typical daily operational cycle is:
-\begin{enumerate}
-\item ingest retrospectives up to the current cutoff date (or append only the new day if historical data are already stored);
-\item ingest forecast ensembles from the same issue date (here, GloFAS horizon \(=28\) days and NWM horizon \(\approx 10\) days);
-\item ingest deterministic covariate forecasts up to the maximum synthesis horizon (for example, GEFS at 30 days, which exceeds the 28-day maximum ensemble horizon used here);
-\item fit the seven quantile models and synthesize the corrected predictive distribution (about 35 minutes for our model in the demanding case).
-\end{enumerate}
-
-With an established data pipeline, this full cycle is operationally feasible for daily updates.
-
-\textbf{TODO}: COLD WAMR STARTS FOR VB USE VB INITAL VALUES
+Yes, the model is intended to be re-estimated as new forecast issuances arrive, and this is feasible at daily resolution. For example, at issuance date 2022-12-25, we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available. With an established data pipeline, this daily update cycle is operationally feasible.
 \end{responsebox}
 
 \locationheading
