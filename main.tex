@@ -193,7 +193,7 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 \begin{responsebox}
 We agree that the manuscript should make computational feasibility explicit, and we now state this more clearly.
 
-For our main model, the dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
+For our main model, the dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. This is not specific to our formulation: for state-space models fit by iterative procedures, the standard computational bottleneck is the repeated forward-backward updating of the latent state trajectory. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
 \[
 O\!\left((T+H)\,d^{3}\right),
 \]
@@ -203,7 +203,7 @@ This immediately explains the practical difference between MCMC and VB. For full
 \[
 O\!\left(I_{\mathrm{MCMC}}\,(T+H)\,d^{3}\right),
 \]
-where \(I_{\mathrm{MCMC}}\) includes burn-in, retained iterations, and any additional iterations required for adequate mixing. For VB-CAVI, the total cost scales as
+where \(I_{\mathrm{MCMC}}\) includes burn-in, retained iterations, and any additional iterations required for adequate mixing. In other words, each MCMC iteration pays for another full filtering/smoothing pass. For VB-CAVI, the total cost scales as
 \[
 O\!\left(I_{\mathrm{VB}}\,(T+H)\,d^{3}\right),
 \]
@@ -211,9 +211,11 @@ where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO converge
 
 In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. In the most demanding cutoff, the slowest quantile converged in about 32 minutes, and the subsequent synthesis over the 28-day forecast window was comparatively small and parallelizable. Thus, under our production setup, end-to-end wall time for fit plus synthesis was about 35 minutes.
 
-This choice is also consistent with our simulation evidence: preliminary univariate DQLM/exDQLM comparisons indicate that VB is approximately 15x--24x faster than MCMC in comparable settings (full reference and details will be added in the revised manuscript).
+This choice is also consistent with our simulation evidence: in a separate simulation study comparing VB and MCMC for univariate DQLM/exDQLM fits, VB was approximately 15x--24x faster in comparable settings.
 
-Yes, the model is intended to be re-estimated as new forecast issuances arrive, and this is feasible at daily resolution. For example, at issuance date 2022-12-25, we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available. With an established data pipeline, this daily update cycle is operationally feasible.
+Yes, the model is intended to be re-estimated as new forecast issuances arrive, and this is feasible at daily resolution. For example, at issuance date 2022-12-25, we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available.
+
+In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can reduce convergence time further. Even without these warm starts, the current end-to-end fit plus synthesis is not computationally expensive for a single river at daily resolution, so with an established data pipeline this daily update cycle is operationally feasible.
 \end{responsebox}
 
 \locationheading
