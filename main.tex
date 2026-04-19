@@ -456,25 +456,23 @@ The choice of the San Lorenzo River was also deliberate. It was relevant to ongo
 
 \responseheading
 \begin{responsebox}
-Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript.
+Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript. The forecasting study is not based on fitting the model to the full record and then evaluating on the same data. Instead, it is a rolling-origin, cutoff-by-cutoff backtesting design.
 
-For each cutoff date \(c\), we fit the model using only information available up to \(c\): observed discharge, retrospective/historical products, and forecast products issued at or before \(c\). No observed discharge after \(c\) is used in fitting, calibration, or synthesis. Verification is then performed only on post-cutoff USGS observations.
+For each cutoff date \(c\), the model is fit using only information available up to \(c\): observed discharge, retrospective/historical products, and forecast products issued at or before \(c\). No observed discharge after \(c\) is used in fitting, calibration, or synthesis. Verification is performed only on the post-cutoff USGS observations, so the forecast window is genuinely unseen at fit time.
 
-The forecasting mechanism is not a static one-shot ``fit once, then forecast forever'' setup. It is a rolling-origin, cutoff-by-cutoff backtesting design. At quantile level \(\tau\), for each forecaster \(j\), we learn historical discrepancy structure up to cutoff through
+The forecasting mechanism itself also differs from a standard one-shot setup in which a single time-series model is fit and then projected forward directly. At quantile level \(\tau\), for each forecaster \(j\), we learn historical discrepancy structure up to cutoff through
 \[
 \mu_{j,t}^{(\tau)}=\mu_{\mathrm{USGS},t}^{(\tau)}+\delta_{j,t}^{(\tau)}+\varepsilon_{j,t}^{(\tau)},\quad t\le c.
 \]
-For \(t>c\), \(\mu_{\mathrm{USGS},t}^{(\tau)}\) is unobserved, so we recover posterior samples through the learned discrepancy relation, e.g.
+For \(t>c\), \(\mu_{\mathrm{USGS},t}^{(\tau)}\) is unobserved, so we recover posterior samples through the learned discrepancy relation, for example
 \[
 \mu_{\mathrm{USGS},t}^{(\tau,s)}=\mu_{j,t}^{(\tau,s)}-\delta_{j,t}^{(\tau,s)},
 \]
-then generate posterior predictive samples from the fitted exAL family at each \(\tau\), and finally synthesize across quantiles. Thus, future observations are never used to estimate post-cutoff latent states or predictive distributions.
+then generate posterior predictive samples from the fitted exAL family at each \(\tau\), and finally synthesize across quantiles. Thus, future observations are never used to estimate the post-cutoff latent states or predictive distributions.
 
-We agree that cutoff selection is itself a nontrivial part of fair out-of-sample design. Each cutoff must satisfy simultaneous availability and consistency constraints: (i) forecast ensembles that were available at that issuance date, (ii) compatible retrospective/historical products for discrepancy learning, and (iii) forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date/lead-time/target-date alignment.
+We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and consistency constraints: forecast ensembles that were actually available at that issuance date, compatible retrospective/historical products for discrepancy learning, and forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date, lead-time, and target-date alignment.
 
-In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and temporal-alignment constraints are handled explicitly. We will revise the manuscript text to make this protocol and its constraints unambiguous.
-
-\textbf{ToDo:} Add version diagram to reflect the challenges. 
+In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add a schematic version/timing diagram so that the cutoff-specific forecasting design and its constraints are unambiguous to the reader.
 
 \end{responsebox}
 
