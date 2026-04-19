@@ -441,7 +441,7 @@ To apply the method in a new basin, a reader would need to prepare a parameteriz
 
 The main challenge is not the fitting code itself, but building this bundle correctly. In practice, this requires matching retrospective and forecast products across centers and versions, aligning issue dates, lead times, and target dates, selecting and fixing the spatial extraction points, harmonizing units and temporal aggregation, and maintaining auditable manifests for all inputs. In our case, this involved substantial archive processing before any model fit was attempted. For example, the GEFS/NWM covariate-forecast audit for the five study cutoffs required manifests covering 56,110 GEFS files and 4,420 NWM files, and the GloFAS historical audit required a completed versioned download campaign across 1,289 historical shards. These steps were accompanied by retry logic, integrity checks, and version audits. For this reason, application to a new basin is feasible within the current workflow, but it requires careful preparation and disciplined data management.
 
-To make this preparation burden explicit in the revised manuscript, we will add a version-audit matrix that summarizes the NWS/NWM and GloFAS forecast chronology, retrospective/historical coverage, and the five study cutoffs used in the paper (Figure~\ref{fig:version-audit-matrix}). The purpose of this figure is to show that a valid cutoff-specific input bundle is not determined by calendar date alone: each cutoff must be checked against provider-specific version windows, coverage endpoints, and pairing rules before the modeling stage begins.
+To make this preparation burden explicit in the revised manuscript, we will add version-audit timelines for NWS/NWM and GloFAS (Figures~\ref{fig:nws-version-audit} and~\ref{fig:glofas-version-audit}). Their purpose is to show that a valid cutoff-specific input bundle is not determined by calendar date alone: each cutoff must be checked against provider-specific version windows, coverage endpoints, and pairing rules before the modeling stage begins.
 
 The choice of the San Lorenzo River was also deliberate. It was relevant to ongoing Santa Cruz water-supply discussions, and at the Big Trees site the flow is comparatively less dominated by large direct regulation than in several larger California systems. During prior basin screening, we also considered Pajaro, Sacramento, Russian, Salinas, Merced, and San Joaquin. Many of these basins are heavily managed or regulated and would require additional modeling to represent structural interventions in the flow process. In other cases, the multi-center forecast/retrospective combination required for this paper was not sufficiently reliable over the historical windows of interest, either because GloFAS support at the target location was weak or because older NWM retrospective/forecast generations were not adequate for a consistent version-matched comparison. These constraints were assessed through the archive and version audits described earlier and, when necessary, through direct verification with provider staff. For these reasons, San Lorenzo was a scientifically and operationally suitable basin for the present study, while other basins would require additional hydrologic or data-engineering work before the same workflow could be applied credibly.
 \end{responsebox}
@@ -475,7 +475,7 @@ then generate posterior predictive samples from the fitted exAL family at each \
 
 We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and consistency constraints: forecast ensembles that were actually available at that issuance date, compatible retrospective/historical products for discrepancy learning, and forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date, lead-time, and target-date alignment.
 
-In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add both a schematic version/timing diagram and the version-audit matrix in Figure~\ref{fig:version-audit-matrix}, so that the cutoff-specific forecasting design, the data-availability constraints, and the provider-specific pairing rules are unambiguous to the reader.
+In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add both a schematic version/timing diagram and the version-audit timelines in Figures~\ref{fig:nws-version-audit} and~\ref{fig:glofas-version-audit}, so that the cutoff-specific forecasting design, the data-availability constraints, and the provider-specific pairing rules are unambiguous to the reader.
 
 \end{responsebox}
 
@@ -646,9 +646,17 @@ R1-m9 &  &  &  \\
 \section*{Shared Figure Referenced Above}
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth]{figures/nws_glofas_version_coverage_matrix_current.png}
-\caption{Version-audit matrix for the five study cutoffs. The figure summarizes the NWS/NWM and GloFAS forecast chronology, retrospective/historical coverage, and provider-specific pairing rules that had to be verified before model fitting.}
-\label{fig:version-audit-matrix}
+\includegraphics[width=\textwidth]{figures/nws_nwm_version_coverage_timeline.png}
+\caption{NWS/NWM version-audit timeline. Colored bars show forecast-version coverage by issue date and hatched bars show the corresponding retrospective coverage by version. This figure summarizes the version windows and coverage endpoints that had to be checked before a cutoff could be used in the forecasting study.}
+\label{fig:nws-version-audit}
+\end{figure}
+
+\clearpage
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/glofas_version_coverage_timeline_v3x_v4x_family_colors.png}
+\caption{GloFAS version-audit timeline. Forecast versions are assigned by official issue-date chronology and paired with the closest exposed historical family. This figure summarizes the chronology-to-family mapping and archive coverage structure that had to be resolved before model fitting.}
+\label{fig:glofas-version-audit}
 \end{figure}
 
 \end{document}
