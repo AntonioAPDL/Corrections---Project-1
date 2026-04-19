@@ -474,7 +474,7 @@ then generate posterior predictive samples from the fitted exAL family at each \
 
 We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and consistency constraints: forecast ensembles that were actually available at that issuance date, compatible retrospective/historical products for discrepancy learning, and forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware pairing rules across centers, archive-level provenance checks, and careful issue-date, lead-time, and target-date alignment.
 
-In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add a schematic version/timing diagram so that the cutoff-specific forecasting design and its constraints are unambiguous to the reader.
+In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add both a schematic version/timing diagram and the version-audit matrix described above, so that the cutoff-specific forecasting design, the data-availability constraints, and the provider-specific pairing rules are unambiguous to the reader.
 
 \end{responsebox}
 
