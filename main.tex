@@ -434,26 +434,13 @@ Taken together, these additions address the editor's concern in two complementar
 
 \responseheading
 \begin{responsebox}
-We agree. The full implementation can be shared, and we will include explicit reproducibility and portability documentation for external users.
+We agree. The full implementation can be shared, and we will provide explicit reproducibility guidance for readers interested in applying the workflow elsewhere. The end-to-end basin workflow (estimation, synthesis, post-processing, and orchestration) is maintained in \url{https://github.com/AntonioAPDL/Project1}, while the core exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm}.
 
-\textbf{TODO}:
-\begin{itemize}
-\item Share the full modeling repository link (estimation, synthesis, post-processing, and orchestration code): \url{https://github.com/AntonioAPDL/Project1}.
-\end{itemize}
+For a new basin, the workflow is feasible, but it is not a one-click rerun. A reader must first build a reproducible site-and-cutoff bundle containing: observed daily discharge at the target site; retrospective/historical streamflow products up to the cutoff date, with center and version documented; forecast ensembles that were actually available at that cutoff; and the historical and forecast precipitation/soil-moisture covariates used by the transfer-function component. The bundle must also record the site coordinates, selected river/grid cells, forecast horizon, units and transformations, and product-version choices so that the exact forecasting task can be regenerated.
 
-We want to make the editor aware that a reader must prepare a site-and-cutoff bundle with in order to implement the model in a new basin:
-\begin{itemize}
-\item observed daily discharge at the target site;
-\item retrospective/historical streamflow products up to the cutoff date (center/version documented);
-\item forecast ensembles that were actually available at the cutoff date;
-\item historical and forecast precipitation/soil-moisture covariates used by the transfer-function component.
-\end{itemize}
+The main difficulty is data engineering rather than model code. In practice, one must verify cross-center version compatibility, align issue dates, lead times, and target dates, harmonize units and temporal aggregation, and preserve auditable metadata for each source. In our study, this required processing large multi-source archives with explicit manifests, retry logic, and health checks before any model fitting was done. For this reason, portability to a new basin is realistic, but it requires careful setup and disciplined post-processing.
 
-Careful documentation about the basin is also required, specially regarding the following: site coordinates and selected river/grid cell (to make spatial extraction reproducible), cutoff date and forecast horizon (to define the exact forecasting task), units/transform conventions (to avoid scale mismatches), and model-version choices for each data center (to avoid mixing incompatible product generations).
-
-An important component of the implementation effort is data engineering. In practice, the main challenges are: differences in data accessibility across centers/products; asynchronous version windows between retrospective and forecast products; strict alignment of issue-date/lead-time/target-date; and cross-source unit/format harmonization. For this study, data preparation required processing large archives (tens of thousands of forecast files across products), with explicit manifests, retry logic, and health checks before model fitting. Therefore, applying the workflow to a new basin is feasible, but it requires advanced planning and disciplined post-processing to preserve version consistency and forecast skill.
-
-\textbf{ToDo:} Comment what we did regarding other basins. Salinas, Russian, Sacramento, etc.. intervention and forecast qwuality pretty poor. Mention the R package Raquel!
+The choice of the San Lorenzo River was also deliberate. It was locally relevant to Santa Cruz water-supply discussions, and at the Big Trees site the flow is comparatively less dominated by large-scale direct regulation than in several larger California river systems. During preliminary basin screening, we also examined candidates including Pajaro, Sacramento, Russian, Salinas, Merced, and San Joaquin. Many of these basins are strongly managed or regulated and would require additional modeling to account for structural interventions in the flow process. In other cases, the multi-center forecast/retrospective combination needed for this paper was not sufficiently reliable over the historical windows of interest, either because GloFAS support at the target location was weak or because older NWM retrospective/forecast generations were not adequate for a consistent version-matched comparison. These constraints were assessed through the archive/version audits described earlier in the response and, when necessary, through direct verification with provider staff. These practical considerations were part of the reason for focusing the present application on San Lorenzo.
 \end{responsebox}
 
 \locationheading
