@@ -312,9 +312,9 @@ The revised results section now makes these tradeoffs explicit for applied hydro
 
 \responseheading
 \begin{responsebox}
-We agree with this point, and we added a targeted ablation analysis to identify which components contribute most to forecast skill.
+We agree with this point. To address it, we include a targeted ablation study designed to identify which structural components of the strongest model contribute most to forecast skill.
 
-Following the main validation in HE-2, we selected the strongest configuration (exAL-M-T1) as the reference model and removed one structural block at a time, while keeping all other settings fixed (same cutoffs, preprocessing, hyperparameters, and evaluation protocol). We aim to isolate the marginal contribution of each hierarchical component to out-of-sample forecast performance.
+Following the main validation in HE-2, we take \texttt{exAL-M-T1} as the reference configuration and remove one model component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed. We focus on the strongest configuration because the most relevant practical question is which structural elements of the best-performing model are worth retaining. This design isolates the marginal contribution of each component to out-of-sample forecast performance and provides a direct answer to the editor's question about which parts of the model deliver the main practical gains.
 
 We use the following labels in the ablation study:
 \begin{itemize}
@@ -324,7 +324,7 @@ We use the following labels in the ablation study:
 \item \texttt{exAL-M-noTF}: same as full model, but with transfer function removed from both historical fitting and forecast window.
 \end{itemize}
 
-Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower is better.
+Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower values indicate better predictive performance.
 
 \begin{center}
 \scriptsize
@@ -340,6 +340,8 @@ exAL-M-noTF & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \texti
 \bottomrule
 \end{tabular}
 \end{center}
+
+In the revised manuscript, we use this comparison to quantify how much forecast skill is lost when each structural block is removed. This allows readers to distinguish between components that are essential for predictive performance and components whose contribution is more limited.
 
 \end{responsebox}
 
