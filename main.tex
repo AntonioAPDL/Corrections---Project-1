@@ -211,11 +211,11 @@ where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO converge
 
 In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. Across different operational setups, the average wall time for model fitting is about 100 minutes, and the full post-processing stage requires roughly 20 additional minutes. Thus, under our production setup, average end-to-end wall time is about 120 minutes.
 
-This choice is also consistent with our simulation evidence: in a separate simulation study for the simpler univariate DQLM/exDQLM setting, VB was approximately 15x--24x faster than MCMC in comparable fits. Since our main application is multivariate and therefore more demanding, this result should be interpreted as supportive lower-complexity evidence rather than as a direct one-to-one runtime comparison.
+This choice is also consistent with our simulation evidence: although the simulation study was conducted in the simpler univariate DQLM/exDQLM setting, it still shows a substantial VB speed advantage, with VB approximately 15x--24x faster than MCMC in comparable fits. Since our main application is multivariate and therefore more demanding, this result should be interpreted as supportive lower-complexity evidence rather than as a direct one-to-one runtime comparison.
 
 Yes, the model is intended to be re-estimated as new forecast issuances arrive, and this is feasible at daily resolution. For example, at issuance date 2022-12-25, we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available.
 
-In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can reduce convergence time further. Even without these warm starts, the current end-to-end fit plus synthesis is not computationally expensive for a single river at daily resolution, so with an established data pipeline this daily update cycle is operationally feasible.
+In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can reduce convergence time further. Even without these warm starts, an average end-to-end cycle of about two hours remains operationally feasible for daily forecasting at a single river site when the data pipeline is already in place.
 \end{responsebox}
 
 \locationheading
