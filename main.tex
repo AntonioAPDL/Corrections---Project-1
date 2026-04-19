@@ -492,7 +492,11 @@ In short, the evaluation is out-of-sample and operationally realistic, but only 
 
 \responseheading
 \begin{responsebox}
-\textbf{ToDo:} Agradecer ref
+We thank the reviewer for this observation. We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at the cutoff is the most natural reference, since it is the one issued with the largest amount of contemporaneous atmospheric information.
+
+Following this suggestion, we revised the workflow so that the forecasting analysis now uses only the most recent forecast ensemble available at the time of each cutoff, rather than combining multiple previously issued forecast ensembles across earlier issue dates. This change simplifies the forecasting protocol, makes the setup easier to interpret, and aligns the evaluation more closely with the operational question of interest: how well the post-processing method improves the forecast ensemble that would actually have been available to a practitioner at that issuance time.
+
+The revised forecasting results are now based on this updated setup, and we will make that change explicit in the manuscript.
 \end{responsebox}
 
 \locationheading
