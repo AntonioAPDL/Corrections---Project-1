@@ -319,13 +319,13 @@ Following the main validation in HE-2, we take \texttt{exAL-M-T1} as the referen
 
 We use the following labels in the ablation study:
 \begin{itemize}
-\item \texttt{exAL-M-T1} (full reference): trend + seasonal + transfer-function components; transfer function active in both historical fitting and forecast window;
+\item \texttt{exAL-M-T1} (full reference): trend + all three seasonal harmonic pairs + transfer-function components; transfer function active in both historical fitting and forecast window;
 \item \texttt{exAL-M-T1-noTrend}: same as full model, but with trend component removed;
-\item \texttt{exAL-M-T1-noSeason}: same as full model, but with seasonal component removed;
 \item \texttt{exAL-M-noTF}: same as full model, but with transfer function removed from both historical fitting and forecast window.
+\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: same as full model, but with the first, second, or third seasonal harmonic pair removed, respectively.
 \end{itemize}
 
-Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower values indicate better predictive performance.
+At each cutoff, the full reference configuration uses the HE-2-selected epsilon for \texttt{exAL-M-T1}, with \(c_{\mathrm{factor}}=1.0\) fixed, and the corresponding ablations inherit that same cutoff-specific epsilon. Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower values indicate better predictive performance, and within each cutoff column the smallest value is shown in bold.
 
 \begin{center}
 \scriptsize
@@ -334,15 +334,17 @@ Table HE3-A reports mean CRPS over the forecast window for the full model and it
 \toprule
 Ablation model & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
 \midrule
-exAL-M-T1 (full) & 0.1295 & 0.0201 & 0.1910 & 0.0178 & 0.5991 \\
-exAL-M-T1-noTrend & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
-exAL-M-T1-noSeason & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
-exAL-M-noTF & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} & \textit{[insert]} \\
+exAL-M-T1 (full) & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.6144} \\
+exAL-M-T1-noTrend & 1.1591 & 0.0666 & 1.4134 & 0.2571 & 2.2330 \\
+exAL-M-noTF & 0.3421 & 0.0984 & 0.4800 & 0.0383 & 2.3651 \\
+exAL-M-T1-noH1 & 0.3536 & 0.1030 & 1.9431 & 0.2777 & 2.3530 \\
+exAL-M-T1-noH2 & 0.3932 & 0.1757 & 1.9430 & 0.2795 & 2.2696 \\
+exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.6253 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-In the revised manuscript, we use this comparison to quantify how much forecast skill is lost when each structural block is removed. This allows readers to distinguish between components that are essential for predictive performance and components whose contribution is more limited.
+The completed ablation study shows that the full model remains the best configuration at every cutoff. Removing the transfer function degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially for the more difficult winter cutoffs. This provides a direct answer to the editor's question: for the strongest multivariate exAL model, predictive skill is supported jointly by transfer information, the trend block, and multiple seasonal harmonics rather than by any single structural component in isolation.
 
 \end{responsebox}
 
@@ -376,7 +378,7 @@ This makes CRPS a natural primary metric for our forecasting problem, because th
 
 Third, to provide the explicit quantile-level diagnostics requested by the editor, we additionally report quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four key models \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}. This keeps the model-level comparison focused on the main synthesis competitors while still exposing how forecast quality varies across the targeted quantiles.
 
-For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the same cutoff-specific selected configurations reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baselines reported in HE-2. Table HE4-B reports the mean forecast-window quantile check loss at each targeted quantile on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance. We report one panel per cutoff so that score changes across distinct forecast windows are visible directly, which is how we make regime dependence explicit in the revised analysis.
+For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the same cutoff-specific selected configurations reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baselines reported in HE-2. Table HE4-B reports the mean forecast-window quantile check loss at each targeted quantile on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column is shown in bold. We report one panel per cutoff so that score changes across distinct forecast windows are visible directly, which is how we make regime dependence explicit in the revised analysis.
 
 \begin{center}
 \tiny
@@ -386,33 +388,33 @@ For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the same cutoff-specific sel
 Model & q0.05 & q0.20 & q0.35 & q0.50 & q0.65 & q0.80 & q0.95 \\
 \midrule
 \multicolumn{8}{l}{\textit{Cutoff 01/23/2021}} \\
-exAL-M-T1 & 0.0292 & 0.0791 & 0.0989 & 0.0997 & 0.0937 & 0.0752 & 0.0607 \\
-AL-M-T1 & 0.0237 & 0.0763 & 0.1010 & 0.1002 & 0.0992 & 0.0732 & 0.0696 \\
+exAL-M-T1 & 0.0292 & 0.0791 & \textbf{0.0989} & \textbf{0.0997} & \textbf{0.0937} & 0.0752 & \textbf{0.0607} \\
+AL-M-T1 & \textbf{0.0237} & \textbf{0.0763} & 0.1010 & 0.1002 & 0.0992 & \textbf{0.0732} & 0.0696 \\
 exAL-U-T1 & 0.0306 & 0.1020 & 0.1546 & 0.1959 & 0.2144 & 0.1998 & 0.1169 \\
 AL-U-T1 & 0.0297 & 0.1002 & 0.1521 & 0.1952 & 0.2293 & 0.2122 & 0.0830 \\
 \addlinespace[1pt]
 \multicolumn{8}{l}{\textit{Cutoff 11/12/2021}} \\
-exAL-M-T1 & 0.0064 & 0.0167 & 0.0257 & 0.0149 & 0.0091 & 0.0136 & 0.0090 \\
-AL-M-T1 & 0.0060 & 0.0222 & 0.0253 & 0.0159 & 0.0136 & 0.0210 & 0.0261 \\
-exAL-U-T1 & 0.0159 & 0.0576 & 0.0876 & 0.1055 & 0.1034 & 0.0795 & 0.0043 \\
+exAL-M-T1 & 0.0064 & \textbf{0.0167} & 0.0257 & \textbf{0.0149} & \textbf{0.0091} & \textbf{0.0136} & 0.0090 \\
+AL-M-T1 & \textbf{0.0060} & 0.0222 & \textbf{0.0253} & 0.0159 & 0.0136 & 0.0210 & 0.0261 \\
+exAL-U-T1 & 0.0159 & 0.0576 & 0.0876 & 0.1055 & 0.1034 & 0.0795 & \textbf{0.0043} \\
 AL-U-T1 & 0.0153 & 0.0571 & 0.0864 & 0.1016 & 0.1000 & 0.0743 & 0.0072 \\
 \addlinespace[1pt]
 \multicolumn{8}{l}{\textit{Cutoff 12/21/2021}} \\
-exAL-M-T1 & 0.0611 & 0.1486 & 0.1083 & 0.1160 & 0.1506 & 0.1479 & 0.0676 \\
+exAL-M-T1 & \textbf{0.0611} & \textbf{0.1486} & \textbf{0.1083} & \textbf{0.1160} & \textbf{0.1506} & \textbf{0.1479} & \textbf{0.0676} \\
 AL-M-T1 & 0.0755 & 0.2203 & 0.1765 & 0.1190 & 0.2399 & 0.2274 & 0.1186 \\
 exAL-U-T1 & 0.0885 & 0.3269 & 0.5360 & 0.7243 & 0.8671 & 0.9284 & 0.6705 \\
 AL-U-T1 & 0.0893 & 0.3267 & 0.5342 & 0.7218 & 0.8544 & 0.8936 & 0.4532 \\
 \addlinespace[1pt]
 \multicolumn{8}{l}{\textit{Cutoff 05/11/2022}} \\
-exAL-M-T1 & 0.0049 & 0.0126 & 0.0140 & 0.0131 & 0.0121 & 0.0098 & 0.0044 \\
-AL-M-T1 & 0.0049 & 0.0111 & 0.0130 & 0.0127 & 0.0120 & 0.0100 & 0.0091 \\
+exAL-M-T1 & \textbf{0.0049} & 0.0126 & 0.0140 & 0.0131 & 0.0121 & \textbf{0.0098} & \textbf{0.0044} \\
+AL-M-T1 & \textbf{0.0049} & \textbf{0.0111} & \textbf{0.0130} & \textbf{0.0127} & 0.0120 & 0.0100 & 0.0091 \\
 exAL-U-T1 & 0.0117 & 0.0318 & 0.0368 & 0.0240 & 0.0117 & 0.0244 & 0.0201 \\
-AL-U-T1 & 0.0116 & 0.0313 & 0.0356 & 0.0235 & 0.0114 & 0.0242 & 0.0227 \\
+AL-U-T1 & 0.0116 & 0.0313 & 0.0356 & 0.0235 & \textbf{0.0114} & 0.0242 & 0.0227 \\
 \addlinespace[1pt]
 \multicolumn{8}{l}{\textit{Cutoff 12/25/2022}} \\
-exAL-M-T1 & 0.1087 & 0.3985 & 0.4103 & 0.4214 & 0.3583 & 0.2395 & 0.1395 \\
-AL-M-T1 & 0.1298 & 0.4368 & 0.5299 & 0.3773 & 0.2639 & 0.2556 & 0.0944 \\
-exAL-U-T1 & 0.1403 & 0.3706 & 0.4925 & 0.6082 & 0.6743 & 0.6210 & 0.2494 \\
+exAL-M-T1 & \textbf{0.1087} & 0.3985 & \textbf{0.4103} & 0.4214 & 0.3583 & \textbf{0.2395} & 0.1395 \\
+AL-M-T1 & 0.1298 & 0.4368 & 0.5299 & \textbf{0.3773} & \textbf{0.2639} & 0.2556 & \textbf{0.0944} \\
+exAL-U-T1 & 0.1403 & \textbf{0.3706} & 0.4925 & 0.6082 & 0.6743 & 0.6210 & 0.2494 \\
 AL-U-T1 & 0.1440 & 0.3883 & 0.4996 & 0.6177 & 0.7366 & 0.7186 & 0.3549 \\
 \bottomrule
 \end{tabular}
