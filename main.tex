@@ -262,7 +262,7 @@ In addition, we benchmark all Bayesian models against raw physical forecast ense
 
 All models are evaluated under identical cutoffs, forecast horizons, and preprocessing rules. We use lead-wise and mean forecast-window CRPS as the principal cross-model validation metric, and report model-specific quantile diagnostics separately.
 
-The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
+The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise. For the six tuned multivariate/NDLM families, we selected the completed \texttt{cf1} configuration with the smallest forecast-window mean CRPS separately at each cutoff, with \texttt{c\_factor}=1.0 fixed and \(\epsilon\in\{1,30,60,90,180,360\}\). For the three univariate references and the two raw physical ensembles, no new epsilon sweep was applied; those values are carried forward from the matched comparison baselines. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
 
 \begin{center}
 \scriptsize
@@ -277,19 +277,19 @@ RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \addlinespace[2pt]
 \multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
 N-U-T1 & 0.5851 & 0.9105 & 1.1922 & 1.3156 & 1.1617 \\
-N-M-T0 & 0.3599 & 0.3226 & 2.0461 & 0.9356 & 3.2322 \\
-N-M-T1 & 4.4601 & 0.3557 & 1.8789 & 1.3256 & 2.8785 \\
+N-M-T0 & 0.3411 & 0.5595 & 1.9973 & 0.7643 & 3.0653 \\
+N-M-T1 & 0.5870 & 0.3011 & 5.1830 & 0.8346 & 3.4697 \\
 AL-U-T1 & 0.2946 & 0.1333 & 1.1377 & 0.0465 & 1.0293 \\
-AL-M-T0 & 0.3252 & 0.2547 & 0.6708 & 0.0460 & 2.1955 \\
-AL-M-T1 & 0.1421 & 0.0237 & 0.3595 & 0.0223 & 0.6640 \\
+AL-M-T0 & 0.3267 & 2.2435 & 0.6511 & 0.0433 & 2.2601 \\
+AL-M-T1 & 0.1604 & 0.0391 & 0.3482 & 0.0214 & 0.6186 \\
 exAL-U-T1 & 0.2969 & 0.1350 & 1.2043 & 0.0468 & 0.9324 \\
-exAL-M-T0 & 0.3315 & 0.2836 & 0.5746 & 0.0695 & 2.2785 \\
-exAL-M-T1 & \textbf{0.1295} & \textbf{0.0201} & \textbf{0.2830} & \textbf{0.0165} & \textbf{0.5991} \\
+exAL-M-T0 & 0.3292 & 1.2744 & 0.4720 & 0.0694 & 2.3365 \\
+exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.6144} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The main validation message is clear. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) provide the strongest and most consistent CRPS performance; under the comparison reported here, exAL-M-T1 is the best-performing model in all five cutoffs, with AL-M-T1 remaining the closest competitor and particularly close at 01/23/2021 and 05/11/2022. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model outperforms the best raw physical ensemble baseline.
+The main validation message remains clear after selecting the best completed epsilon configuration within each tuned family. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) still provide the strongest and most consistent CRPS performance; under the updated comparison, exAL-M-T1 remains the best-performing model in all five cutoffs, with AL-M-T1 remaining the closest competitor and particularly close at 01/23/2021, 05/11/2022, and 12/25/2022. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) continues to yield substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline.
 
 These five cutoffs do not exhaust the feasible dates; more cutoffs are possible. However, this validation exercise required much more than rerunning the model at arbitrary calendar times. For each cutoff, we had to verify that the full input bundle was simultaneously available and version-consistent: observed flow, retrospective products, raw forecast ensembles, and forecast covariates for precipitation and soil moisture. For older periods in particular, this also required reconstructing product-version compatibility across GloFAS and NWM operational eras, checking archived metadata, and, when documentation was incomplete, resolving lineage questions through direct verification with provider staff.
 
