@@ -192,15 +192,17 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 \responseheading
 \begin{responsebox}
-We agree that the manuscript should make computational feasibility explicit, and we now state this more clearly.
+We agree, and the revised manuscript will make the computational claim explicit rather than leaving it implicit in the abstract.
 
-For our main model, the dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. This is not specific to our formulation: for state-space models fit by iterative procedures, the standard computational bottleneck is the repeated forward-backward updating of the latent state trajectory. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
+Under our production implementation, one full issuance cycle for the main model at a single river site requires about two hours end-to-end: roughly 100 minutes for fitting and about 20 additional minutes for post-processing. This timing is based on our production Linux server (64 CPU cores and about 503 GiB RAM), where the seven quantile models are fit in parallel, so wall-clock time is governed by the slowest quantile fit rather than by the sum across quantiles. In that operational sense, daily refitting is feasible once the data pipeline is already in place.
+
+The dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. This is not specific to our formulation: for state-space models fit by iterative procedures, the standard computational bottleneck is the repeated forward-backward updating of the latent state trajectory. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
 \[
 O\!\left((T+H)\,d^{3}\right),
 \]
 with lower-order terms of order \(O((T+H)\,d^{2})\).
 
-This immediately explains the practical difference between MCMC and VB. For full MCMC, the total cost scales as
+This also explains why we describe the VB implementation as the practically faster route for forecasting. For full MCMC, the total cost scales as
 \[
 O\!\left(I_{\mathrm{MCMC}}\,(T+H)\,d^{3}\right),
 \]
@@ -208,21 +210,19 @@ where \(I_{\mathrm{MCMC}}\) includes burn-in, retained iterations, and any addit
 \[
 O\!\left(I_{\mathrm{VB}}\,(T+H)\,d^{3}\right),
 \]
-where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO convergence. For the forecasting objective of this paper, this distinction is critical: once VB has converged, posterior samples can be generated at low incremental cost, whereas MCMC continues to pay the full state-smoothing cost at every retained iteration.
+where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO convergence. For the forecasting objective of this paper, the practical distinction is that once VB has converged, posterior samples can be generated at low incremental cost, whereas MCMC continues to pay the full state-smoothing cost at every retained iteration.
 
-In our production runs, the seven quantile models are fit in parallel, so wall-clock time is determined by the slowest quantile fit rather than by the sum across quantiles. Across different operational setups, the average wall time for model fitting is about 100 minutes, and the full post-processing stage requires roughly 20 additional minutes. Thus, under our production setup, average end-to-end wall time is about 120 minutes.
-
-This choice is also consistent with our simulation evidence: although the simulation study was conducted in the simpler univariate DQLM/exDQLM setting, it was implemented using the CRAN R package \texttt{exdqlm}, for which all the present manuscript authors are package contributors. That study still shows a substantial VB speed advantage, with VB approximately 10x--20x faster than MCMC in comparable fits. Since our main application is multivariate and therefore more demanding, this result should be interpreted as supportive lower-complexity evidence rather than as a direct one-to-one runtime comparison.
+This interpretation is also consistent with our simulation evidence. Although that simulation study was conducted in the simpler univariate DQLM/exDQLM setting implemented in the CRAN R package \texttt{exdqlm}, it still shows a substantial VB speed advantage, with VB approximately 10x--20x faster than MCMC in comparable fits. Because the application in this paper is multivariate and therefore more demanding, we present that result as supportive evidence about relative algorithmic efficiency rather than as a one-to-one runtime claim for the application itself.
 
 Yes, the model is intended to be re-estimated as new forecast issuances arrive, and this is feasible at a daily resolution. For example, at issuance date 2022-12-25, we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available.
 
-In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can further reduce convergence time. Even without these warm starts, an average end-to-end cycle of about two hours (via VB) remains operationally feasible for daily forecasting at a single river site when the data pipeline is already in place.
+In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can further reduce convergence time. Even without these warm starts, the observed end-to-end timing remains operationally feasible for daily forecasting at a single river site when the data pipeline is already in place.
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert updated abstract sentence on computational feasibility and the corresponding methods/results paragraphs where runtime, hardware, and refitting feasibility are described.]\par
+\textit{Evidence:} [Insert runtime summary, hardware note, and any appendix/table reference used to document the production timing.]
 \end{actionbox}
 
 \commentheading{\HE{2}}
@@ -232,11 +232,11 @@ In addition, posterior summaries from the previous issuance provide informed ini
 
 \responseheading
 \begin{responsebox}
-We agree with this concern, and we have expanded the validation panel accordingly.
+We agree, and the revised manuscript now validates the proposed method against both simpler Bayesian competitors and raw physical forecast ensembles. This directly addresses the two main concerns raised here: whether the extended asymmetric Laplace formulation improves on the ordinary asymmetric Laplace in this forecasting problem, and whether the added model complexity yields practical gains relative to simpler statistical and physical baselines.
 
-In the revised manuscript, we now compare the proposed method against both physical forecast products and simpler Bayesian statistical references. All nine Bayesian alternatives use the same linear dynamic backbone (trend, seasonal, and transfer-function components) and Gaussian state-evolution noise. They differ only in two respects: the observation likelihood, and the way external forecast information is incorporated during the forecast window.
+In the revised manuscript, we compare nine Bayesian alternatives built on the same linear-dynamic backbone (trend, seasonal, and transfer-function components) and Gaussian state-evolution noise. They differ only in two respects: the observation likelihood, and whether external forecast information is used during the forecast window.
 
-We use the compact label \(L\)-\(S\)-\(T\): \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes extended DQLM (exDQLM) with extended asymmetric Laplace likelihood; \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM); \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window, and T1 means transfer function active during the forecast window (requiring forecast precipitation and soil-moisture covariates, here from NOAA/GEFS).
+We use the compact label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
 
 \begin{center}
 \scriptsize
@@ -258,11 +258,11 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 \end{tabular}
 \end{center}
 
-In addition, we benchmark all Bayesian models against raw physical forecast ensembles: those produced by ECMWF/GloFAS and those produced by NOAA/NWM.
+In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NOAA/NWM forecast ensembles.
 
-All models are evaluated under identical cutoffs, forecast horizons, and preprocessing rules. We use lead-wise and mean forecast-window CRPS as the principal cross-model validation metric, and report model-specific quantile diagnostics separately.
+All models are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. We use lead-wise and mean forecast-window CRPS as the principal cross-model validation metric, and report model-specific quantile diagnostics separately. For the Bayesian models and the raw GloFAS ensemble, we report the common forecast-window CRPS; the raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its available archive-supported forecast window rather than treated as a strictly horizon-matched 28-day comparison baseline.
 
-The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise. For the six tuned multivariate/NDLM families, we selected the completed \texttt{cf1} configuration with the smallest forecast-window mean CRPS separately at each cutoff, with \texttt{c\_factor}=1.0 fixed and \(\epsilon\in\{1,30,60,90,180,360\}\). For the three univariate references and the two raw physical ensembles, no new epsilon sweep was applied; those values are carried forward from the matched comparison baselines. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
+The table below reports the mean CRPS over the forecast window for every model family and every cutoff used in this validation exercise. For the six tuned multivariate/NDLM families, we selected, at each cutoff, the completed configuration with \(c_{\mathrm{factor}}=1.0\) and the smallest forecast-window mean CRPS over \(\epsilon\in\{1,30,60,90,180,360\}\). For the three univariate references and the two raw physical ensembles, no new epsilon sweep was applied; those values are carried forward from the matched comparison baselines. Bold indicates the lowest CRPS within each cutoff column. The model labels follow the notation defined above, and cutoff columns are shown in MM/DD/YYYY format.
 
 \begin{center}
 \scriptsize
@@ -289,21 +289,17 @@ exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210
 \end{tabular}
 \end{center}
 
-The main validation message remains clear after selecting the best completed epsilon configuration within each tuned family. First, multivariate synthesis models with transfer function active during the forecast window (AL-M-T1 and exAL-M-T1) still provide the strongest and most consistent CRPS performance; under the updated comparison, exAL-M-T1 remains the best-performing model in all five cutoffs, with AL-M-T1 remaining the closest competitor and particularly close at 01/23/2021, 05/11/2022, and 12/25/2022. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) continues to yield substantial gains, showing that these products contain predictive signal that can be effectively exploited by the synthesis framework. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline.
+This comparison directly addresses the question about the extended asymmetric Laplace likelihood. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} remains the best-performing model in all five cutoffs, with \texttt{AL-M-T1} as the closest competitor. Thus the additional exAL complexity is not only theoretical; it delivers the strongest operational performance in the revised comparison panel.
 
-These five cutoffs do not exhaust the feasible dates; more cutoffs are possible. However, this validation exercise required much more than rerunning the model at arbitrary calendar times. For each cutoff, we had to verify that the full input bundle was simultaneously available and version-consistent: observed flow, retrospective products, raw forecast ensembles, and forecast covariates for precipitation and soil moisture. For older periods in particular, this also required reconstructing product-version compatibility across GloFAS and NWM operational eras, checking archived metadata, and, when documentation was incomplete, resolving lineage questions through direct verification with provider staff.
+The broader validation message is also clear. First, the multivariate synthesis models with transfer function active during the forecast window (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance. Second, incorporating climate-institution retrospective and ensemble information (multivariate vs univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be exploited effectively by the synthesis framework. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline.
 
-We therefore selected five cutoffs that jointly span distinct hydrometeorological situations, including high-rainfall periods, drier regimes, and transition cases, while still allowing a comparison across all model families and forecast products. Producing the CRPS table required substantial data engineering in addition to model fitting: downloading and storing large multi-source archives, post-processing them into aligned daily bundles, matching legacy and current product versions, and tuning/running all model families consistently across these settings. In this sense, the choice of five cutoffs aims for a balance between breadth of scenarios and the level of reproducibility, version control, and computational effort required for a reasonable comparison.
-
-We believe this revision directly addresses the editor's concern: the paper no longer relies solely on internal variants of the proposed method. It includes standard Bayesian alternatives (NDLM and AL-DQLM) and raw physical ensembles as explicit benchmarks, enabling readers to assess the practical gains from additional model complexity.
-
-The revised results section now makes these tradeoffs explicit for applied hydrology users.
+Rather than asserting superior sharpness or calibration by inspection alone, we now support the forecasting claim with explicit probabilistic scores: HE-2 reports CRPS across all model families and raw ensembles, and HE-4 reports targeted quantile check losses for the key synthesis competitors. We therefore believe this revision answers the editor's concern in the practical terms most relevant to applied hydrology users.
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert revised validation subsection, model-label definition table, and HE2 CRPS comparison table location.]\par
+\textit{Evidence:} [Insert HE2 table number and any supporting appendix/figure references used to document the cutoff-specific comparison design and baseline-horizon note.]
 \end{actionbox}
 
 \commentheading{\HE{3}}
@@ -313,16 +309,16 @@ The revised results section now makes these tradeoffs explicit for applied hydro
 
 \responseheading
 \begin{responsebox}
-We agree with this point. To address it, we include a targeted ablation study designed to identify which structural components of the strongest model contribute most to forecast skill.
+We agree, and the revised manuscript now includes a targeted ablation study of the strongest model, \texttt{exAL-M-T1}. The purpose is exactly to identify which structural pieces deliver most of the forecasting gain.
 
-Following the main validation in HE-2, we take \texttt{exAL-M-T1} as the reference configuration and remove one model component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed. We focus on the strongest configuration because the most relevant practical question is which structural elements of the best-performing model are worth retaining. This design isolates the marginal contribution of each component to out-of-sample forecast performance and provides a direct answer to the editor's question about which parts of the model deliver the main practical gains.
+Following the main validation in HE-2, we take the cutoff-specific winning \texttt{exAL-M-T1} configuration as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration.
 
 We use the following labels in the ablation study:
 \begin{itemize}
 \item \texttt{exAL-M-T1} (full reference): trend + all three seasonal harmonic pairs + transfer-function components; transfer function active in both historical fitting and forecast window;
 \item \texttt{exAL-M-T1-noTrend}: same as full model, but with trend component removed;
-\item \texttt{exAL-M-noTF}: same as full model, but with transfer function removed from both historical fitting and forecast window.
-\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: same as full model, but with the first, second, or third seasonal harmonic pair removed, respectively.
+\item \texttt{exAL-M-noTF}: same as the full model, but with transfer information removed from both historical fitting and the forecast window. This is not the same comparison as the broader T0 family in HE-2, because here the rest of the winning \texttt{exAL-M-T1} specification is held fixed.
+\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: same as the full model, but with the first, second, or third seasonal harmonic pair removed from the seasonal state block. These harmonic pairs capture distinct seasonal frequencies, so this design is more informative than removing the entire seasonal block at once.
 \end{itemize}
 
 At each cutoff, the full reference configuration uses the HE-2-selected epsilon for \texttt{exAL-M-T1}, with \(c_{\mathrm{factor}}=1.0\) fixed, and the corresponding ablations inherit that same cutoff-specific epsilon. Table HE3-A reports mean CRPS over the forecast window for the full model and its ablations. Lower values indicate better predictive performance, and within each cutoff column the smallest value is shown in bold.
@@ -344,14 +340,14 @@ exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.6253 \\
 \end{tabular}
 \end{center}
 
-The completed ablation study shows that the full model remains the best configuration at every cutoff. Removing the transfer function degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially for the more difficult winter cutoffs. This provides a direct answer to the editor's question: for the strongest multivariate exAL model, predictive skill is supported jointly by transfer information, the trend block, and multiple seasonal harmonics rather than by any single structural component in isolation.
+Across all five cutoffs, the full model remains the best configuration. Removing transfer information degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially in the more difficult winter windows. The practical message is therefore not that one small add-on explains the gains of \texttt{exAL-M-T1}; rather, its advantage comes from the combination of transfer information, trend, and multi-frequency seasonality.
 
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert revised ablation-study subsection and HE3-A table location.]\par
+\textit{Evidence:} [Insert HE3 table number and any appendix or workflow note cited for the harmonic-specific ablation design.]
 \end{actionbox}
 
 \commentheading{\HE{4}}
@@ -376,9 +372,11 @@ so CRPS is an integrated quantile-score criterion. In practice, with quantile le
 \]
 This makes CRPS a natural primary metric for our forecasting problem, because the final object of interest is the synthesized posterior predictive distribution rather than any single quantile in isolation.
 
-Third, to provide the explicit quantile-level diagnostics requested by the editor, we additionally report quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four key models \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}. This keeps the model-level comparison focused on the main synthesis competitors while still exposing how forecast quality varies across the targeted quantiles.
+In plain terms, CRPS summarizes the quality of the full predictive distribution, whereas quantile check loss tells us whether the forecast is accurate at a specific targeted quantile level.
 
-For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the same cutoff-specific selected configurations reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baselines reported in HE-2. Table HE4-B reports the mean forecast-window quantile check loss at each targeted quantile on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column is shown in bold. We report one panel per cutoff so that score changes across distinct forecast windows are visible directly, which is how we make regime dependence explicit in the revised analysis.
+Third, to provide the explicit quantile-level diagnostics requested by the editor, we additionally report quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four key models \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}. This keeps the comparison focused on the main synthesis competitors while still showing how forecast quality changes across the targeted quantiles.
+
+For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the same cutoff-specific selected configurations reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baselines reported in HE-2. Table HE4-B reports the mean forecast-window quantile check loss at each targeted quantile on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column (ties included) is shown in bold. We report one panel per cutoff so that score changes across distinct forecast windows are visible directly, which is how we make regime dependence explicit in the revised analysis.
 
 \begin{center}
 \tiny
@@ -420,14 +418,14 @@ AL-U-T1 & 0.1440 & 0.3883 & 0.4996 & 0.6177 & 0.7366 & 0.7186 & 0.3549 \\
 \end{tabular}
 \end{center}
 
-Taken together, these additions address the editor's concern in two complementary ways: CRPS evaluates the full predictive distribution used for forecasting comparisons, while the quantile check-loss tables show how performance changes across the targeted quantile levels.
+The main pattern is clear. The multivariate synthesis models account for nearly all column-wise minima, with \texttt{exAL-M-T1} especially dominant in the more difficult 12/21/2021 panel, while \texttt{AL-M-T1} captures some minima at easier cutoffs. The univariate references are consistently less competitive. Taken together, these additions address the editor's concern in two complementary ways: CRPS evaluates the full predictive distribution used for forecasting comparisons, while the quantile check-loss tables show how performance changes across the targeted quantile levels.
 
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert revised probabilistic-validation subsection and HE4-B table location.]\par
+\textit{Evidence:} [Insert HE4 table number and any appendix reference used for the quantile check-loss construction.]
 \end{actionbox}
 
 \commentheading{\HE{5}}
@@ -437,21 +435,17 @@ Taken together, these additions address the editor's concern in two complementar
 
 \responseheading
 \begin{responsebox}
-We agree. We can share the full implementation used in this study. The end-to-end workflow for data preparation, estimation, synthesis, post-processing, and orchestration is maintained in \url{https://github.com/AntonioAPDL/Project1}, and the core exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm}. In the revision, we will make the relationship between these two resources explicit so that readers can distinguish between the reusable model code and the broader basin-specific workflow.
+We agree, and in the revised submission we will make code availability explicit and operationally useful. The reusable exDQLM estimation code is available through the CRAN R package \texttt{exdqlm}, and the end-to-end forecasting workflow used in this study is maintained in \url{https://github.com/AntonioAPDL/Project1}. [Placeholder: insert permanent public release, archived repository link, and/or DOI to be cited in the resubmission.]
 
-To apply the method in a new basin, a reader would need to prepare a parameterized site-and-cutoff bundle. At minimum, this bundle must contain: observed daily discharge at the target site; retrospective/historical streamflow products up to the cutoff date, with source and version documented; forecast ensembles that were actually available at that cutoff; and the historical and forecast precipitation/soil-moisture covariates used by the transfer-function component. It must also record the site coordinates, the selected river/grid cells, the forecast horizon, the units and transformations used, and the product-version choices for each data provider. Without this metadata, the forecasting task is not reproducible.
+We will also make the division between reusable code and basin-specific setup clearer. What a new user can reuse directly includes the model-fitting code, orchestration scripts, post-processing routines, and configuration templates. What must still be constructed for a new basin is a cutoff-specific input bundle containing observed discharge, retrospective/historical streamflow products, forecast ensembles issued at the cutoff, forecast covariates for precipitation and soil moisture, and the associated metadata on site coordinates, spatial extraction choices, units, temporal aggregation, and product versions.
 
-The main challenge is not the fitting code itself, but building this bundle correctly. In practice, this requires matching retrospective and forecast products across centers and versions, aligning issue dates, lead times, and target dates, selecting and fixing the spatial extraction points, harmonizing units and temporal aggregation, and maintaining auditable manifests for all inputs. In our case, this involved substantial archive processing before any model fit was attempted. For example, the GEFS/NWM covariate-forecast audit for the five study cutoffs required manifests covering 56,110 GEFS files and 4,420 NWM files, and the GloFAS historical audit required a completed versioned download campaign across 1,289 historical shards. These steps were accompanied by retry logic, integrity checks, and version audits. For this reason, application to a new basin is feasible within the current workflow, but it requires careful preparation and disciplined data management.
-
-To make this preparation burden explicit in the revised manuscript, we will add version-audit timelines for NWS/NWM and GloFAS (Figures~\ref{fig:nws-version-audit} and~\ref{fig:glofas-version-audit}). These figures summarize the forecast-version chronology and the retrospective/historical coverage available over the study period. Read together with the accompanying text, they show why a valid cutoff-specific input bundle is not determined by calendar date alone: each cutoff must be checked against the active forecast generation, the available historical coverage, and the archive lineage needed to assemble compatible inputs before the modeling stage begins.
-
-The choice of the San Lorenzo River was also deliberate. It was relevant to ongoing Santa Cruz water-supply discussions, and at the Big Trees site the flow is comparatively less dominated by large direct regulation than in several larger California systems. During prior basin screening, we also considered Pajaro, Sacramento, Russian, Salinas, Merced, and San Joaquin. Many of these basins are heavily managed or regulated and would require additional modeling to represent structural interventions in the flow process. In other cases, the multi-center forecast/retrospective combination required for this paper was not sufficiently reliable over the historical windows of interest, either because GloFAS support at the target location was weak or because older NWM retrospective/forecast generations were not adequate for a consistent version-matched comparison. These constraints were assessed through the archive and version audits described earlier and, when necessary, through direct verification with provider staff. For these reasons, San Lorenzo was a scientifically and operationally suitable basin for the present study, while other basins would require additional hydrologic or data-engineering work before the same workflow could be applied credibly.
+In other words, the main obstacle to applying the workflow elsewhere is not the estimation code itself, but assembling a version-consistent forecast dataset. We will say this explicitly in the revised manuscript so that readers do not confuse code availability with fully portable basin-ready data availability. To document that distinction, we will reference the version-audit timelines for NWS/NWM and GloFAS and explain how they support the construction of a valid cutoff-specific bundle.
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert code/data-availability subsection and any appendix or supplement section describing the reusable workflow and basin-specific bundle requirements.]\par
+\textit{Evidence:} [Insert permanent repository/archive citation, release tag, and/or DOI once finalized.]
 \end{actionbox}
 
 \commentheading{\HE{6}}
@@ -461,30 +455,22 @@ The choice of the San Lorenzo River was also deliberate. It was relevant to ongo
 
 \responseheading
 \begin{responsebox}
-Our evaluation is out-of-sample in time, and we will make this protocol explicit in the revised manuscript. The forecasting study is not based on fitting the model to the full record and then evaluating on the same data. Instead, it is a rolling-origin, cutoff-by-cutoff backtesting design.
+Our evaluation is out-of-sample, and it already uses rolling-origin cross-validation in time. Operationally, the five cutoffs serve as five temporally separated evaluation folds.
 
-For each cutoff date \(c\), the model is fit using only information available up to \(c\): observed discharge, retrospective/historical products, and forecast products issued at or before \(c\). No observed discharge after \(c\) is used in fitting, calibration, or synthesis. Verification is performed only on the post-cutoff USGS observations, so the forecast window is genuinely unseen at fit time.
+For each cutoff date \(c\), the model is fit using only information available through \(c\): observed discharge up to \(c\), retrospective/historical products available at \(c\), and forecast ensembles issued at or before \(c\). Verification is then performed only on USGS observations after \(c\). No post-cutoff observations are used in fitting, calibration, or synthesis.
 
-The forecasting mechanism itself also differs from a standard one-shot setup in which a single time-series model is fit and then projected forward directly. At quantile level \(\tau\), for each forecaster \(j\), we learn historical discrepancy structure up to cutoff through
-\[
-\mu_{j,t}^{(\tau)}=\mu_{\mathrm{USGS},t}^{(\tau)}+\delta_{j,t}^{(\tau)}+\varepsilon_{j,t}^{(\tau)},\quad t\le c.
-\]
-For \(t>c\), \(\mu_{\mathrm{USGS},t}^{(\tau)}\) is unobserved, so we recover posterior samples through the learned discrepancy relation, for example
-\[
-\mu_{\mathrm{USGS},t}^{(\tau,s)}=\mu_{j,t}^{(\tau,s)}-\delta_{j,t}^{(\tau,s)},
-\]
-then generate posterior predictive samples from the fitted exAL family at each \(\tau\), and finally synthesize across quantiles. Thus, future observations are never used to estimate the post-cutoff latent states or predictive distributions.
+After fitting at cutoff \(c\), we apply the pre-cutoff discrepancy-learning framework to the forecast ensembles available at that cutoff to obtain post-cutoff predictive distributions, and we then verify those predictive distributions against the unseen USGS observations in the forecast window. The post-cutoff data are therefore used only for evaluation, not for model estimation.
 
-We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and consistency constraints: forecast ensembles that were actually available at that issuance date, compatible retrospective/historical products for discrepancy learning, and forecast covariates (precipitation and soil moisture) with compatible horizons. In practice, this requires version-aware cross-center matching, archive-level provenance checks, and careful issue-date, lead-time, and target-date alignment.
+We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and version consistency for the forecast ensembles, retrospective inputs, and forecast covariates. We therefore treat cutoff construction as part of the forecasting design itself, not as an afterthought. HE-2 through HE-4 are now all reported under this rolling-origin protocol.
 
-In short, the evaluation is out-of-sample and operationally realistic, but only when these data-versioning and timing constraints are handled explicitly. In the revision, we will clarify this protocol in the text and add both a schematic version/timing diagram and the version-audit timelines in Figures~\ref{fig:nws-version-audit} and~\ref{fig:glofas-version-audit}, so that the cutoff-specific forecasting design and the data-availability constraints across provider generations are unambiguous to the reader.
+In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and timing constraints are handled explicitly. In the revised manuscript, we will make this protocol easier to follow with a short forecasting-design schematic and the accompanying version-audit timelines, so the reader can see exactly why the evaluation is out-of-sample and how the five cutoffs function as valid forecasting folds.
 
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert forecasting-design subsection, rolling-origin evaluation description, and the locations of the version-audit/timing figures.]\par
+\textit{Evidence:} [Insert figure numbers, schematic reference, and any appendix reference documenting the cutoff-specific validation protocol.]
 \end{actionbox}
 
 \commentheading{\HE{7}}
@@ -496,15 +482,17 @@ In short, the evaluation is out-of-sample and operationally realistic, but only 
 \begin{responsebox}
 We thank the reviewer for this observation. We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at the cutoff is the most natural reference, since it is the one issued with the largest amount of contemporaneous atmospheric information.
 
-Following this suggestion, we revised the workflow so that the forecasting analysis now uses only the most recent forecast ensemble available at the time of each cutoff, rather than combining multiple previously issued forecast ensembles across earlier issue dates. This change simplifies the forecasting protocol, makes the setup easier to interpret, and aligns the evaluation more closely with the operational question of interest: how well the post-processing method improves the forecast ensemble that would actually have been available to a practitioner at that issuance time.
+Following this suggestion, we reran the forecasting analysis using only the most recent forecast ensemble available at the time of each cutoff, rather than combining multiple previously issued forecast ensembles across earlier issue dates.
 
-The revised forecasting results are now based on this updated setup, and we will make that change explicit in the manuscript.
+The main conclusions remained unchanged under this latest-issue-only protocol. Performance was comparable to the earlier setup, and the ranking of the strongest models was materially the same. In particular, the revised HE-2 results still show \texttt{exAL-M-T1} as the best-performing model across the five cutoffs, with \texttt{AL-M-T1} remaining the closest competitor.
+
+We therefore adopt the most recent-forecast-only design throughout the revised forecasting analysis. This makes the workflow easier to interpret, more operationally realistic, and directly aligned with the question of how well the proposed post-processing improves the forecast that a practitioner would actually have had in hand at the issuance date.
 \end{responsebox}
 
 \locationheading
 \begin{actionbox}
-\textit{Location:} To be finalized after manuscript revision.\par
-\textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+\textit{Location:} [Insert forecasting-protocol subsection and the sentence(s) clarifying that only the most recent available forecast issuance is used.]\par
+\textit{Evidence:} [Insert HE2 table reference and any appendix note confirming that the final reported results use the latest-forecast-only protocol.]
 \end{actionbox}
 
 
