@@ -260,7 +260,7 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 
 In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NOAA/NWM forecast ensembles.
 
-All Bayesian models and the raw GloFAS ensemble are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. We use mean forecast-window CRPS as the principal cross-model validation metric, and report quantile diagnostics separately. The version-consistent forecast matching needed to define these cutoffs is summarized by the NWS/NWM and GloFAS audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter. The raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its archive-supported forecast window rather than treated as a strictly horizon-matched 28-day benchmark.
+All Bayesian models and the raw GloFAS ensemble are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. The three NDLM rows now come from a dedicated corrected rerun under the shared featurecov and blended-input contract used for the revised synthesis comparison. We use mean forecast-window CRPS as the principal cross-model validation metric, and report quantile diagnostics separately. The version-consistent forecast matching needed to define these cutoffs is summarized by the NWS/NWM and GloFAS audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter. The raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its archive-supported forecast window rather than treated as a strictly horizon-matched 28-day benchmark.
 
 \medskip
 \noindent\textbf{Table HE2-A.} Mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw physical ensembles. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
@@ -278,9 +278,9 @@ RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
 RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \addlinespace[2pt]
 \multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
-N-U-T1 & 0.5851 & 0.9105 & 1.1922 & 1.3156 & 1.1617 \\
-N-M-T0 & 0.3411 & 0.5595 & 1.9973 & 0.7643 & 3.0653 \\
-N-M-T1 & 0.5870 & 0.3011 & 5.1830 & 0.8346 & 3.4697 \\
+N-U-T1 & 0.3520 & 0.2486 & 1.1768 & 0.1572 & 2.1451 \\
+N-M-T0 & 0.5257 & 0.7126 & 3.5474 & 2.0727 & 4.2233 \\
+N-M-T1 & 0.5930 & 0.8524 & 13.9269 & 2.2880 & 8.9743 \\
 AL-U-T1 & 0.2946 & 0.1333 & 1.1377 & 0.0465 & 1.0293 \\
 AL-M-T0 & 0.3267 & 2.2435 & 0.6511 & 0.0433 & 2.2601 \\
 AL-M-T1 & 0.1604 & 0.0391 & 0.3482 & 0.0214 & 0.6186 \\
@@ -293,7 +293,7 @@ exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210
 
 This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} remains the best-performing model in all five cutoffs, with \texttt{AL-M-T1} as the closest competitor. The additional exAL complexity is therefore not only theoretical; it delivers the strongest operational performance in the revised comparison panel.
 
-The broader validation message is straightforward. First, the multivariate synthesis models with transfer function active during the forecast window (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance. Second, incorporating climate-institution retrospective and ensemble information (multivariate versus univariate formulations) yields substantial gains, showing that these products contain predictive signal that can be exploited effectively by the synthesis framework. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model and remains superior to the raw ensemble baselines across the five forecasting folds.
+The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance. Second, after rerunning the three NDLM families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain materially less competitive, especially at the harder 12/21/2021 and 12/25/2022 cutoffs. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model and remains superior to both the corrected NDLM alternatives and the raw ensemble baselines across the five forecasting folds.
 
 Rather than asserting superior forecast quality by inspection alone, we now support the forecasting claim with explicit probabilistic scores: HE-2 reports CRPS across all model families and raw ensembles, and HE-4 reports targeted quantile check losses for the key synthesis competitors. This revision therefore answers the editor's concern in the practical terms most relevant to applied hydrology users.
 \end{responsebox}
@@ -616,7 +616,7 @@ No Reviewer 2 comments were provided in the decision email.
 \endlastfoot
 
 HE-1 & Abstract; forecasting methods/results discussion & Added explicit runtime, hardware, computational-complexity, and daily-refitting feasibility response. & Done \\
-HE-2 & Forecasting-validation subsection; main comparison table & Added nine-model plus raw-ensemble CRPS comparison and clarified the exAL-versus-AL result. & Done \\
+HE-2 & Forecasting-validation subsection; main comparison table & Added the corrected nine-model plus raw-ensemble CRPS comparison, including the repaired NDLM rerun values, and clarified the exAL-versus-AL result. & Done \\
 HE-3 & Ablation-study subsection; HE3-A table & Added component-wise ablation study of \texttt{exAL-M-T1} and clarified that each ablation is a strict simplification. & Done \\
 HE-4 & Probabilistic-validation subsection; HE4-B table & Added forecast-window CRPS framing and quantile check-loss comparison for the key synthesis competitors. & Done \\
 HE-5 & Code/data availability subsection & Clarified reusable code versus basin-specific archive construction and cited the reusable software resources. & Done \\
