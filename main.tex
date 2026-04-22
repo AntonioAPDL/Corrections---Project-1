@@ -260,7 +260,7 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 
 In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NOAA/NWM forecast ensembles.
 
-All Bayesian models and the raw GloFAS ensemble are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. The three NDLM rows now come from a dedicated corrected rerun under the shared featurecov and blended-input contract used for the revised synthesis comparison. We use mean forecast-window CRPS as the principal cross-model validation metric, and report quantile diagnostics separately. The version-consistent forecast matching needed to define these cutoffs is summarized by the NWS/NWM and GloFAS audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter. The raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its archive-supported forecast window rather than treated as a strictly horizon-matched 28-day benchmark.
+All Bayesian models and the raw GloFAS ensemble are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. The three NDLM rows and the two univariate AL/exAL rows now come from dedicated corrected reruns under the shared featurecov and blended-input contract used for the revised synthesis comparison. We use mean forecast-window CRPS as the principal cross-model validation metric, and report quantile diagnostics separately. The version-consistent forecast matching needed to define these cutoffs is summarized by the NWS/NWM and GloFAS audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter. The raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its archive-supported forecast window rather than treated as a strictly horizon-matched 28-day benchmark.
 
 \medskip
 \noindent\textbf{Table HE2-A.} Mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw physical ensembles. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
@@ -281,10 +281,10 @@ RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 N-U-T1 & 0.3520 & 0.2486 & 1.1768 & 0.1572 & 2.1451 \\
 N-M-T0 & 0.5311 & 0.0565 & 1.5616 & 0.0241 & 2.3485 \\
 N-M-T1 & 0.5275 & 0.0722 & 0.6071 & 0.0416 & \textbf{0.5363} \\
-AL-U-T1 & 0.2946 & 0.1333 & 1.1377 & 0.0465 & 1.0293 \\
+AL-U-T1 & 0.2449 & 0.1493 & 1.2283 & 0.0551 & 1.1038 \\
 AL-M-T0 & 0.3267 & 2.2435 & 0.6511 & 0.0433 & 2.2601 \\
 AL-M-T1 & 0.1604 & 0.0391 & 0.3482 & 0.0214 & 0.6186 \\
-exAL-U-T1 & 0.2969 & 0.1350 & 1.2043 & 0.0468 & 0.9324 \\
+exAL-U-T1 & 0.2229 & 0.1506 & 1.2691 & 0.0541 & 1.1189 \\
 exAL-M-T0 & 0.3292 & 1.2744 & 0.4720 & 0.0694 & 2.3365 \\
 exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & 0.6144 \\
 \bottomrule
@@ -293,7 +293,7 @@ exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210
 
 This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} is the best-performing model in four of the five cutoffs, while the corrected \texttt{N-M-T1} row is lowest at 12/25/2022. The additional exAL complexity is therefore not only theoretical; it delivers the strongest operational performance in most cutoffs and remains highly competitive even in the final winter fold.
 
-The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance overall. Second, after rerunning the three NDLM families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain less competitive in most cutoffs, though the corrected \texttt{N-M-T1} specification is strongest at 12/25/2022. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model at every cutoff and dominates the panel overall, even though the corrected multivariate NDLM wins the final winter fold.
+The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance overall. Second, after rerunning the three NDLM families and the two univariate AL/exAL families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain less competitive in most cutoffs, though the corrected \texttt{N-M-T1} specification is strongest at 12/25/2022. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model at every cutoff and dominates the panel overall, even though the corrected multivariate NDLM wins the final winter fold.
 
 Rather than asserting superior forecast quality by inspection alone, we now support the forecasting claim with explicit probabilistic scores: HE-2 reports CRPS across all model families and raw ensembles, and HE-4 reports targeted quantile check losses for the key synthesis competitors. This revision therefore answers the editor's concern in the practical terms most relevant to applied hydrology users.
 \end{responsebox}
@@ -376,7 +376,7 @@ In plain terms, CRPS summarizes the quality of the full predictive distribution,
 
 Third, to provide the explicit quantile-level diagnostics requested by the editor, we additionally report quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four key models \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}. This keeps the comparison focused on the main synthesis competitors while still showing how forecast quality changes across the targeted quantiles.
 
-For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the corresponding final multivariate forecasting runs reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baselines reported in HE-2.
+For \texttt{exAL-M-T1} and \texttt{AL-M-T1}, we use the corresponding final multivariate forecasting runs reported in HE-2; for \texttt{exAL-U-T1} and \texttt{AL-U-T1}, we use the carried-forward univariate baseline runs retained for the quantile-loss comparison, rather than the later corrected univariate HE-2 mean-CRPS rerun.
 
 \medskip
 \noindent\textbf{Table HE4-B.} Mean forecast-window quantile check loss at the targeted quantiles for the four principal synthesis competitors, reported on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column (ties included) is shown in bold.\par
