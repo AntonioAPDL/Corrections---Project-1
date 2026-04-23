@@ -324,7 +324,7 @@ We use the following labels in the ablation study:
 \end{itemize}
 
 \medskip
-\noindent\textbf{Table HE3-A.} Mean forecast-window CRPS for the full \texttt{exAL-M-T1} model and its component-wise ablations. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
+\noindent\textbf{Table HE3-A.} Mean forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and raw physical-ensemble references. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 \begin{center}
@@ -340,11 +340,15 @@ exAL-M-noTF & 0.3421 & 0.0984 & 0.4800 & 0.0383 & 2.3651 \\
 exAL-M-T1-noH1 & 0.3536 & 0.1030 & 1.9431 & 0.2777 & 2.3530 \\
 exAL-M-T1-noH2 & 0.3932 & 0.1757 & 1.9430 & 0.2795 & 2.2696 \\
 exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.6253 \\
+\addlinespace[2pt]
+\multicolumn{6}{l}{\textit{Raw physical ensembles (reference only)}} \\
+RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
+RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Across all five cutoffs, the full model remains the best configuration. Removing transfer information degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially in the more difficult winter windows. This pattern is especially clear at the 12/25/2022 cutoff, where every ablation is markedly worse than the full model. That difficult winter window is therefore where the full model's combined structure matters most, not evidence of an anomalous ablation fit. The practical message is not that one small add-on explains the gains of \texttt{exAL-M-T1}; its advantage comes from the combination of transfer information, trend, and multi-frequency seasonality.
+Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially in the more difficult winter windows. This pattern is especially clear at the 12/25/2022 cutoff, where every ablation is markedly worse than the full model. The added raw-reference rows show that the full \texttt{exAL-M-T1} specification also remains better than both raw physical ensembles at every cutoff, so the ablation losses are not merely small perturbations around baseline raw-forecast skill. That difficult winter window is therefore where the full model's combined structure matters most, not evidence of an anomalous ablation fit. The practical message is not that one small add-on explains the gains of \texttt{exAL-M-T1}; its advantage comes from the combination of transfer information, trend, and multi-frequency seasonality.
 
 \end{responsebox}
 
