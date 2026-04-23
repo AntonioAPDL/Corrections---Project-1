@@ -543,9 +543,20 @@ The remaining issues raised by the reviewer about motivation, model-to-results l
 Major comments:
 \end{commentblock}
 
-\begin{commentresponse}[7]{\RoneM{1}}
+\commentheading{\RoneM{1}}
+\begin{commentblock}
 1. In the introduction and elsewhere, the “cascade of uncertainty” is not distinguished between meteorological uncertainty and hydrological uncertainty. This is not necessarily a major problem with a Bayesian model that combines sources of uncertainty, but I find the introduction and motivation less compelling when hydrological and meteorological concepts are mixed. For example, the paragraph that starts off “Hydrological predictions are often produced using physical models…” diverts to discussions of under-dispersion in ensembles and perturbation methods in weather forecasts. I would suggest restructuring the introduction to cover different sources of uncertainty before explaining how uncertainty can be consolidated in a Bayesian framework.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that the original introduction did not distinguish meteorological and hydrological uncertainty clearly enough. That conflated two different parts of the forecasting problem and made the motivation less focused than it should have been.
+
+In the revision, we reorganized the introduction so that the uncertainty sources are separated before the Bayesian framework is introduced. We now distinguish uncertainty entering upstream through meteorological forcings and forecast generation from uncertainty entering downstream through hydrological response, model structure, parameterization, initial conditions, and observed-versus-product discrepancies. This makes the scope of the paper more precise.
+
+We also revised the motivating paragraphs so that the manuscript no longer moves directly from hydrological forecasting to details of atmospheric ensemble generation. The revised text first explains the main uncertainty sources, then explains why operational streamflow products still require statistical correction, and only then introduces the Bayesian quantile-based correction-and-synthesis framework. This makes it clearer that the paper is not about how meteorological ensembles are produced, but about how available forecast and retrospective products can be corrected and synthesized for probabilistic river-flow forecasting.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[7]{\RoneM{2}}
 2. The links between the model formulation and the results are not clear to me. For example, three models (A, B and C) are developed in section 2. It would be helpful to explicitly link the models to the results being discussed in section 3.
