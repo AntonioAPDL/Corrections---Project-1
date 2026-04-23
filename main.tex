@@ -512,13 +512,26 @@ The following reviewer comments were taken into consideration during the peer re
 \section{Reviewer comments}
 
 \subsection{Reviewer 1 (verbatim header + overview)}
-\begin{commentresponse}[7]{\RoneO}
+\commentheading{\RoneO}
+\begin{commentblock}
 Reviewer comments:
 
 Reviewer 1 Comments to the Author
 
 This paper develops a Bayesian quantile regression approach, based on asymmetric Laplace distributions, to predict and forecast streamflow in the Santa Cruz region of the US. The work appears strong in the development of the Bayesian models and the novelty in the extension of inference methods is accepted. However, the improvement of forecasts through dynamical error correction is a common strategy and the novelty of this part may need to be elucidated further. The paper is framed as a forecasting paper, however the forecasting component is limited and robust forecast evaluation is absent. I recommend that some substantial revisions, mainly structural, are required before proceeding with publication. My comments below don’t cover everything, but are intended as a push into reshaping:
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that, in its original form, the manuscript gave more attention to model development than to forecasting validation. The revision addresses that directly.
+
+First, the forecasting analysis is no longer based on a single illustrative case. It now uses multiple cutoffs treated as rolling-origin out-of-sample forecasting folds (HE-6). Second, the proposed model is now compared against simpler Bayesian alternatives and against the raw ECMWF/GloFAS and NOAA/NWM ensembles, so the forecasting claims are supported by direct comparative evidence rather than by internal comparisons alone (HE-2). Third, the revised manuscript now reports proper probabilistic forecast-verification scores for the forecasting exercise, including CRPS and targeted quantile diagnostics (HE-4). Finally, the forecasting protocol now uses only the most recent forecast ensemble available at each cutoff, which is the more natural operational setup (HE-7).
+
+We also revised how the contribution is stated. The manuscript does not present dynamical error correction, by itself, as the contribution. The contribution is the Bayesian quantile-based correction-and-synthesis framework, together with its forecasting performance in this application. The revised manuscript now states that more clearly.
+
+The remaining issues raised by the reviewer about motivation, model-to-results linkage, and presentation are addressed in the specific responses below.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \subsection{Summary of changes (Reviewer 1)}
 \begin{itemize}
