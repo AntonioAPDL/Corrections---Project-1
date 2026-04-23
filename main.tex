@@ -560,13 +560,37 @@ We will also shorten the discussion of atmospheric ensemble-generation methods i
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[7]{\RoneM{2}}
+\commentheading{\RoneM{2}}
+\begin{commentblock}
 2. The links between the model formulation and the results are not clear to me. For example, three models (A, B and C) are developed in section 2. It would be helpful to explicitly link the models to the results being discussed in section 3.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that the connection between the formulation and the reported results is not clear enough in the current manuscript. Part of the difficulty comes from the staged presentation through Models A, B, and C. That progression was intended as a walkthrough for building the final forecasting specification, but in the current form it can give the impression that these are the main competing models used in the results section.
 
-\begin{commentresponse}[7]{\RoneM{3}}
+To address this, in the revised manuscript we will simplify the methodological presentation and introduce the final forecasting model directly in compact form. We will then explain its components and notation within that unified specification, rather than using the staged A/B/C development as the main organizing device. This should make it much easier to connect the model definition to the empirical comparisons and forecasting results reported later in the paper.
+
+We will also revise the opening of the results section so that the reader can immediately see which specification is being evaluated and how the reported model comparisons relate to the final forecasting framework.
+\end{responsebox}
+\locationheading
+\LocationLine
+
+\commentheading{\RoneM{3}}
+\begin{commentblock}
 3. The paper is maths heavy, so it may be beneficial to reduce the equations and mathematical details. The amount of detail given may be highly suitable for a dissertation, but some details are not necessary for a paper. For example, in section 2.7, PITs are described in detail, however, it is followed that CRPS is chosen for model selection instead and PITs are not used. Suggest removing PITs in this case. As another example, no quantile crossing is observed, however a two-step method is presented to “resolve” quantile crossing. I suggest reconsidering how much detail is needed for the Posterior Predictive Synthesis part.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that the current manuscript contains more mathematical detail than is needed for a journal article, and we will simplify the presentation.
+
+In particular, we agree that the detailed PIT discussion is not necessary in the present paper, since PITs are not used in the final reported evaluation and CRPS is the main criterion used for model comparison and forecast assessment. We will therefore remove the detailed PIT development from the main text and keep the focus on CRPS and the forecast-verification quantities that are actually used in the revised results section.
+
+We also agree that the overall methodological presentation can be made more compact. As part of the revision, we will present the final forecasting model directly and reduce intermediate derivational detail that is not essential for understanding the applied contribution.
+
+For the posterior predictive synthesis, however, we will retain a concise methodological description in the main text because this step is part of the contribution of the paper. The synthesis is the mechanism that combines independently fitted quantile-specific outputs into a single predictive distribution, and the monotonicity safeguard is included to make that synthesis robust to possible quantile crossing even if crossing was not observed in the present application. That said, we agree that the current exposition is longer than necessary, and we will shorten it substantially while preserving the key construction.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[7]{\RoneM{4}}
 4. If I have not misunderstood, only one short forecast has been evaluated for a moderate flood from 2022-12-25 to 2023-01-22. Is it possible to provide more evidence for the use of the model for forecasting high, low and moderate events? Or the continuous period 2023 to present? Going to the previous comment, PITs and CRPS have been used for model selection (section 2.7) rather than forecast verification. I would suggest that in an expanded evaluation of forecast performance that CRPS and PITs would be useful tools.
