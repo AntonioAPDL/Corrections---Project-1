@@ -670,9 +670,20 @@ In the revised manuscript, we will therefore replace the current deterministic l
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[5]{\Ronem{4}}
+\commentheading{\Ronem{4}}
+\begin{commentblock}
 4. Section 2.3: Introduce the USGS measurements and difference with reanalysis products. It may be useful to have a separate data and methodology section.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that the current manuscript does not introduce the USGS observations and their role relative to the retrospective products clearly enough.
+
+At present, the retrospective component is developed mathematically before the reader has been clearly oriented to the role of the USGS discharge series as the reference target. In the revised manuscript, we will fix this in two ways. First, in the methodology section, we will add a short orienting description before the retrospective-product equations to state explicitly that the USGS series is the observed target, whereas the retrospective products are external historical inputs used for discrepancy learning. Second, we will reorganize the current application section so that the observed discharge series, the retrospective products, the forecast ensembles, and the forecast covariates are introduced in a clearer order before the application-specific specification and results.
+
+The goal is to make the role of each data source explicit, rather than leaving the reader to infer it from the notation alone.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[5]{\Ronem{5}}
 5. How is non-zero precipitation handled, is it through data censoring?
