@@ -685,9 +685,18 @@ The goal is to make the role of each data source explicit, rather than leaving t
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[5]{\Ronem{5}}
+\commentheading{\Ronem{5}}
+\begin{commentblock}
 5. How is non-zero precipitation handled, is it through data censoring?
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+This was not described clearly enough in the manuscript. In the current specification, precipitation is not handled through a separate censoring, zero-inflation, or occurrence/intensity model. Instead, it enters only as an external covariate in the transfer function, so zero-precipitation days are retained as zero and precipitation is not modeled as a response variable.
+
+This is the intended role of precipitation in our framework. The external precipitation path acts as an exogenous driver of river flow: abrupt increases can induce sharp changes in the flow quantiles, while the absence of precipitation allows the transfer effect to decay according to the transfer rate. In that sense, the discontinuous behavior of precipitation is handled through the covariate path and the transfer-function dynamics rather than through a separate precipitation model. We will make this explicit in the revised manuscript.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[5]{\Ronem{6}}
 6. Section 3: lagged forecasts are weighted into an ensemble forecast for the target time rather than using the latest available forecast. In my experience, this can have the effect of degrading skill. Did the authors find this was beneficial?
