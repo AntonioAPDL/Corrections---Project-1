@@ -66,8 +66,8 @@
 }
 \newcommand{\LocationLine}{%
   \begin{actionbox}
-  \textit{Location:} To be finalized after manuscript revision.\par
-  \textit{Evidence:} To be added once the corresponding sections/tables are incorporated in the revised manuscript.
+  \textit{Location:} The corresponding manuscript section(s) will be revised as described in the response above; exact section, table, and figure references will be finalized once those edits are implemented.\par
+  \textit{Evidence:} The planned manuscript change is documented in the response above; updated manuscript locations and any new tables or figures will be cited in the resubmission.
   \end{actionbox}
 }
 % One environment to prevent broken/mismatched blocks for each comment.
@@ -173,7 +173,10 @@ Environmetrics
 
 \subsection{Summary of changes (handling editor)}
 \begin{itemize}
-\item[] To be completed: brief summary of major revisions addressing the handling editor's concerns.
+\item[] Added an explicit computational-feasibility response for the main forecasting workflow, including runtime, hardware, leading-order complexity, and the operational implications of daily refitting (HE-1).
+\item[] Expanded the forecasting validation to a five-cutoff rolling-origin design with direct comparison against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM ensembles, using forecast-window CRPS and targeted quantile diagnostics (HE-2, HE-4, HE-6, HE-7).
+\item[] Added a targeted ablation study of the strongest model specification to identify which hierarchical components contribute most to forecast skill (HE-3).
+\item[] Clarified reproducibility by distinguishing reusable software resources from the basin-specific work required to assemble a valid version-consistent forecast archive for a new application (HE-5).
 \end{itemize}
 
 \subsection{Handling editor text (verbatim preface)}
@@ -443,7 +446,7 @@ The main practical pattern is that the multivariate synthesis models dominate th
 
 \responseheading
 \begin{responsebox}
-We agree, and the revised submission now makes code availability explicit and operationally useful. The reusable exDQLM estimation code is available through the CRAN R package \texttt{exdqlm}, and the end-to-end forecasting workflow used in this study is maintained in \url{https://github.com/AntonioAPDL/Project1}. [Placeholder: insert permanent public release, archived repository link, and/or DOI to be cited in the resubmission.]
+We agree, and the revised submission now makes code availability explicit and operationally useful. The reusable exDQLM estimation code is available through the CRAN R package \texttt{exdqlm}, and the end-to-end forecasting workflow used in this study is maintained in \url{https://github.com/AntonioAPDL/Project1}. Before resubmission, we will add a permanent archived release for the project repository and cite that release explicitly in the manuscript.
 
 We also make the division between reusable code and basin-specific setup clearer. What a new user can reuse directly includes the model-fitting code, orchestration scripts, post-processing routines, and configuration templates. What must still be constructed for a new basin is a cutoff-specific input bundle containing observed discharge, retrospective/historical streamflow products, forecast ensembles issued at the cutoff, forecast covariates for precipitation and soil moisture, and the associated metadata on site coordinates, spatial extraction choices, units, temporal aggregation, and product versions.
 
@@ -453,7 +456,7 @@ In short, the code is reusable; the non-portable part is the construction of a v
 \locationheading
 \begin{actionbox}
 \textit{Location:} Revised code/data-availability subsection and the reproducibility note describing the reusable workflow and basin-specific bundle requirements.\par
-\textit{Evidence:} CRAN package \texttt{exdqlm}; project repository URL above; [Placeholder: permanent archive DOI and/or release tag to be inserted before resubmission.]
+\textit{Evidence:} CRAN package \texttt{exdqlm}; project repository URL above; permanent archived release/DOI to be inserted before resubmission.
 \end{actionbox}
 
 \commentheading{\HE{6}}
@@ -471,7 +474,7 @@ After fitting at cutoff \(\textbf{c}\), we apply the pre-cutoff discrepancy-lear
 
 We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and version consistency for the forecast ensembles, retrospective inputs, and forecast covariates. We therefore treat cutoff construction as part of the forecasting design itself, not as an afterthought. These cutoffs were determined by archive feasibility and version consistency, not by forecast performance. HE-2 through HE-4 are now all reported under this rolling-origin protocol.
 
-In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and timing constraints are handled explicitly. The revised manuscript now makes this protocol easier to follow with a short forecasting-design schematic and the accompanying version-audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter, so the reader can see exactly why the evaluation is out-of-sample and how the five cutoffs function as valid forecasting folds.
+In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and timing constraints are handled explicitly. The revised manuscript will make this protocol easier to follow with a short forecasting-design schematic and the accompanying version-audit timelines in Figures~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit}, reproduced at the end of this response letter, so the reader can see exactly why the evaluation is out-of-sample and how the five cutoffs function as valid forecasting folds.
 
 \end{responsebox}
 
@@ -488,7 +491,7 @@ In short, the evaluation is out-of-sample and operationally realistic, but only 
 
 \responseheading
 \begin{responsebox}
-We thank the reviewer for this observation. We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at the cutoff is the most natural reference, since it is the one issued with the largest amount of contemporaneous atmospheric information.
+We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at the cutoff is the most natural reference, since it is the one issued with the largest amount of contemporaneous atmospheric information.
 
 Following this suggestion, we reran the forecasting analysis using only the most recent forecast ensemble available at the time of each cutoff, rather than combining multiple previously issued forecast ensembles across earlier issue dates.
 
@@ -535,7 +538,10 @@ The remaining issues raised by the reviewer about motivation, model-to-results l
 
 \subsection{Summary of changes (Reviewer 1)}
 \begin{itemize}
-\item[]To be completed: brief summary of major revisions for Reviewer 1.
+\item[] Reframed the forecasting contribution around a broader rolling-origin validation design with five cutoff dates, proper probabilistic forecast-verification scores, and a latest-forecast-only operational protocol, rather than a single illustrative forecast window alone (R1-O, R1-M4, R1-M5, R1-m6).
+\item[] Simplified the planned manuscript architecture by separating the main sources of uncertainty more clearly, clarifying the roles of observations, retrospective products, and forecast products, and reorganizing the application/results sections so the forecasting evidence is easier to follow (R1-M1, R1-M2, R1-m3, R1-m4, R1-m7).
+\item[] Reduced nonessential mathematical detail by dropping the detailed PIT development from the main text, keeping a shorter synthesis description, and planning a more direct presentation of the final forecasting specification (R1-M3).
+\item[] Addressed several local presentation issues, including terminology, precipitation handling, table labeling, and the intended role of the synthesis figures (R1-m1, R1-m2, R1-m5, R1-m8, R1-m9).
 \end{itemize}
 
 \subsection{Reviewer 1 --- Major comments }
@@ -615,7 +621,7 @@ We also revised the validation so that forecast performance is assessed using pr
 \begin{responsebox}
 We agree that fair assessment of this method must be organized around forecast origins, not around a conventional single split of the time series.
 
-The main reason is that our setting is not a standard univariate forecasting problem in which one fits a model to past USGS observations and then extrapolates that same series forward recursively. At a cutoff date \(\textbf{c}\), the method uses all information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\), retrospective or historical products available at \(\textbf{c}\), and the forecast ensembles and forecast covariates issued at that cutoff. Using the discrepancy structure learned before \(\textbf{c}\), it then produces predictive quantile estimates for the unobserved future USGS discharge over the forecast window covered by the forecast ensembles. These predictive quantile estimates are subsequently utilized to produce a synthesized predictive distribution. The predictive performance of the synthesized distribution is carried out only against the USGS observations realized after \(\textbf{c}\). For this reason, the appropriate evaluation framework is a rolling-origin backtesting.
+The main reason is that our setting is not a standard univariate forecasting problem in which one fits a model to past USGS observations and then extrapolates that same series forward recursively. At a cutoff date \(\textbf{c}\), the method uses all information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\), retrospective or historical products available at \(\textbf{c}\), and the forecast ensembles and forecast covariates issued at that cutoff. Using the discrepancy structure learned before \(\textbf{c}\), it then produces predictive quantile estimates for the unobserved future USGS discharge over the forecast window covered by the forecast ensembles. These predictive quantile estimates are then synthesized into a predictive distribution. That synthesized predictive distribution is evaluated only against the USGS observations realized after \(\textbf{c}\). For this reason, the appropriate evaluation framework is a rolling-origin backtesting design.
 
 This is already the logic of the revised five-cutoff analysis. The five cutoffs act as five temporally separated rolling-origin evaluation folds, each defined by valid archive availability and version consistency of the required inputs. In that sense, the revised analysis is already a fair out-of-sample forecasting assessment for this framework. It is also important that such cutoffs not be taken too densely in time: if forecast origins are too close to one another, their forecast windows may overlap heavily and repeatedly sample the same hydrological regime, which can overrepresent a particular setting in the aggregate validation.
 
@@ -787,21 +793,21 @@ HE-4 & Probabilistic-validation subsection; HE4-B table & Added forecast-window 
 HE-5 & Code/data availability subsection & Clarified reusable code versus basin-specific archive construction and cited the reusable software resources. & Done \\
 HE-6 & Forecasting-design subsection & Clarified rolling-origin out-of-sample validation, cutoff construction, and version-consistency constraints. & Done \\
 HE-7 & Forecasting-protocol subsection & Documented the latest-forecast-only rerun and stated that the main conclusions remain unchanged. & Done \\
-R1-O &  &  &  \\
-R1-M1 &  &  &  \\
-R1-M2 &  &  &  \\
-R1-M3 &  &  &  \\
-R1-M4 &  &  &  \\
-R1-M5 &  &  &  \\
-R1-m1 &  &  &  \\
-R1-m2 &  &  &  \\
-R1-m3 &  &  &  \\
-R1-m4 &  &  &  \\
-R1-m5 &  &  &  \\
-R1-m6 &  &  &  \\
-R1-m7 &  &  &  \\
-R1-m8 &  &  &  \\
-R1-m9 &  &  &  \\
+R1-O & Reviewer 1 overview; forecasting positioning & Reframed the contribution around expanded forecast validation, direct benchmark comparison, and clearer contribution language. & Drafted \\
+R1-M1 & Introduction uncertainty framing & Planned a cleaner separation of meteorological versus hydrological uncertainty and a tighter motivation for correction and synthesis. & Drafted \\
+R1-M2 & Methodology/results bridge & Planned a final-model-first presentation and a clearer roadmap linking the formulation to the reported results. & Drafted \\
+R1-M3 & Methods streamlining & Planned removal of the detailed PIT development, compression of intermediate derivations, and a shorter synthesis exposition. & Drafted \\
+R1-M4 & Forecast-validation subsection & Expanded the evidence from one illustrative window to a five-cutoff rolling-origin forecast evaluation with CRPS and quantile diagnostics. & Drafted \\
+R1-M5 & Forecast-assessment design discussion & Clarified why fair assessment is cutoff-based rolling-origin backtesting and how broader tuning/validation could be built over feasible cutoffs. & Drafted \\
+R1-m1 & Introduction wording on model classes & Planned an explicit acknowledgement that conceptual models are often more practical for forecasting than physically based models alone. & Drafted \\
+R1-m2 & Section 2.1 terminology & Planned correction of the apparent ``flexile'' typo and committed to clearer terminology in the revised section. & Drafted \\
+R1-m3 & Section 2.3 retrospective-product wording & Clarified that retrospective products are single-valued/non-ensemble rather than uncertainty-free and softened the deterministic language. & Drafted \\
+R1-m4 & Data/application organization & Planned an earlier introduction of the USGS target series and a clearer ordering of observations, retrospective products, and forecast inputs. & Drafted \\
+R1-m5 & Transfer-function covariate description & Clarified that precipitation enters only as an external transfer-function covariate and is not modeled with a separate censoring component. & Drafted \\
+R1-m6 & Forecast-issuance protocol & Adopted a latest-forecast-only protocol at each cutoff and aligned the forecasting discussion with that final operational design. & Drafted \\
+R1-m7 & Section 3 headings and structure & Planned clearer subsection titles and a cleaner separation between application setup, historical fit, and forecasting evidence. & Drafted \\
+R1-m8 & Tables 1 and 2 captions/notes & Planned correction of the posterior mean/median inconsistency for the two parameter-summary tables. & Drafted \\
+R1-m9 & Synthesis-figure explanation & Clarified that the figure pair is illustrative and that the main forecasting evidence now comes from the expanded multi-cutoff validation. & Drafted \\
 \end{longtable}
 \normalsize
 
