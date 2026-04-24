@@ -592,9 +592,20 @@ For the posterior predictive synthesis, however, we will retain a concise method
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[7]{\RoneM{4}}
+\commentheading{\RoneM{4}}
+\begin{commentblock}
 4. If I have not misunderstood, only one short forecast has been evaluated for a moderate flood from 2022-12-25 to 2023-01-22. Is it possible to provide more evidence for the use of the model for forecasting high, low and moderate events? Or the continuous period 2023 to present? Going to the previous comment, PITs and CRPS have been used for model selection (section 2.7) rather than forecast verification. I would suggest that in an expanded evaluation of forecast performance that CRPS and PITs would be useful tools.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that the original manuscript placed too much weight on the 2022-12-25 to 2023-01-22 forecast window. That case study is useful as an operational illustration, but by itself it is not sufficient to support broader claims about forecasting performance.
+
+In the revised manuscript, the forecasting evaluation is expanded to five cutoff dates, treated as rolling-origin out-of-sample forecast exercises. These cutoffs were selected to cover different hydrological settings, including wetter, drier, and transitional periods, so the empirical evidence is no longer tied to a single moderate-flood episode.
+
+We also revised the validation so that forecast performance is assessed using proper predictive scores for the forecast distributions themselves. In particular, we report CRPS over the forecast windows for these cutoff-specific exercises, together with complementary quantile-based diagnostics. Consistent with the streamlining described in Response R1-M3, we keep the forecast-verification discussion focused on the measures that are actually used in the revised comparison, rather than retaining a separate PIT development in the main text. The corresponding expanded validation changes are detailed in HE-2, HE-4, and HE-6 above.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[7]{\RoneM{5}}
 5. A robust discussion of how the method can be set up for fair forecast assessment using cross-validation might be required.
