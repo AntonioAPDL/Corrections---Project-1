@@ -655,9 +655,20 @@ We thank the reviewer for pointing this out. This appears to have been a typo on
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[5]{\Ronem{3}}
+\commentheading{\Ronem{3}}
+\begin{commentblock}
 3. Section 2.3: Agree reanalyses have fewer problems that forecasts in terms of data gaps and uncertainties; however, it is important to note that fields like rainfall in ERA5 are filled out with short-run forecasts and are not completely deterministic.
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We thank the reviewer for this important clarification. We agree that the current wording in Section 2.3 is too strong.
+
+Our intent was to distinguish retrospective products from ensemble forecasts in the sense that the former are single-valued, non-ensemble historical reconstructions or simulations, rather than probabilistic products. We did not intend to suggest that they are uncertainty-free, purely deterministic in a stronger sense, or equivalent to observations. That distinction matters here, because some variables in products such as ERA5 are generated through short forecast components within the reanalysis system, and retrospective hydrological products such as GloFAS historical and NWM retrospective remain model-based reconstructions with their own forcing, model, and calibration uncertainties.
+
+In the revised manuscript, we will therefore replace the current deterministic language with more precise wording. In particular, we will describe these inputs as single-valued retrospective or reanalysis-based products and state explicitly that single-valued does not mean uncertainty-free. This will preserve the intended distinction from ensemble forecast products without overstating the status of the retrospective inputs.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[5]{\Ronem{4}}
 4. Section 2.3: Introduce the USGS measurements and difference with reanalysis products. It may be useful to have a separate data and methodology section.
