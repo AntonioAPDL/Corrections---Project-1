@@ -698,9 +698,18 @@ This is the intended role of precipitation in our framework. The external precip
 \locationheading
 \LocationLine
 
-\begin{commentresponse}[5]{\Ronem{6}}
+\commentheading{\Ronem{6}}
+\begin{commentblock}
 6. Section 3: lagged forecasts are weighted into an ensemble forecast for the target time rather than using the latest available forecast. In my experience, this can have the effect of degrading skill. Did the authors find this was beneficial?
-\end{commentresponse}
+\end{commentblock}
+\responseheading
+\begin{responsebox}
+We agree that this concern is well taken from an operational forecasting perspective. In the revised analysis, we no longer combine older forecast issuances for the target time. Instead, at each cutoff we use only the most recent forecast ensemble available, which is the most natural applied benchmark and avoids potential degradation from including older atmospheric information.
+
+The revised forecasting results reported in this response letter and referred to in the manuscript now follow that latest-forecast-only protocol. The corresponding update is described in HE-7 above.
+\end{responsebox}
+\locationheading
+\LocationLine
 
 \begin{commentresponse}[5]{\Ronem{7}}
 7. Section 3.2: The title here is somewhat vague “General results”. Given Section 3 is supposed to be on forecasting and these results appear to be about in-sample prediction, I suggest reorganising the headings and separating out model checking from forecasting.
