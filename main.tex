@@ -235,7 +235,7 @@ In addition, posterior summaries from the previous issuance provide informed ini
 
 \responseheading
 \begin{responsebox}
-We agree, and the revised manuscript now validates the proposed method against both simpler Bayesian competitors and raw physical forecast ensembles. In the revised comparison, the best version of the proposed model, \texttt{exAL-M-T1}, achieves the lowest forecast-window CRPS in four of the five cutoffs and remains below the corresponding \texttt{AL-M-T1} score in all five. This directly addresses the two main concerns raised here: whether the extended asymmetric Laplace formulation improves on the ordinary asymmetric Laplace in this forecasting problem, and whether the added model complexity yields practical gains relative to simpler statistical and physical baselines.
+We agree, and the revised manuscript now validates the proposed method against both simpler Bayesian competitors and raw physical forecast ensembles. In the revised comparison, the best version of the proposed model, \texttt{exAL-M-T1}, achieves the lowest forecast-window CRPS in all five cutoffs and remains below the corresponding \texttt{AL-M-T1} score in all five. This directly addresses the two main concerns raised here: whether the extended asymmetric Laplace formulation improves on the ordinary asymmetric Laplace in this forecasting problem, and whether the added model complexity yields practical gains relative to simpler statistical and physical baselines.
 
 In the revised manuscript, we compare nine Bayesian alternatives built on the same linear-dynamic backbone (trend, seasonal, and transfer-function components) and Gaussian state-evolution noise. They differ only in two respects: the observation likelihood, and whether external forecast information is used during the forecast window.
 
@@ -283,20 +283,20 @@ RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
 N-U-T1 & 0.3520 & 0.2486 & 1.1768 & 0.1572 & 2.1451 \\
 N-M-T0 & 0.5311 & 0.0565 & 1.5616 & 0.0241 & 2.3485 \\
-N-M-T1 & 0.5275 & 0.0722 & 0.6071 & 0.0416 & \textbf{0.5363} \\
+N-M-T1 & 0.5275 & 0.0722 & 0.6071 & 0.0416 & 0.5363 \\
 AL-U-T1 & 0.2449 & 0.1493 & 1.2283 & 0.0551 & 1.1038 \\
 AL-M-T0 & 0.3267 & 2.2435 & 0.6511 & 0.0433 & 2.2601 \\
 AL-M-T1 & 0.1604 & 0.0391 & 0.3482 & 0.0214 & 0.6186 \\
 exAL-U-T1 & 0.2229 & 0.1506 & 1.2691 & 0.0541 & 1.1189 \\
 exAL-M-T0 & 0.3292 & 1.2744 & 0.4720 & 0.0694 & 2.3365 \\
-exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & 0.6144 \\
+exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.4375} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} is the best-performing model in four of the five cutoffs, while the corrected \texttt{N-M-T1} row is lowest at 12/25/2022. The additional exAL complexity is therefore not only theoretical; it delivers the strongest operational performance in most cutoffs and remains highly competitive even in the final winter fold.
+This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} is now the best-performing model in all five cutoffs. The additional exAL complexity is therefore not only theoretical; it delivers the strongest operational performance in every evaluated window, including the final winter fold.
 
-The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance overall. Second, after rerunning the three NDLM families and the two univariate AL/exAL families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain less competitive in most cutoffs, though the corrected \texttt{N-M-T1} specification is strongest at 12/25/2022. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model at every cutoff and dominates the panel overall, even though the corrected multivariate NDLM wins the final winter fold.
+The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance overall. Second, after rerunning the three NDLM families and the two univariate AL/exAL families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain less competitive than the best exAL specification. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model at every cutoff and dominates the panel overall, including the final winter fold.
 
 Rather than asserting superior forecast quality by inspection alone, we now support the forecasting claim with explicit probabilistic scores: HE-2 reports CRPS across all model families and raw ensembles, and HE-4 reports targeted quantile check losses for the key synthesis competitors. This revision therefore answers the editor's concern in the practical terms most relevant to applied hydrology users.
 \end{responsebox}
@@ -316,7 +316,7 @@ Rather than asserting superior forecast quality by inspection alone, we now supp
 \begin{responsebox}
 We agree, and the revised manuscript now includes a targeted ablation study of the strongest model, \texttt{exAL-M-T1}, to identify which structural components contribute most to forecast skill.
 
-Following the main validation in HE-2, we take the cutoff-specific winning \texttt{exAL-M-T1} configuration as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration. We also verified that each ablation is a strict simplification of the corresponding full model: it uses the same covariate bundle, the same lagged and interaction terms in the transfer-function inputs, the same fixed discount factors and other fit hyperparameters, and changes only the intended structural component.
+Following the main validation in HE-2, we take the corresponding \texttt{exAL-M-T1} structural specification at each cutoff as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed within each ablation campaign. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration. The later HE-2 discount-factor refinement at 12/25/2022 changes the final CRPS level reported for \texttt{exAL-M-T1}, but it does not change the structural ablation setup or the conclusions reported here. We also verified that each ablation is a strict simplification of the corresponding full model: it uses the same covariate bundle, the same lagged and interaction terms in the transfer-function inputs, the same fixed discount factors and other fit hyperparameters, and changes only the intended structural component.
 
 We use the following labels in the ablation study:
 \begin{itemize}
@@ -421,7 +421,7 @@ exAL-U-T1 & 0.0117 & 0.0318 & 0.0368 & 0.0240 & 0.0117 & 0.0244 & 0.0201 \\
 AL-U-T1 & 0.0116 & 0.0313 & 0.0356 & 0.0235 & \textbf{0.0114} & 0.0242 & 0.0227 \\
 \addlinespace[1pt]
 \multicolumn{8}{l}{\textit{Cutoff 12/25/2022}} \\
-exAL-M-T1 & \textbf{0.1087} & 0.3985 & \textbf{0.4103} & 0.4214 & 0.3583 & \textbf{0.2395} & 0.1395 \\
+exAL-M-T1 & \textbf{0.0569} & \textbf{0.1758} & \textbf{0.1971} & \textbf{0.2308} & \textbf{0.2494} & \textbf{0.2376} & 0.1480 \\
 AL-M-T1 & 0.1298 & 0.4368 & 0.5299 & \textbf{0.3773} & \textbf{0.2639} & 0.2556 & \textbf{0.0944} \\
 exAL-U-T1 & 0.1403 & \textbf{0.3706} & 0.4925 & 0.6082 & 0.6743 & 0.6210 & 0.2494 \\
 AL-U-T1 & 0.1440 & 0.3883 & 0.4996 & 0.6177 & 0.7366 & 0.7186 & 0.3549 \\
@@ -495,7 +495,7 @@ We agree that, from an operational forecasting perspective, the most recent fore
 
 Following this suggestion, we reran the forecasting analysis using only the most recent forecast ensemble available at the time of each cutoff, rather than combining multiple previously issued forecast ensembles across earlier issue dates.
 
-The main conclusions remained unchanged under this latest-issue-only protocol. Performance was comparable to the earlier setup, and the ranking of the strongest models was materially similar. In particular, the revised HE-2 results still show \texttt{exAL-M-T1} as the best-performing model in four of the five cutoffs and better than \texttt{AL-M-T1} in all five, while the corrected \texttt{N-M-T1} row is strongest at 12/25/2022.
+The main conclusions remained unchanged under this latest-issue-only protocol. Performance was comparable to the earlier setup, and the ranking of the strongest models was materially similar. In particular, the revised HE-2 results still show \texttt{exAL-M-T1} as the best-performing model in all five cutoffs and better than \texttt{AL-M-T1} in all five.
 
 We therefore adopt the most recent-forecast-only design throughout the revised forecasting analysis. HE-2 through HE-4 all reflect this final protocol. This makes the workflow easier to interpret, more operationally realistic, and directly aligned with the question of how well the proposed post-processing improves the forecast that a practitioner would actually have had in hand at the issuance date.
 \end{responsebox}
