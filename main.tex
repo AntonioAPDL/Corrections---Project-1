@@ -316,7 +316,7 @@ Rather than asserting superior forecast quality by inspection alone, we now supp
 \begin{responsebox}
 We agree, and the revised manuscript now includes a targeted ablation study of the strongest model, \texttt{exAL-M-T1}, to identify which structural components contribute most to forecast skill.
 
-Following the main validation in HE-2, we take the corresponding \texttt{exAL-M-T1} structural specification at each cutoff as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed within each ablation campaign. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration. The later HE-2 discount-factor refinement at 12/25/2022 changes the final CRPS level reported for \texttt{exAL-M-T1}, but it does not change the structural ablation setup or the conclusions reported here. We also verified that each ablation is a strict simplification of the corresponding full model: it uses the same covariate bundle, the same lagged and interaction terms in the transfer-function inputs, the same fixed discount factors and other fit hyperparameters, and changes only the intended structural component.
+Following the main validation in HE-2, we take the corresponding \texttt{exAL-M-T1} structural specification at each cutoff as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed within each ablation campaign. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration. At the 12/25/2022 cutoff, the refreshed ablation now uses the same published \texttt{exAL-M-T1} winner as HE-2, so the full-reference CRPS reported here matches the final HE-2 table exactly. We also verified that each ablation is a strict simplification of the corresponding full model: it uses the same covariate bundle, the same lagged and interaction terms in the transfer-function inputs, the same fixed discount factors and other fit hyperparameters, and changes only the intended structural component.
 
 We use the following labels in the ablation study:
 \begin{itemize}
@@ -337,12 +337,12 @@ We use the following labels in the ablation study:
 \toprule
 Ablation model & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
 \midrule
-exAL-M-T1 (full) & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.6144} \\
-exAL-M-T1-noTrend & 1.1591 & 0.0666 & 1.4134 & 0.2571 & 2.2330 \\
-exAL-M-noTF & 0.3421 & 0.0984 & 0.4800 & 0.0383 & 2.3651 \\
-exAL-M-T1-noH1 & 0.3536 & 0.1030 & 1.9431 & 0.2777 & 2.3530 \\
-exAL-M-T1-noH2 & 0.3932 & 0.1757 & 1.9430 & 0.2795 & 2.2696 \\
-exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.6253 \\
+exAL-M-T1 (full) & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.4375} \\
+exAL-M-T1-noTrend & 1.1591 & 0.0666 & 1.4134 & 0.2571 & 3.0796 \\
+exAL-M-noTF & 0.3421 & 0.0984 & 0.4800 & 0.0383 & 2.3588 \\
+exAL-M-T1-noH1 & 0.3536 & 0.1030 & 1.9431 & 0.2777 & 2.0821 \\
+exAL-M-T1-noH2 & 0.3932 & 0.1757 & 1.9430 & 0.2795 & 2.0661 \\
+exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.3886 \\
 \addlinespace[2pt]
 \multicolumn{6}{l}{\textit{Raw physical ensembles (reference only)}} \\
 RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
