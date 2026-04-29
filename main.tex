@@ -125,8 +125,6 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 % streamlining in the manuscript is decided.
 % TODO[R1-M4][OPEN]: Compress further after the canonical validation narrative in
 % HE-2 / HE-6 is finalized.
-% TODO[R1-M5][OPEN]: Compress to one short paragraph after the final validation
-% wording is settled.
 % TODO[R1-m4][BRUNO-REVIEW]: Recheck after the final data/application section
 % structure is fixed in the manuscript.
 % TODO[R1-m7][BRUNO-REVIEW]: Recheck after the final results-section headings and
@@ -509,15 +507,7 @@ We agree that the original manuscript placed too much weight on the 2022-12-25 t
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-\bruno{\bf By now, it should be clear what we did regarding validation. So, this response is way to long. Summarize it down to a paragraph.}We agree that fair assessment of this method must be organized around forecast origins, not around a conventional single split of the time series.
-
-The main reason is that our setting is not a standard univariate forecasting problem in which one fits a model to past USGS observations and then extrapolates that same series forward recursively. At a cutoff date \(\textbf{c}\), the method uses all information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\), retrospective or historical products available at \(\textbf{c}\), and the forecast ensembles and forecast covariates issued at that cutoff. Using the discrepancy structure learned before \(\textbf{c}\), it then produces predictive quantile estimates for the unobserved future USGS discharge over the forecast window covered by the forecast ensembles. These predictive quantile estimates are then synthesized into a predictive distribution. That synthesized predictive distribution is evaluated only against the USGS observations realized after \(\textbf{c}\). For this reason, the appropriate evaluation framework is a rolling-origin backtesting design.
-
-This is already the logic of the revised five-cutoff analysis. The five cutoffs act as five temporally separated rolling-origin evaluation folds, each defined by valid archive availability and version consistency of the required inputs. In that sense, the revised analysis is already a fair out-of-sample forecasting assessment for this framework. It is also important that such cutoffs not be taken too densely in time: if forecast origins are too close to one another, their forecast windows may overlap heavily and repeatedly sample the same hydrological regime, which can overrepresent a particular setting in the aggregate validation.
-
-More generally, the same design extends naturally to broader validation or hyperparameter tuning. For a given candidate setting, one may repeat the full cutoff-specific workflow over a larger set of feasible cutoff dates: fit the quantile models at each cutoff, obtain the forecast-window predictive quantile outputs, synthesize them into a predictive distribution, compute a proper score such as mean forecast-window CRPS, and then average that score across cutoffs. In practice, this larger cutoff set should still be chosen carefully so that the folds remain informative and do not collapse into many near-duplicate forecast situations. Repeating this procedure across candidate settings yields the specification with the best average predictive performance over the rolling-origin folds. This is the appropriate analogue of cross-validation in our setting.
-
-The main limitation is practical rather than conceptual. Each cutoff requires a complete, version-consistent input bundle that includes retrospective products, forecast ensembles, and historical forecast covariates such as precipitation and soil moisture. The feasible cutoff range is therefore constrained by archive coverage and version matching across products, and a large rolling-origin study over all feasible cutoffs is computationally expensive even though it is parallelizable in principle. We will make this evaluation setup more explicit in the revised manuscript so that the role of the five-cutoff study and how it can be extended to broader tuning or validation exercises are clear.
+We agree that fair assessment of this method must be organized around forecast origins rather than a conventional single split of the time series. The revised analysis already does this through five rolling-origin cutoff-based folds, which are the appropriate analogue of cross-validation in this setting. The same design could be extended to broader tuning or validation over a larger set of feasible cutoffs, but in practice those cutoffs are constrained by archive/version consistency and should not be taken so densely that heavily overlapping forecast windows overrepresent the same hydrological regime. We will make this evaluation setup more explicit in the revised manuscript.
 \end{responsebox}
 %\locationheading
 %\LocationLine
