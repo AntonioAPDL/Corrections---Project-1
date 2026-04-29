@@ -108,8 +108,8 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 % archive feasibility and version consistency. Pending Raquel's input.
 % TODO[HE-2/HE-6][OPEN]: Decide how much of the version-audit / forecast-archive
 % story should remain in the rebuttal versus the manuscript.
-% TODO[HE-3][OPEN]: Replace manuscript placeholder Section YYY once the revised
-% section numbering is settled.
+% TODO[HE-3][OPTIONAL]: Insert an exact manuscript section number later if we
+% decide that the generic forecasting-results reference should be made explicit.
 % TODO[HE-4][OPEN]: Replace manuscript placeholder Section ZZZ once the revised
 % section numbering is settled.
 % TODO[HE-6][OPEN]: Clarify the role and availability of weather-forecast inputs
@@ -262,20 +262,18 @@ This comparison addresses the extended asymmetric Laplace question directly. Und
 
 \responseheading
 \begin{responsebox}
-We agree \bruno{with the reviewer that there is an explanatory value to the model, reflected in the relevance of its different components. In this repect we notice that all model parameters are estimated using a probabilistic approach. Thus, credible intervals are available and have been reported in the paper when possible. These can be used to assess relevant components of the model. In addition }, \st{and} the revised manuscript now includes a targeted ablation study of the strongest model, \texttt{exAL-M-T1}, \bruno{focused on predictions and aimed at }\st{to identify which} \bruno{identifying the} structural components \bruno{that }contribute most to forecast skill.
-
-\st{Following the main validation in HE-2, we take the corresponding \texttt{exAL-M-T1} structural specification at each cutoff as the reference and remove one component at a time, while keeping the cutoffs, preprocessing, hyperparameters, external inputs, and evaluation protocol fixed within each ablation campaign. This design makes the comparison directly interpretable: any change in forecast-window CRPS can be attributed to the removed component rather than to retuning or to a different data configuration. At the 12/25/2022 cutoff, the refreshed ablation now uses the same published \texttt{exAL-M-T1} winner as HE-2, so the full-reference CRPS reported here matches the final HE-2 table exactly. We also verified that each ablation is a strict simplification of the corresponding full model: it uses the same covariate bundle, the same lagged and interaction terms in the transfer-function inputs, the same fixed discount factors and other fit hyperparameters, and changes only the intended structural component.}
+We agree that the original manuscript did not show clearly enough which parts of the hierarchical specification contribute most to forecast skill. In the revised manuscript, we address this with a targeted ablation study of the best-performing model, \texttt{exAL-M-T1}. Each ablation removes one structural component at a time while keeping the cutoff dates, preprocessing, external inputs, and forecasting hyperparameters fixed, so differences in forecast-window CRPS can be attributed to the removed component rather than to a different forecasting setup.
 
 We use the following labels in the ablation study:
 \begin{itemize}
-\item \texttt{exAL-M-T1} (full reference): trend + all three seasonal harmonic pairs + transfer-function components; transfer function active in both historical fitting and forecast window;
-\item \texttt{exAL-M-T1-noTrend}: same as full model, but with trend component removed;
-\item \texttt{exAL-M-noTF}: same as the full model, but with transfer information removed from both historical fitting and the forecast window. This is not the same comparison as the broader T0 family in HE-2, because here the rest of the winning \texttt{exAL-M-T1} specification is held fixed.
-\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: same as the full model, but with the first, second, or third retained seasonal harmonic pair removed from the seasonal state block. In the full model, the seasonal block retains three harmonic pairs (\texttt{harmonics = 1, 2, 1/6.8333333}), and each ablation removes exactly one of those three pairs. This design is more informative than removing the entire seasonal block at once because it shows whether forecast skill depends on a specific retained harmonic pair or on the seasonal block more broadly.
+\item \texttt{exAL-M-T1} (full reference): trend + three retained seasonal harmonic pairs + transfer-function components, with the transfer function active in both fitting and forecasting;
+\item \texttt{exAL-M-T1-noTrend}: the full model without the trend state;
+\item \texttt{exAL-M-noTF}: the full model without transfer information in either fitting or the forecast window;
+\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: the full model with the first, second, or third retained seasonal harmonic pair removed from the seasonal state block.
 \end{itemize}
 
 \medskip
-\noindent\st{\textbf{Table HE3-A.}} \bruno{The table shows the} mean forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and raw physical-ensemble references. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
+\noindent The table reports mean forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and the raw forecast products included as references. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 \begin{center}
@@ -292,14 +290,14 @@ exAL-M-T1-noH1 & 0.3536 & 0.1030 & 1.9431 & 0.2777 & 2.0821 \\
 exAL-M-T1-noH2 & 0.3932 & 0.1757 & 1.9430 & 0.2795 & 2.0661 \\
 exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.3886 \\
 \addlinespace[2pt]
-\multicolumn{6}{l}{\textit{Raw physical ensembles (reference only)}} \\
+\multicolumn{6}{l}{\textit{Raw forecast products (reference only)}} \\
 RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
 RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, but the largest losses generally occur when the trend block or one of the seasonal harmonic pairs is removed, especially in the more difficult winter windows. This pattern is especially clear at the 12/25/2022 cutoff, where every ablation is markedly worse than the full model. The added raw-reference rows show that the full \texttt{exAL-M-T1} specification also remains better than both raw physical ensembles at every cutoff, so the ablation losses are not merely small perturbations around baseline raw-forecast skill. That difficult winter window is therefore where the full model's combined structure matters most, not evidence of an anomalous ablation fit. The practical message is not that one small add-on explains the gains of \texttt{exAL-M-T1}; its advantage comes from the combination of transfer information, trend, and multi-frequency seasonality. \bruno{These results have been added to the paper in Section YYY}
+Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. The full \texttt{exAL-M-T1} model also remains better than both raw forecast products at every cutoff. The main practical conclusion is that the gain of \texttt{exAL-M-T1} does not come from a single add-on; it comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. These ablation results are now summarized in the revised forecasting-results section of the manuscript.
 
 \end{responsebox}
 
