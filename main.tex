@@ -112,11 +112,10 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 % decide that the generic forecasting-results reference should be made explicit.
 % TODO[HE-4][OPTIONAL]: Insert an exact manuscript section number later if we
 % decide that the generic forecasting-validation reference should be explicit.
-% TODO[HE-6][OPEN]: Clarify the role and availability of weather-forecast inputs
-% in the post-cutoff prediction step and distinguish them from post-cutoff USGS
-% observations used only for evaluation.
+% TODO[HE-6][OPEN]: Mirror the forecast-input timing clarification explicitly in
+% the revised manuscript when the forecasting-design subsection is rewritten.
 % TODO[HE-6][OPEN]: Consider moving the forecast-input availability explanation
-% earlier, when the cutoff design is first introduced.
+% earlier, when the cutoff design is first introduced in the manuscript.
 % TODO[R1-O][OPEN]: Decide whether to keep one concise sentence about the effort
 % required to assemble the historical deterministic-forecast archive.
 % TODO[R1-M1][HOLD]: Revisit after the manuscript introduction is rewritten.
@@ -395,16 +394,11 @@ We agree. The revised manuscript now states explicitly that the reusable exDQLM 
 
 \responseheading
 \begin{responsebox}
-Our evaluation is out-of-sample, and it already uses rolling-origin cross-validation in time. Operationally, the five cutoffs serve as five temporally separated evaluation folds.
+We agree that this needed to be clarified. The revised forecasting evaluation is out-of-sample and uses five rolling-origin cutoff-based forecasting folds.
 
-For each cutoff date \(\textbf{c}\), the model is fit using only information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\), retrospective/historical products available at \(\textbf{c}\), and forecast ensembles issued at or before \(\textbf{c}\). Verification is then performed only on USGS observations after \(\textbf{c}\). No post-cutoff observations are used in fitting, calibration, or synthesis. \bruno{\bf We should say something about the use of the weather forecasts and their availability.}
+For each cutoff date \(\textbf{c}\), the model is fit using only information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\), retrospective/historical products available at \(\textbf{c}\), and forecast products issued at or before \(\textbf{c}\). Post-cutoff USGS observations are used only for verification. By contrast, the post-cutoff forecast inputs that were already available at \(\textbf{c}\), including the forecast ensembles and the forecast precipitation and soil-moisture covariates used in the transfer component, are used to generate the forecast-window predictive distributions.
 
-After fitting at cutoff \(\textbf{c}\), we apply the pre-cutoff discrepancy-learning framework to the forecast ensembles available at that cutoff to obtain post-cutoff predictive distributions, and we then verify those predictive distributions against the unseen USGS observations in the forecast window. The post-cutoff \bruno{observed }data are therefore used only for evaluation, not for model estimation. \bruno{\bf Well, more or less, some data, like the deterministic predictions are used to get the predictions. }
-
-\bruno{\bf This description, or something like it, should be moved to item where the cutoffs are first mentioned.}
-We also agree that cutoff selection is itself part of a fair out-of-sample design. A valid cutoff is not simply any calendar date. Each cutoff must satisfy simultaneous availability and version consistency for the forecast ensembles, retrospective inputs, and forecast covariates. We therefore treat cutoff construction as part of the forecasting design itself, not as an afterthought. These cutoffs were determined by archive feasibility and version consistency, not by forecast performance. HE-2 through HE-4 are now all reported under this rolling-origin protocol.
-
-\st{In short, the evaluation is out-of-sample and operationally realistic, but only when the data-versioning and timing constraints are handled explicitly. The revised manuscript will make this protocol easier to follow with a short forecasting-design schematic and the accompanying version-audit timelines in Figures~ and , reproduced at the end of this response letter, so the reader can see exactly why the evaluation is out-of-sample and how the five cutoffs function as valid forecasting folds.}
+As noted in HE-2, the five cutoffs were retained only when the forecast inputs, retrospective products, and forecast covariates were all archive-feasible and version-consistent. The evaluation folds were therefore determined by timing and data availability, not by forecast performance.
 
 \end{responsebox}
 
