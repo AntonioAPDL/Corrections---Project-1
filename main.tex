@@ -96,6 +96,41 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 \author{Antonio Aguirre \and Raquel Prado \and Bruno Sans\'o}
 \date{Prepared April 2026}
 
+% =========================
+% INTERNAL TODOs FROM BRUNO
+% Remove this block before preparing the final submission-facing version.
+% =========================
+% TODO[HE-2][OPEN]: Add 1--2 concise sentences explaining the archive assembly
+% effort required to build the historical deterministic-forecast repository.
+% TODO[HE-2][OPEN]: State briefly that the earlier retrospective-input version
+% conflict was corrected in the revised analysis.
+% TODO[HE-2][HOLD]: Justify why only five cutoffs were retained after enforcing
+% archive feasibility and version consistency. Pending Raquel's input.
+% TODO[HE-2/HE-6][OPEN]: Decide how much of the version-audit / forecast-archive
+% story should remain in the rebuttal versus the manuscript.
+% TODO[HE-3][OPEN]: Replace manuscript placeholder Section YYY once the revised
+% section numbering is settled.
+% TODO[HE-4][OPEN]: Replace manuscript placeholder Section ZZZ once the revised
+% section numbering is settled.
+% TODO[HE-6][OPEN]: Clarify the role and availability of weather-forecast inputs
+% in the post-cutoff prediction step and distinguish them from post-cutoff USGS
+% observations used only for evaluation.
+% TODO[HE-6][OPEN]: Consider moving the forecast-input availability explanation
+% earlier, when the cutoff design is first introduced.
+% TODO[R1-O][OPEN]: Decide whether to keep one concise sentence about the effort
+% required to assemble the historical deterministic-forecast archive.
+% TODO[R1-M1][HOLD]: Revisit after the manuscript introduction is rewritten.
+% TODO[R1-M2][HOLD]: Revisit after the final manuscript structure is fixed.
+% TODO[R1-M3][HOLD]: Revisit after the degree of mathematical streamlining in the
+% revised manuscript is fixed.
+% TODO[R1-M4][OPEN]: Compress further after the canonical validation narrative in
+% HE-2 / HE-6 is finalized.
+% TODO[R1-M5][OPEN]: Compress to one short paragraph after the final validation
+% wording is settled.
+% TODO[GLOBAL][OPEN]: Replace manuscript placeholders such as Section XXX/YYY/ZZZ.
+% TODO[GLOBAL][FINAL]: Remove all remaining \bruno{} and \st{} markup before the
+% final submission-facing version is prepared.
+
 \begin{document}
 \maketitle
 \begin{flushleft}
@@ -152,11 +187,11 @@ Thank you for pointing this out. The revised manuscript now makes the computatio
 
 \responseheading
 \begin{responsebox}
-We agree \bruno{with the reviewer that is very important for the paper to show that the proposed methods have been properly validated. This is a challenging task given the complexity of the application, involving a sophisticated non-Gaussian dynamic model that blends several sources of information, of disparate quality and relevance, consisting of daily data over several decades. Our main validation strategy consist on scoring the predictive ability of the model when compared to future observations that are not part of the model fit. To this end, we considered five different dates during 2021-2021 and produced predictive inference for up to 29 days ahead, which is the forecast windown available for deterministic models. Performing the validation required a tremendous effort to find, download and process large amounts of data. {\bf Antonio: include a sentence or two describing the process. Also, we have to say somewhere that the retrospective analysis we were using before were not valid, due to the version conflict, and that this has been corrected.}}\st{, and the revised manuscript now validates the proposed method against both simpler Bayesian competitors and raw physical forecast ensembles. In the revised comparison, the best version of the proposed model, \texttt{exAL-M-T1}, achieves the lowest forecast-window CRPS in all five cutoffs and remains below the corresponding \texttt{AL-M-T1} score in all five. This directly addresses the two main concerns raised here: whether the extended asymmetric Laplace formulation improves on the ordinary asymmetric Laplace in this forecasting problem, and whether the added model complexity yields practical gains relative to simpler statistical and physical baselines.}
+We agree that the original manuscript did not validate the proposed forecasting framework strongly enough. In the revised manuscript, we address that directly through a five-cutoff rolling-origin out-of-sample evaluation. At each cutoff, we generate predictive distributions for up to 29 days ahead and verify them against future USGS observations that were not used in model fitting. The revised comparison includes both simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products.
 
-In the revised manuscript, we compare nine Bayesian alternatives built on the same linear-dynamic backbone (trend, seasonal, and transfer-function components) and Gaussian state-evolution noise. They differ only in two respects: the observation likelihood, and whether external forecast information is used during the forecast window.
+Constructing this validation required recovering and harmonizing historical deterministic forecast archives, retrospective products, and forecast covariates across institutions. In the course of this revision, we also corrected the earlier retrospective-input version mismatch so that the final comparisons use only version-consistent forecasting folds. % TODO[HE-2]: insert final concise justification for why only five cutoffs were retained after archive/version screening, once Raquel's input is available.
 
-\bruno{To describe the models considered, }we use the label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
+To describe the models considered, we use the compact label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
 
 \begin{center}
 \scriptsize
@@ -180,10 +215,10 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 
 In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NOAA/NWM forecast ensembles.
 
-All Bayesian models and the raw GloFAS ensemble are evaluated at the same cutoffs, on the same transformed discharge scale, and under the same preprocessing rules. \st{The three NDLM rows and the two univariate AL/exAL rows now come from dedicated corrected reruns under the shared featurecov and blended-input contract used for the revised synthesis comparison.} We use mean forecast-window CRPS as the principal cross-model validation metric, and report quantile diagnostics separately. \st{The version-consistent forecast matching needed to define these cutoffs is summarized by the NWS/NWM and GloFAS audit timelines in Figures and , reproduced at the end of this response letter. The raw NWM ensemble is included as the operational baseline available at those cutoffs, and its reported mean CRPS is computed over its archive-supported forecast window rather than treated as a strictly horizon-matched 28-day benchmark.} \bruno{\bf Antonio: The story of Figures~~\ref{fig:nws-version-audit} and \ref{fig:glofas-version-audit} is complicated, and it is not told properly here. We don't want the statisticians to become experts in deterministic forecast versions, but we want to convey to the reviewers the amount of work that went into producing these forecasts and the nuances that we had to navigate. Also, we need to justify why we considered ``only'' five cutoffs.  Let's see what Raquel has to say.}
+All Bayesian models and the two raw forecast products are evaluated on the same transformed discharge scale and under the same preprocessing rules. We use mean forecast-window CRPS as the principal cross-model validation metric and report quantile diagnostics separately.
 
 \medskip
-\noindent\st{\textbf{Table HE2-A.}} \bruno{The table reports the} mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw physical ensembles. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
+\noindent The table reports mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw forecast products. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 \begin{center}
@@ -211,11 +246,7 @@ exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210
 \end{tabular}
 \end{center}
 
-This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs. More broadly, \texttt{exAL-M-T1} is now the best-performing model in all five cutoffs. The additional exAL complexity is therefore not only theoretical; it delivers the strongest operational performance in every evaluated window, including the final winter fold.
-
-The broader validation message is straightforward. First, the multivariate transfer-enabled asymmetric-Laplace synthesis models (\texttt{AL-M-T1} and \texttt{exAL-M-T1}) provide the strongest and most consistent CRPS performance overall. Second, after rerunning the three NDLM families and the two univariate AL/exAL families under the corrected shared featurecov/blended-input contract, the Normal-likelihood alternatives remain less competitive than the best exAL specification. Third, across all five cutoffs, the best corrected model still outperforms the best raw physical ensemble baseline. For an applied user, the practical conclusion is that the added exAL structure is justified because it improves on the corresponding AL model at every cutoff and dominates the panel overall, including the final winter fold. \bruno{These results have been included in Section XXX of the paper.}
-
-\st{Rather than asserting superior forecast quality by inspection alone, we now support the forecasting claim with explicit probabilistic scores: HE-2 reports CRPS across all model families and raw ensembles, and HE-4 reports targeted quantile check losses for the key synthesis competitors. This revision therefore answers the editor's concern in the practical terms most relevant to applied hydrology users.}
+This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs, and it is the best-performing model in all five cutoffs overall. The best corrected model also outperforms the best raw physical forecast baseline across the panel. These results therefore show that the additional exAL structure is justified empirically, not only theoretically, because it delivers the strongest forecasting performance among the models and raw products considered.
 \end{responsebox}
 
 %\locationheading
