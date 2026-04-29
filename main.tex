@@ -16,10 +16,9 @@
 \usepackage{graphicx}
 \usepackage{soul}
 
-% Additions to ensure placeholders + long tracker table render reliably
+% Additions for markup and framed responses
 \usepackage{xcolor}
 \usepackage{mdframed}
-\usepackage{longtable}
 
 % ---------------------------
 % Unicode safety (prevents "missing later text" due to smart quotes/dashes)
@@ -62,32 +61,10 @@
 \newcommand{\responseheading}{%
   \vspace{2pt}\noindent\textbf{Response}\par
 }
-\newcommand{\locationheading}{%
-  \vspace{2pt}\noindent\textbf{Location and evidence}\par
-}
-\newcommand{\LocationLine}{%
-  \begin{actionbox}
-  \textit{Location:} The corresponding manuscript section(s) will be revised as described in the response above; exact section, table, and figure references will be finalized once those edits are implemented.\par
-  \textit{Evidence:} The planned manuscript change is documented in the response above; updated manuscript locations and any new tables or figures will be cited in the resubmission.
-  \end{actionbox}
-}
-% One environment to prevent broken/mismatched blocks for each comment.
-\newenvironment{commentresponse}[2][7]{%
-  \def\CommentResponseLines{#1}%
-  \commentheading{#2}
-  \begin{commentblock}
-}{%
-  \end{commentblock}
-  \responseheading
-  \ResponsePlaceholder[\CommentResponseLines]
-  \locationheading
-  \LocationLine
-}
-
 \newcommand{\bruno}[1]{\textcolor{blue}{#1}} % Bruno Sanso edits - blue
 
 % ---------------------------
-% Visible placeholders (boxes)
+% Framed response boxes
 % ---------------------------
 \mdfdefinestyle{plainbox}{
   linewidth=0.4pt,
@@ -102,13 +79,6 @@
   skipbelow=6pt
 }
 \newenvironment{responsebox}{\begin{mdframed}[style=plainbox]}{\end{mdframed}}
-\newenvironment{actionbox}{\begin{mdframed}[style=plainbox]}{\end{mdframed}}
-\newcommand{\ResponsePlaceholder}[1][7]{%
-  \begin{responsebox}
-
-  \textit{[Insert response here.}\par\vspace*{#1\baselineskip}
-  \end{responsebox}
-}
 
 % ---------------------------
 % ID macros
@@ -121,70 +91,34 @@
 % ---------------------------
 % Title
 % ---------------------------
-\title{\textbf{Response to Reviewers}\\
+\title{\textbf{Response to the Editor and Reviewer 1}\\
 Manuscript ID: 5228655 (\emph{Environmetrics})}
 \author{Antonio Aguirre \and Raquel Prado \and Bruno Sans\'o}
-\date{Prepared January 2026}
+\date{Prepared April 2026}
 
 \begin{document}
 \maketitle
-\bruno{\bf Antonio: The table of contents is useful for internal use, but please get rid of it when you submit the manuscript back. The reason is that you don't know how the editor will want to handle the communication with the reviewers. Maybe the editor will split the response and send different chunks to different people. In that case the ToC would be confusing.}
+\begin{flushleft}
+Dear Professor Fass\`o,
+\end{flushleft}
 
-\bruno{\bf Take everything that is in sections 1 through 4.3 and write it as a letter. Treat the editor as a colleague and thank the editor, the AE and the referee for all the suggestions, indicating that we found them very useful and that we have given them full consideration, leading to a revised and improved version of the paper. Then make a summary of the most relevant changes and then write that detailed responses to all the suggestions will be given below. Start on a new page for the comments of each one of the different reviewers. Get rid of all the ``location and evidence''. Most editors and reviewers in statistics will find that unusual and may react negatively to it.}
+We thank you, the Associate Editor, and the reviewer for the careful reading of our manuscript and for the constructive suggestions. We found the comments very helpful and have revised the paper substantially in response.
 
-\tableofcontents
+The revised manuscript places much greater emphasis on forecast validation and presentation. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the strongest model specification. We also clarified the role of the different data sources, simplified parts of the methodological exposition, and made the computational and reproducibility discussion more explicit.
 
-\section{Manuscript metadata}
-\begin{tabular}{@{}>{\bfseries}p{0.23\linewidth}p{0.73\linewidth}@{}}
-Manuscript title: & Bayesian Quantile-Based Correction and Synthesis of River Flow Forecasts \\
-Journal: & \emph{Environmetrics} \\
-Manuscript ID: & 5228655 \\
-Decision letter date: & Sat, Jan 17, 2026 \\
-Corresp. author: & Antonio Aguirre (\texttt{jaguir26@ucsc.edu}) \\
-Co-authors: & Raquel Prado; Bruno Sans\'o \\
-\end{tabular}
+Detailed point-by-point responses follow below.
 
-\section{How to read this response}
-Each reviewer comment is quoted verbatim and followed by a response. For each response, we indicate the location(s) of the corresponding changes in the manuscript and summarize the supporting evidence (figures, tables, or appendices) when applicable.
-
-\section{Decision letter}
-% NOTE: This is the full letter text as pasted, including non-technical lines,
-% so nothing is inadvertently omitted.
-
-\begin{commentblock}
-Dear Mr. Antonio Aguirre,
-
-Thank you for submitting your manuscript ``Bayesian Quantile-Based Correction and Synthesis of River Flow Forecasts'' to our journal. After careful assessment, we have decided not to publish your manuscript in Environmetrics.
-
-In fact, although the review team see merits in your manuscript, both of them require changes that exceed a major revision, but are open to considering a new submission
-
-Hence, we have decided not to consider this manuscript further for publication. At the same time, I invite you to submit a new version of this paper.
-
-If you decide to resubmit, please include the title and ID (5228655) of the current submission in the cover letter and address all the issues raised in a point-to-point rebuttal.
-
-Comments from reviewers have been included at the bottom of this email to provide further details about this decision.
-
-If you are considering submitting this manuscript to another journal, Wiley Editing Services may be able to help. Wiley Editing Services are available to all authors and offer expert help with manuscript preparation, including English language editing, translation, manuscript formatting, figure illustration, and graphical abstract design. To learn more, visit the Wiley Editing Services website.
-
-You can also find free resources for writing and preparing your manuscript through Wiley Author Services.
-
-We appreciate you considering Environmetrics for the publication of your research.
-Kind regards,
-Alessandro Fassò
-Environmetrics
-\end{commentblock}
+\section*{Summary of Major Revisions}
+\begin{itemize}
+\item[] Rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products.
+\item[] Added forecast-window CRPS and targeted quantile diagnostics, and aligned the final forecasting protocol with the most recent forecast issuance available at each cutoff.
+\item[] Added a targeted ablation study of the strongest specification and clarified the forecasting contribution of the Bayesian quantile-based correction-and-synthesis framework.
+\item[] Simplified the planned manuscript presentation by clarifying the roles of observations, retrospective products, and forecast products, tightening the methodological exposition, and expanding the computational and reproducibility discussion.
+\end{itemize}
 
 \newpage
 
-\section{Handling editor comments }
-
-\subsection{Summary of changes }
-\begin{itemize}
-\item[] Added an explicit computational-feasibility response for the main forecasting workflow, including runtime, hardware, leading-order complexity, and the operational implications of daily refitting (HE-1).
-\item[] Expanded the forecasting validation to a five-cutoff rolling-origin design with direct comparison against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM ensembles, using forecast-window CRPS and targeted quantile diagnostics (HE-2, HE-4, HE-6, HE-7).
-\item[] Added a targeted ablation study of the strongest model specification to identify which hierarchical components contribute most to forecast skill (HE-3).
-\item[] Clarified reproducibility by distinguishing reusable software resources from the basin-specific work required to assemble a valid version-consistent forecast archive for a new application (HE-5).
-\end{itemize}
+\section{Response to the Handling Editor}
 
 %\subsection{Handling editor text (verbatim preface)}
 \begin{commentblock}
@@ -517,12 +451,7 @@ We therefore adopt the most recent-forecast-only design throughout the revised f
 %\end{actionbox}
 
 \newpage
-%\subsection{Handling editor transition line (verbatim)}
-%\begin{commentblock}
-%The following reviewer comments were taken into consideration during the peer review process.
-%\end{commentblock}
-
-\section{Reviewer 1 comments}
+\section{Response to Reviewer 1}
 
 %\subsection{Reviewer 1 (verbatim header + overview)}
 %\commentheading{\RoneO}
@@ -546,16 +475,6 @@ This paper develops a Bayesian quantile regression approach, based on asymmetric
 \end{responsebox}
 %\locationheading
 %\LocationLine
-
-\subsection{Summary of changes (Reviewer 1)}
-
-\bruno{\bf This, should go at the very beginning when addressing the Editor}
-\begin{itemize}
-\item[] Reframed the forecasting contribution around a broader rolling-origin validation design with five cutoff dates, proper probabilistic forecast-verification scores, and a latest-forecast-only operational protocol, rather than a single illustrative forecast window alone (R1-O, R1-M4, R1-M5, R1-m6).
-\item[] Simplified the planned manuscript architecture by separating the main sources of uncertainty more clearly, clarifying the roles of observations, retrospective products, and forecast products, and reorganizing the application/results sections so the forecasting evidence is easier to follow (R1-M1, R1-M2, R1-m3, R1-m4, R1-m7).
-\item[] Reduced nonessential mathematical detail by dropping the detailed PIT development from the main text, keeping a shorter synthesis description, and planning a more direct presentation of the final forecasting specification (R1-M3).
-\item[] Addressed several local presentation issues, including terminology, precipitation handling, table labeling, and the intended role of the synthesis figures (R1-m1, R1-m2, R1-m5, R1-m8, R1-m9).
-\end{itemize}
 
 %\subsection{Reviewer 1 --- Major comments }
 \begin{commentblock}
@@ -771,61 +690,8 @@ This should make the purpose of these figures much clearer and prevent the ambig
 %\locationheading
 %\LocationLine
 
-\section{Reviewer 2 comments}
-No Reviewer 2 comments were provided in the decision email.
-
-\section{Change log / tracker (to be maintained)}
-% Use ltablex so the tracker can span pages (tabularx cannot).
 \clearpage
-\small
-\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}%
->{\raggedright\arraybackslash}p{0.22\linewidth}%
->{\raggedright\arraybackslash}p{0.40\linewidth}%
->{\raggedright\arraybackslash}p{0.16\linewidth}@{}}
-\toprule
-\textbf{ID} & \textbf{Location} & \textbf{Change summary} & \textbf{Status} \\
-\midrule
-\endfirsthead
-
-\toprule
-\textbf{ID} & \textbf{Location} & \textbf{Change summary} & \textbf{Status} \\
-\midrule
-\endhead
-
-\midrule
-\multicolumn{4}{r}{\small Continued on next page} \\
-\endfoot
-
-\bottomrule
-\endlastfoot
-
-HE-1 & Abstract; forecasting methods/results discussion & Added explicit runtime, hardware, computational-complexity, and daily-refitting feasibility response. & Done \\
-HE-2 & Forecasting-validation subsection; main comparison table & Added the corrected nine-model plus raw-ensemble CRPS comparison, including the repaired NDLM rerun values, and clarified the exAL-versus-AL result. & Done \\
-HE-3 & Ablation-study subsection; HE3-A table & Added component-wise ablation study of \texttt{exAL-M-T1} and clarified that each ablation is a strict simplification. & Done \\
-HE-4 & Probabilistic-validation subsection; HE4-B table & Added forecast-window CRPS framing and quantile check-loss comparison for the key synthesis competitors. & Done \\
-HE-5 & Code/data availability subsection & Clarified reusable code versus basin-specific archive construction and cited the reusable software resources. & Done \\
-HE-6 & Forecasting-design subsection & Clarified rolling-origin out-of-sample validation, cutoff construction, and version-consistency constraints. & Done \\
-HE-7 & Forecasting-protocol subsection & Documented the latest-forecast-only rerun and stated that the main conclusions remain unchanged. & Done \\
-R1-O & Reviewer 1 overview; forecasting positioning & Reframed the contribution around expanded forecast validation, direct benchmark comparison, and clearer contribution language. & Drafted \\
-R1-M1 & Introduction uncertainty framing & Planned a cleaner separation of meteorological versus hydrological uncertainty and a tighter motivation for correction and synthesis. & Drafted \\
-R1-M2 & Methodology/results bridge & Planned a final-model-first presentation and a clearer roadmap linking the formulation to the reported results. & Drafted \\
-R1-M3 & Methods streamlining & Planned removal of the detailed PIT development, compression of intermediate derivations, and a shorter synthesis exposition. & Drafted \\
-R1-M4 & Forecast-validation subsection & Expanded the evidence from one illustrative window to a five-cutoff rolling-origin forecast evaluation with CRPS and quantile diagnostics. & Drafted \\
-R1-M5 & Forecast-assessment design discussion & Clarified why fair assessment is cutoff-based rolling-origin backtesting and how broader tuning/validation could be built over feasible cutoffs. & Drafted \\
-R1-m1 & Introduction wording on model classes & Planned an explicit acknowledgement that conceptual models are often more practical for forecasting than physically based models alone. & Drafted \\
-R1-m2 & Section 2.1 terminology & Planned correction of the apparent ``flexile'' typo and committed to clearer terminology in the revised section. & Drafted \\
-R1-m3 & Section 2.3 retrospective-product wording & Clarified that retrospective products are single-valued/non-ensemble rather than uncertainty-free and softened the deterministic language. & Drafted \\
-R1-m4 & Data/application organization & Planned an earlier introduction of the USGS target series and a clearer ordering of observations, retrospective products, and forecast inputs. & Drafted \\
-R1-m5 & Transfer-function covariate description & Clarified that precipitation enters only as an external transfer-function covariate and is not modeled with a separate censoring component. & Drafted \\
-R1-m6 & Forecast-issuance protocol & Adopted a latest-forecast-only protocol at each cutoff and aligned the forecasting discussion with that final operational design. & Drafted \\
-R1-m7 & Section 3 headings and structure & Planned clearer subsection titles and a cleaner separation between application setup, historical fit, and forecasting evidence. & Drafted \\
-R1-m8 & Tables 1 and 2 captions/notes & Planned correction of the posterior mean/median inconsistency for the two parameter-summary tables. & Drafted \\
-R1-m9 & Synthesis-figure explanation & Clarified that the figure pair is illustrative and that the main forecasting evidence now comes from the expanded multi-cutoff validation. & Drafted \\
-\end{longtable}
-\normalsize
-
-\clearpage
-\section*{Figures Referenced Above}
+\section*{Figures Referenced in the Responses}
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth]{figures/nws_nwm_version_coverage_timeline_paper.pdf}
