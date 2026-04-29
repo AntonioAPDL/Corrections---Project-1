@@ -118,10 +118,11 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 % earlier, when the cutoff design is first introduced in the manuscript.
 % TODO[R1-O][OPEN]: Decide whether to keep one concise sentence about the effort
 % required to assemble the historical deterministic-forecast archive.
-% TODO[R1-M1][HOLD]: Revisit after the manuscript introduction is rewritten.
-% TODO[R1-M2][HOLD]: Revisit after the final manuscript structure is fixed.
-% TODO[R1-M3][HOLD]: Revisit after the degree of mathematical streamlining in the
-% revised manuscript is fixed.
+% TODO[R1-M1][BRUNO-REVIEW]: Recheck after the introduction rewrite is complete.
+% TODO[R1-M2][BRUNO-REVIEW]: Recheck after the final methodology/results
+% structure is fixed.
+% TODO[R1-M3][BRUNO-REVIEW]: Recheck after the final level of mathematical
+% streamlining in the manuscript is decided.
 % TODO[R1-M4][OPEN]: Compress further after the canonical validation narrative in
 % HE-2 / HE-6 is finalized.
 % TODO[R1-M5][OPEN]: Compress to one short paragraph after the final validation
@@ -456,13 +457,7 @@ Major comments:
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-\bruno{\bf Before dealing with this answer, I would like to see how the manuscript gets modified.}We agree with this comment. In its current form, the introduction does not separate meteorological and hydrological sources of uncertainty clearly enough, and this weakens the motivation.
-
-More specifically, the current introduction moves too quickly from general remarks on hydrological forecasting to details of atmospheric ensemble generation, including under-dispersion and perturbation methods used in weather forecasting. While those issues are relevant to the broader forecasting chain, they are not the main focus of this paper. Our contribution starts from forecast and retrospective streamflow products that are already available from operational centers and studies how they can be statistically corrected and synthesized for probabilistic river-flow forecasting.
-
-In the revised manuscript, we will reorganize the introduction so that the uncertainty sources are distinguished before the Bayesian framework is introduced. We will first separate uncertainty entering through meteorological forcings and forecast generation from uncertainty entering through hydrological response, model structure, parameterization, initial conditions, and discrepancies between observations and operational products. We will then explain why the latter discrepancies motivate a statistical correction-and-synthesis approach in our setting.
-
-We will also shorten the discussion of atmospheric ensemble-generation methods in the introduction and keep the focus on the uncertainty sources that are directly relevant to the problem studied in the paper. This should make the motivation clearer and the scope of the paper easier to follow.
+We agree that the introduction does not currently distinguish meteorological and hydrological uncertainty clearly enough, and that this weakens the motivation. In the revised manuscript, we will reorganize the introduction so that these uncertainty sources are separated before the Bayesian framework is introduced, and we will shorten the discussion of atmospheric ensemble-generation methods so that the focus stays on the sources of uncertainty most directly relevant to the correction-and-synthesis problem studied here. This should make the motivation clearer and the scope of the paper easier to follow.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -473,11 +468,7 @@ We will also shorten the discussion of atmospheric ensemble-generation methods i
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-\bruno{\bf same as before}We agree that the connection between the formulation and the reported results is not clear enough in the current manuscript. Part of the difficulty comes from the staged presentation through Models A, B, and C. That progression was intended as a walkthrough for building the final forecasting specification, but in the current form it can give the impression that these are the main competing models used in the results section.
-
-To address this, in the revised manuscript we will simplify the methodological presentation and introduce the final forecasting model directly in compact form. We will then explain its components and notation within that unified specification, rather than using the staged A/B/C development as the main organizing device. This should make it much easier to connect the model definition to the empirical comparisons and forecasting results reported later in the paper.
-
-We will also revise the opening of the results section so that the reader can immediately see which specification is being evaluated and how the reported model comparisons relate to the final forecasting framework.
+We agree that the current A/B/C presentation does not make the connection between the model formulation and the reported results clear enough. In the revised manuscript, we will present the final forecasting specification more directly and use the staged development only as supporting exposition, rather than as the main organizing device for the results. We will also revise the opening of the results section so that the reader can see immediately which specification is being evaluated and how the reported comparisons relate to the final forecasting framework.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -488,13 +479,9 @@ We will also revise the opening of the results section so that the reader can im
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-\bruno{\bf Same as before}We agree that the current manuscript contains more mathematical detail than is needed for a journal article, and we will simplify the presentation.
+We agree that the manuscript currently contains more mathematical detail than is needed for a journal article, and we will simplify the presentation substantially. In particular, we will remove the detailed PIT development from the main text, since PITs are not used in the final reported evaluation and CRPS is the main criterion used for model comparison and forecast assessment.
 
-In particular, we agree that the detailed PIT discussion is not necessary in the present paper, since PITs are not used in the final reported evaluation and CRPS is the main criterion used for model comparison and forecast assessment. We will therefore remove the detailed PIT development from the main text and keep the focus on CRPS and the forecast-verification quantities that are actually used in the revised results section.
-
-We also agree that the overall methodological presentation can be made more compact. As part of the revision, we will present the final forecasting model directly and reduce intermediate derivational detail that is not essential for understanding the applied contribution.
-
-For the posterior predictive synthesis, however, we will retain a concise methodological description in the main text because this step is part of the contribution of the paper. The synthesis is the mechanism that combines independently fitted quantile-specific outputs into a single predictive distribution, and the monotonicity safeguard is included to make that synthesis robust to possible quantile crossing even if crossing was not observed in the present application. That said, we agree that the current exposition is longer than necessary, and we will shorten it substantially while preserving the key construction.
+More broadly, we will reduce intermediate derivational detail and keep the focus on the forecasting quantities that are actually used in the revised results section. For posterior predictive synthesis, we will retain only a concise description in the main text, because that step is part of the contribution of the paper; the quantile-crossing safeguard will be mentioned briefly as a robustness device rather than developed at length.
 \end{responsebox}
 %\locationheading
 %\LocationLine
