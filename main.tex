@@ -127,6 +127,12 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 % HE-2 / HE-6 is finalized.
 % TODO[R1-M5][OPEN]: Compress to one short paragraph after the final validation
 % wording is settled.
+% TODO[R1-m4][BRUNO-REVIEW]: Recheck after the final data/application section
+% structure is fixed in the manuscript.
+% TODO[R1-m7][BRUNO-REVIEW]: Recheck after the final results-section headings and
+% subsection structure are fixed.
+% TODO[R1-m9][BRUNO-REVIEW]: Recheck after the final decision on Figures 8 and 9
+% in the manuscript.
 % TODO[GLOBAL][OPEN]: Replace manuscript placeholders such as Section XXX/YYY/ZZZ.
 % TODO[GLOBAL][FINAL]: Remove all remaining \bruno{} and \st{} markup before the
 % final submission-facing version is prepared.
@@ -527,9 +533,7 @@ Minor comments:
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The current sentence is too narrow because hydrological prediction is not limited to physically based models.
-
-In the revised manuscript, we will broaden that statement to acknowledge that operational hydrological forecasting is carried out with conceptual as well as physically based models. We will also note that conceptual models are often more practical for prediction because they are typically simpler to specify, calibrate, and use in forecasting applications.
+We agree. The current sentence is too narrow. In the revised manuscript, we will broaden it to note that operational hydrological forecasting uses conceptual as well as physically based models, and that conceptual models are often more practical for prediction because they are typically simpler to specify, calibrate, and use in forecasting applications.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -540,7 +544,7 @@ In the revised manuscript, we will broaden that statement to acknowledge that op
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. This appears to have been a typo on our side rather than intended terminology. In the revised manuscript, we will correct this wording and use clearer terminology in the corresponding section.
+We agree. This appears to have been a typo on our side rather than intended terminology, and we will correct it in the revised manuscript.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -551,11 +555,7 @@ We agree. This appears to have been a typo on our side rather than intended term
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the current wording in Section 2.3 is too strong.
-
-Our intent was to distinguish retrospective products from ensemble forecasts in the sense that the former are single-valued, non-ensemble historical reconstructions or simulations, rather than probabilistic products. We did not intend to suggest that they are uncertainty-free, purely deterministic in a stronger sense, or equivalent to observations. That distinction matters here, because some variables in products such as ERA5 are generated through short forecast components within the reanalysis system, and retrospective hydrological products such as GloFAS historical and NWM retrospective remain model-based reconstructions with their own forcing, model, and calibration uncertainties.
-
-In the revised manuscript, we will therefore replace the current deterministic language with more precise wording. In particular, we will describe these inputs as single-valued retrospective or reanalysis-based products and state explicitly that single-valued does not mean uncertainty-free. This will preserve the intended distinction from ensemble forecast products without overstating the status of the retrospective inputs.
+We agree that the current wording in Section 2.3 is too strong. Our intent was only to distinguish single-valued retrospective products from probabilistic forecast products, not to suggest that the former are uncertainty-free or equivalent to observations. In the revised manuscript, we will replace the deterministic language with more precise wording and note explicitly that products such as ERA5 can include short forecast components, so these inputs should be understood as retrospective or reanalysis-based products with their own uncertainties.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -566,11 +566,7 @@ In the revised manuscript, we will therefore replace the current deterministic l
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the current manuscript does not introduce the USGS observations and their role relative to the retrospective products clearly enough.
-
-At present, the retrospective component is developed mathematically before the reader has been clearly oriented to the role of the USGS discharge series as the reference target. In the revised manuscript, we will fix this in two ways. First, in the methodology section, we will add a short orienting description before the retrospective-product equations to state explicitly that the USGS series is the observed target, whereas the retrospective products are external historical inputs used for discrepancy learning. Second, we will reorganize the current application section so that the observed discharge series, the retrospective products, the forecast ensembles, and the forecast covariates are introduced in a clearer order before the application-specific specification and results.
-
-The goal is to make the role of each data source explicit, rather than leaving the reader to infer it from the notation alone.
+We agree that the USGS observations and their role relative to the retrospective products are introduced too indirectly. In the revised manuscript, we will state earlier and more explicitly that the USGS series is the observed target, whereas the retrospective products are external historical inputs, and we will reorganize the application material so that observations, retrospective products, forecast products, and forecast covariates are introduced in a clearer order.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -581,9 +577,7 @@ The goal is to make the role of each data source explicit, rather than leaving t
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-This was not described clearly enough in the manuscript. In the current specification, precipitation is not handled through a separate censoring, zero-inflation, or occurrence/intensity model. Instead, it enters only as an external covariate in the transfer function, so zero-precipitation days are retained as zero and precipitation is not modeled as a response variable.
-
-This is the intended role of precipitation in our framework. The external precipitation path acts as an exogenous driver of river flow: abrupt increases can induce sharp changes in the flow quantiles, while the absence of precipitation allows the transfer effect to decay according to the transfer rate. In that sense, the discontinuous behavior of precipitation is handled through the covariate path and the transfer-function dynamics rather than through a separate precipitation model. We will make this explicit in the revised manuscript.
+This was not described clearly enough in the manuscript. In the current specification, precipitation is not handled through a separate censoring, zero-inflation, or occurrence/intensity model. Instead, it enters as an external covariate in the transfer function, so zero-precipitation days are retained as zero and its intermittent behavior is handled through the supplied covariate path and transfer dynamics rather than through a separate precipitation model. We will make this explicit in the revised manuscript.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -594,9 +588,7 @@ This is the intended role of precipitation in our framework. The external precip
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that this concern is well taken from an operational forecasting perspective. In the revised analysis, we no longer combine older forecast issuances for the target time. Instead, at each cutoff we use only the most recent forecast ensemble available, which is the most natural applied benchmark and avoids potential degradation from including older atmospheric information.
-
-The revised forecasting results reported in this response letter and referred to in the manuscript now follow that latest-forecast-only protocol. The corresponding update is described in HE-7 above.
+We agree that this concern is well taken from an operational forecasting perspective. In the revised analysis, we no longer combine older forecast issuances for the target time; at each cutoff we use only the most recent forecast ensemble available. The revised forecasting results reported in this response letter and referred to in the manuscript now follow that latest-forecast-only protocol.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -607,11 +599,7 @@ The revised forecasting results reported in this response letter and referred to
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the current organization of Section 3 is not clear enough. The issue is not only the subsection title ``General Results''; more broadly, the current section titled ``Forecasting the San Lorenzo River Flow'' mixes application setup, historical fit and parameter interpretation, and actual forecasting results more than it should.
-
-In the revised manuscript, we will reorganize this material more explicitly. The current Section 3 will be refocused as a data-and-application setup section, while the subsequent results material will be divided into clearer subsections that separate historical fit and parameter interpretation from out-of-sample forecasting evaluation and posterior predictive synthesis. We will also replace vague titles such as ``General Results'' with headings that state directly what is being shown.
-
-This should make it much easier for the reader to distinguish what is application setup, what concerns behavior over the historical sample, and what constitutes the actual forecasting evidence.
+We agree that the current organization of Section 3 is not clear enough. In the revised manuscript, we will replace vague headings such as ``General Results'' and reorganize the material so that application setup, historical fit and parameter interpretation, and out-of-sample forecasting results are presented in separate subsections. This should make it much clearer what is setup, what concerns behavior over the historical sample, and what constitutes the actual forecasting evidence.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -622,7 +610,7 @@ This should make it much easier for the reader to distinguish what is applicatio
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The current labeling of Tables 1 and 2 is inconsistent. The entries reported in those two tables are posterior medians with 95\% credible intervals, not posterior means. In the revised manuscript, we will correct the captions and table notes accordingly and ensure that the surrounding text uses the same terminology consistently.
+We agree. The current labeling of Tables 1 and 2 is inconsistent: the entries reported there are posterior medians with 95\% credible intervals, not posterior means. In the revised manuscript, we will correct the captions and table notes accordingly and ensure that the surrounding text uses the same terminology consistently.
 \end{responsebox}
 %\locationheading
 %\LocationLine
@@ -633,11 +621,7 @@ We agree. The current labeling of Tables 1 and 2 is inconsistent. The entries re
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the current discussion of these figures is not clear enough. In the original manuscript, Figures 8 and 9 were intended as single-cutoff illustrations of the synthesis step, but the text does not explain their roles clearly enough and leaves too much room for over-interpretation of the apparent differences in spread.
-
-In the revised manuscript, the main forecasting evidence will come from the expanded multi-cutoff comparisons and forecast-verification results described in Responses R1-M4 and R1-M5, rather than from this single illustrative figure pair alone. If these synthesis figures are retained, we will revise the surrounding discussion to state explicitly that one is an operational forecasting illustration and the other is an idealized benchmark based on a different information setting, so they are not meant to be interpreted as a direct like-for-like comparison of predictive variance.
-
-This should make the purpose of these figures much clearer and prevent the ambiguity noted by the reviewer.
+We agree that the discussion of these figures is not clear enough. In the revised manuscript, the main forecasting evidence will come from the expanded multi-cutoff comparisons rather than from this illustrative figure pair alone. If these synthesis figures are retained, we will explain more explicitly that they play different roles and are not intended as a like-for-like comparison of predictive variance.
 \end{responsebox}
 %\locationheading
 %\LocationLine
