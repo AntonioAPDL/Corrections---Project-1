@@ -136,33 +136,7 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 \responseheading
 \begin{responsebox}
-\bruno{Thank you for pointing out the lack of emphasis on the computational speed of the proposed methods, which is one of the relevant aspects of the paper. }\st{We agree, and } The revised manuscript now states the computational cost and operational feasibility explicitly rather than leaving them implicit in the abstract.
-
-To answer the editor's three questions directly: on runtime, under our production implementation, one full issuance cycle for the main model at a single river site requires about two hours end-to-end. That corresponds to roughly 100 minutes for fitting and about 20 additional minutes for post-processing on our Linux production server (64 CPU cores and about 503 GiB RAM). The seven quantile fits are run in parallel, so wall-clock time is governed by the slowest quantile fit rather than by the sum across all seven fits. \st{On} \bruno{Regarding} re-estimation, \st{yes,} the model \st{is intended to be refit} \bruno{requires refitting} as new \st{forecast issuances arrive} \bruno{become available}. \st{On feasibility, yes, that} Daily refitting is operationally feasible once the data pipeline is in place.
-
-\bruno{\bf Antonio: What follows is a very lengthy response, too long. I assume that the relevant parts of the response will make it to the manuscript. Shorten the response to just one paragraph describing briefly what you added to the manuscript and where.} 
-
-The dominant computational cost is repeated Kalman filtering/smoothing within iterative inference. This is not specific to our formulation: for state-space models fit by iterative procedures, the standard computational bottleneck is the repeated forward-backward updating of the latent state trajectory. Let \(T\) denote the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension (\(d=31\) in our implementation). With fixed observation dimension, the leading cost of one full filtering/smoothing pass is
-\[
-O\!\left((T+H)\,d^{3}\right),
-\]
-with lower-order terms of order \(O((T+H)\,d^{2})\).
-
-This also explains why we describe the VB implementation as the practically faster route for forecasting. For full MCMC, the total cost scales as
-\[
-O\!\left(I_{\mathrm{MCMC}}\,(T+H)\,d^{3}\right),
-\]
-where \(I_{\mathrm{MCMC}}\) includes burn-in, retained iterations, and any additional iterations required for adequate mixing. In other words, each MCMC iteration pays for another full filtering/smoothing pass. For VB-CAVI, the total cost scales as
-\[
-O\!\left(I_{\mathrm{VB}}\,(T+H)\,d^{3}\right),
-\]
-where \(I_{\mathrm{VB}}\) is the number of iterations required for ELBO convergence. For the forecasting objective of this paper, the practical distinction is that once VB has converged, posterior samples can be generated at low incremental cost, whereas MCMC continues to pay the full state-smoothing cost at every retained iteration.
-
-This interpretation is also consistent with our simulation evidence. Although that simulation study was conducted in the simpler univariate DQLM/exDQLM setting implemented in the CRAN R package \texttt{exdqlm}, it still shows a substantial VB speed advantage, with VB approximately 10x--20x faster than MCMC in comparable fits. Because the application in this paper is multivariate and therefore more demanding, we treat that result as supporting evidence about relative algorithmic efficiency rather than as a one-to-one runtime claim for the present forecasting application.
-
-To answer the re-estimation question more concretely, at issuance date 2022-12-25 we use all information available through 2022-12-25 (historical segment: 1987-05-29 to 2022-12-25) and produce corrected predictive distributions for 2022-12-26 through 2023-01-22. At the next issuance date, the model is refit because the information set has changed: the observed discharge record is extended, the retrospective products are updated, and new ensemble forecasts and forecast covariates become available.
-
-In addition, posterior summaries from the previous issuance provide informed initial values for the next VB run, which can further reduce convergence time. Even without these warm starts, the observed end-to-end timing remains operationally feasible for daily forecasting at a single river site when the data pipeline is already in place.
+Thank you for pointing this out. The revised manuscript now makes the computational cost and operational feasibility of the forecasting workflow explicit in the abstract and in the forecasting methods/results discussion. For the main model at a single river site, one issuance cycle requires about two hours end-to-end on our production Linux server, with about 100 minutes for fitting and about 20 minutes for post-processing on a 64-core machine with roughly 503 GiB RAM; the seven quantile fits are run in parallel. The model requires refitting as new observations, retrospective products, and forecast inputs become available, and this daily refitting is operationally feasible once the data pipeline is in place. The dominant computational bottleneck is repeated Kalman filtering and smoothing, with leading-order cost proportional to \((T+H)d^{3}\) per full pass, where \(T\) is the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension.
 \end{responsebox}
 
 %\locationheading
