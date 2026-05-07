@@ -21,8 +21,13 @@ Key revised-manuscript references:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/FIGURE_TABLE_PROVENANCE.md`
 - manuscript revision checklist:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/MANUSCRIPT_REVISION_CHECKLIST.md`
+- generated-asset manifest:
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/ARTICLE_GENERATED_ASSET_MANIFEST.json`
 - generated asset index:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/generated/README.md`
+- generated figure selection + table includes:
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/generated/article_asset_selection/selection_manifest.json`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/generated/article_table_includes/README.md`
 - current HE2 historical-support audit snapshot:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/generated/he2_historical_support_audit_20260507/historical_support_audit.md`
 
@@ -56,6 +61,7 @@ Core fields:
 - Updated discount-factor setup and Wishart epsilon sensitivity results.
 - Cross-link every claim to explicit figures/tables/evidence files.
 - Treat the revised article repo `generated/` directory as the manuscript-local evidence freeze point whenever the response letter references current figures/tables/audits.
+- When figures or model-derived tables change, refresh the revised article repo first via `scripts/refresh_all_generated_assets.py`; then re-read the refreshed article-side bundles before editing the corrections letter.
 
 ## Notes
 
