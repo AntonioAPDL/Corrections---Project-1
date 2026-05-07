@@ -127,13 +127,13 @@ Dear Professor Fass\`o,
 
 We thank you and the reviewer for the careful reading of our manuscript and for the constructive suggestions. We found the comments very helpful and have revised the paper substantially in response.
 
-The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the strongest model specification. We also plan corresponding manuscript revisions to clarify the roles of the different data sources, streamline parts of the methodological exposition, and make the computational and reproducibility discussion more explicit.
+The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the strongest model specification. We also revised the manuscript to clarify the roles of the different data sources, streamline parts of the methodological exposition, and make the computational and reproducibility discussion more explicit.
 
 Detailed point-by-point responses follow below.
 
 \section*{Summary of Major Revisions}
 \begin{itemize}
-\item[] Rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products.
+\item[] Rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
 \item[] Added forecast-window CRPS and targeted quantile diagnostics, and aligned the final forecasting protocol with the most recent forecast issuance available at each cutoff.
 \item[] Added a targeted ablation study of the strongest specification and clarified the forecasting contribution of the Bayesian quantile-based correction-and-synthesis framework.
 \item[] Planned manuscript revisions clarify the roles of observations, retrospective products, and forecast products, tighten the methodological exposition, and expand the computational and reproducibility discussion.
@@ -168,11 +168,11 @@ Thank you for pointing this out. The revised manuscript now makes the computatio
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not validate the proposed forecasting framework strongly enough. In the revised manuscript, we address that directly through a five-cutoff rolling-origin out-of-sample evaluation. At each cutoff, we generate predictive distributions for up to 29 days ahead and verify them against future USGS observations that were not used in model fitting. The revised comparison includes both simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products.
+We agree that the original manuscript did not validate the proposed forecasting framework strongly enough. In the revised manuscript, we address that directly through a five-cutoff rolling-origin out-of-sample evaluation. At each cutoff, we generate predictive distributions for up to 29 days ahead and verify them against future USGS observations that were not used in model fitting. The revised comparison includes both simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
 
 Constructing this validation required recovering and harmonizing historical deterministic forecast archives, retrospective products, and forecast covariates across institutions. In the course of this revision, we also corrected the earlier retrospective-input version mismatch so that the final comparisons use only version-consistent forecasting folds.
 
-To describe the models considered, we use the compact label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NOAA/NWM). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
+To describe the models considered, we use the compact label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NWS). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
 
 \begin{center}
 \scriptsize
@@ -194,7 +194,7 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 \end{tabular}
 \end{center}
 
-In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NOAA/NWM forecast products.
+In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NWS forecast products.
 
 All Bayesian models and the two raw forecast products are evaluated on the same transformed discharge scale and under the same preprocessing rules. We use mean forecast-window CRPS as the principal cross-model validation metric and report quantile diagnostics separately.
 
@@ -211,7 +211,7 @@ Model label & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
 \midrule
 \multicolumn{6}{l}{\textit{Raw forecast products}} \\
 RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
-RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
+RAW-NWS & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \addlinespace[2pt]
 \multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
 N-U-T1 & 0.3520 & 0.2486 & 1.1768 & 0.1572 & 2.1451 \\
@@ -268,7 +268,7 @@ exAL-M-T1-noH3 & 0.3552 & 0.1763 & 1.9360 & 0.2226 & 2.3886 \\
 \addlinespace[2pt]
 \multicolumn{6}{l}{\textit{Raw forecast products (reference only)}} \\
 RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
-RAW-NWM & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
+RAW-NWS & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -388,7 +388,7 @@ This paper develops a Bayesian quantile regression approach, based on asymmetric
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. The revised manuscript addresses that directly by centering the forecasting analysis on multiple rolling-origin cutoffs over a 29-day horizon, comparing the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NOAA/NWM forecast products, reporting both CRPS and targeted quantile diagnostics, and using only the most recent forecast ensemble available at each cutoff.
+We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. The revised manuscript addresses that directly by centering the forecasting analysis on multiple rolling-origin cutoffs over a 29-day horizon, comparing the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, reporting both CRPS and targeted quantile diagnostics, and using only the most recent forecast ensemble available at each cutoff.
 
 We also revised how the contribution is stated. In the revised manuscript, the main contribution will be presented as the Bayesian quantile-based correction-and-synthesis framework together with its forecasting performance in this application, rather than dynamical error correction in the abstract. The remaining issues concerning motivation, model-to-results linkage, and presentation are addressed point by point below.
 \end{responsebox}
