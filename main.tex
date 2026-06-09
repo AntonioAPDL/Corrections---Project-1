@@ -273,7 +273,7 @@ RAW-NWS & 0.8304 & 1.3719 & 0.2812 & 0.2837 & 0.5568 \\
 \end{tabular}
 \end{center}
 
-Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. The full \texttt{exAL-M-T1} model also remains better than both raw forecast products at every cutoff. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
+Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the raw forecast references in this ablation table, the full \texttt{exAL-M-T1} model is better than \texttt{RAW-GLOFAS} at all five cutoffs and better than \texttt{RAW-NWS} in the first four cutoffs; at 12/25/2022, \texttt{RAW-NWS} remains the best raw/reference entry, matching the exception noted in the revised forecast-comparison discussion. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
 
 \end{responsebox}
 
