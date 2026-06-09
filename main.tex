@@ -93,32 +93,6 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 \author{Antonio Aguirre \and Raquel Prado \and Bruno Sans\'o}
 \date{Prepared April 2026}
 
-% =========================
-% INTERNAL TODOs 
-% Remove this block before submission.
-% =========================
-% TODO[HE-2][HOLD]: Justify why only five cutoffs were retained after enforcing
-% archive feasibility and version consistency. Pending Raquel's input.
-% TODO[HE-3][OPTIONAL]: Insert an exact manuscript section number later if we
-% decide that the generic forecasting-results reference should be made explicit.
-% TODO[HE-4][OPTIONAL]: Insert an exact manuscript section number later if we
-% decide that the generic forecasting-validation reference should be explicit.
-% TODO[HE-6][OPEN]: Mirror the forecast-input timing clarification explicitly in
-% the revised manuscript when the forecasting-design subsection is rewritten.
-% TODO[HE-6][OPEN]: Consider moving the forecast-input availability explanation
-% earlier, when the cutoff design is first introduced in the manuscript.
-% TODO[R1-M1][BRUNO-REVIEW]: Recheck after the introduction rewrite is complete.
-% TODO[R1-M2][BRUNO-REVIEW]: Recheck after the final methodology/results
-% structure is fixed.
-% TODO[R1-M3][BRUNO-REVIEW]: Recheck after the final level of mathematical
-% streamlining in the manuscript is decided.
-% TODO[R1-m4][BRUNO-REVIEW]: Recheck after the final data/application section
-% structure is fixed in the manuscript.
-% TODO[R1-m7][BRUNO-REVIEW]: Recheck after the final results-section headings and
-% subsection structure are fixed.
-% TODO[R1-m9][BRUNO-REVIEW]: Recheck after the final decision on Figures 8 and 9
-% in the manuscript.
-
 \begin{document}
 \maketitle
 \begin{flushleft}
@@ -202,32 +176,9 @@ All Bayesian models and the two raw forecast products are evaluated on the same 
 \noindent The table reports mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw forecast products. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
-\begin{center}
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{>{\ttfamily}l rrrrr}
-\toprule
-Model label & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
-\midrule
-\multicolumn{6}{l}{\textit{Raw forecast products}} \\
-RAW-GLOFAS & 0.5379 & 1.5664 & 1.7757 & 2.0301 & 2.9297 \\
-RAW-NWS & 2.6668 & 0.0968 & 1.8160 & 0.7329 & 1.6609 \\
-\addlinespace[2pt]
-\multicolumn{6}{l}{\textit{Bayesian models (simple to complex)}} \\
-N-U-T1 & 0.3520 & 0.2486 & 1.1768 & 0.1572 & 2.1451 \\
-N-M-T0 & 0.5311 & 0.0565 & 1.5616 & 0.0241 & 2.3485 \\
-N-M-T1 & 0.5275 & 0.0722 & 0.6071 & 0.0416 & 0.5363 \\
-AL-U-T1 & 0.2449 & 0.1493 & 1.2283 & 0.0551 & 1.1038 \\
-AL-M-T0 & 0.3267 & 2.2435 & 0.6511 & 0.0433 & 2.2601 \\
-AL-M-T1 & 0.1604 & 0.0391 & 0.3482 & 0.0214 & 0.6186 \\
-exAL-U-T1 & 0.2229 & 0.1506 & 1.2691 & 0.0541 & 1.1189 \\
-exAL-M-T0 & 0.3292 & 1.2744 & 0.4720 & 0.0694 & 2.3365 \\
-exAL-M-T1 & \textbf{0.1569} & \textbf{0.0284} & \textbf{0.2369} & \textbf{0.0210} & \textbf{0.4375} \\
-\bottomrule
-\end{tabular}
-\end{center}
+\input{tables/generated_tex/he2_benchmark_crps_response_table.tex}
 
-This comparison addresses the extended asymmetric Laplace question directly. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} at all five cutoffs, and it is the best-performing model in all five cutoffs overall. The best corrected model also outperforms the best raw forecast baseline across the panel. These results support the exAL extension empirically, because it gives the strongest forecasting performance among the models and raw forecast products considered.
+This comparison addresses the extended asymmetric Laplace question directly while preserving the raw operational baselines as references. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} in the first four cutoffs, whereas \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. At that final cutoff, the raw NWS forecast product has the lowest CRPS overall. Thus, the corrected Bayesian models provide the strongest corrected forecasts across the rolling-origin panel, but they do not uniformly dominate the best raw baseline in every cutoff.
 \end{responsebox}
 
 %
@@ -252,26 +203,7 @@ We use the following labels in the ablation study:
 \noindent The table reports mean forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and the raw forecast products included as references. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
-\begin{center}
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{>{\ttfamily}l c c c c c}
-\toprule
-Ablation model & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
-\midrule
-exAL-M-T1 (full) & \textbf{0.1397} & \textbf{0.0472} & \textbf{0.2654} & \textbf{0.0323} & \textbf{0.6655} \\
-exAL-M-T1-noTrend & 1.0516 & 0.7234 & 2.5204 & 0.5504 & 3.8662 \\
-exAL-M-noTF & 1.7361 & 1.9129 & 1.7945 & 1.5969 & 2.3674 \\
-exAL-M-T1-noH1 & 1.2786 & 1.6014 & 2.9384 & 1.1590 & 4.8122 \\
-exAL-M-T1-noH2 & 0.7269 & 1.0472 & 2.9358 & 0.8202 & 4.4503 \\
-exAL-M-T1-noH3 & 1.0828 & 1.0356 & 2.6867 & 0.7294 & 4.1448 \\
-\addlinespace[2pt]
-\multicolumn{6}{l}{\textit{Raw forecast products (reference only)}} \\
-RAW-GLOFAS & 0.4037 & 0.1696 & 0.6825 & 0.2723 & 1.5601 \\
-RAW-NWS & 0.8304 & 1.3719 & 0.2812 & 0.2837 & 0.5568 \\
-\bottomrule
-\end{tabular}
-\end{center}
+\input{tables/generated_tex/he3_ablation_crps_response_table.tex}
 
 Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the raw forecast references in this ablation table, the full \texttt{exAL-M-T1} model is better than \texttt{RAW-GLOFAS} at all five cutoffs and better than \texttt{RAW-NWS} in the first four cutoffs; at 12/25/2022, \texttt{RAW-NWS} remains the best raw/reference entry, matching the exception noted in the revised forecast-comparison discussion. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
 
@@ -293,47 +225,9 @@ We use CRPS as the primary summary score because the object of interest is the f
 \noindent The table reports mean forecast-window quantile check loss at the targeted quantiles for the four principal synthesis competitors, on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column (ties included) is shown in bold.\par
 \medskip
 
-\begin{center}
-\tiny
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{>{\ttfamily}l rrrrrrr}
-\toprule
-Model & q0.05 & q0.20 & q0.35 & q0.50 & q0.65 & q0.80 & q0.95 \\
-\midrule
-\multicolumn{8}{l}{\textit{Cutoff 01/23/2021}} \\
-exAL-M-T1 & 0.0292 & 0.0791 & \textbf{0.0989} & \textbf{0.0997} & \textbf{0.0937} & 0.0752 & \textbf{0.0607} \\
-AL-M-T1 & \textbf{0.0237} & \textbf{0.0763} & 0.1010 & 0.1002 & 0.0992 & \textbf{0.0732} & 0.0696 \\
-exAL-U-T1 & 0.0306 & 0.1020 & 0.1546 & 0.1959 & 0.2144 & 0.1998 & 0.1169 \\
-AL-U-T1 & 0.0297 & 0.1002 & 0.1521 & 0.1952 & 0.2293 & 0.2122 & 0.0830 \\
-\addlinespace[1pt]
-\multicolumn{8}{l}{\textit{Cutoff 11/12/2021}} \\
-exAL-M-T1 & 0.0064 & \textbf{0.0167} & 0.0257 & \textbf{0.0149} & \textbf{0.0091} & \textbf{0.0136} & 0.0090 \\
-AL-M-T1 & \textbf{0.0060} & 0.0222 & \textbf{0.0253} & 0.0159 & 0.0136 & 0.0210 & 0.0261 \\
-exAL-U-T1 & 0.0159 & 0.0576 & 0.0876 & 0.1055 & 0.1034 & 0.0795 & \textbf{0.0043} \\
-AL-U-T1 & 0.0153 & 0.0571 & 0.0864 & 0.1016 & 0.1000 & 0.0743 & 0.0072 \\
-\addlinespace[1pt]
-\multicolumn{8}{l}{\textit{Cutoff 12/21/2021}} \\
-exAL-M-T1 & \textbf{0.0611} & \textbf{0.1486} & \textbf{0.1083} & \textbf{0.1160} & \textbf{0.1506} & \textbf{0.1479} & \textbf{0.0676} \\
-AL-M-T1 & 0.0755 & 0.2203 & 0.1765 & 0.1190 & 0.2399 & 0.2274 & 0.1186 \\
-exAL-U-T1 & 0.0885 & 0.3269 & 0.5360 & 0.7243 & 0.8671 & 0.9284 & 0.6705 \\
-AL-U-T1 & 0.0893 & 0.3267 & 0.5342 & 0.7218 & 0.8544 & 0.8936 & 0.4532 \\
-\addlinespace[1pt]
-\multicolumn{8}{l}{\textit{Cutoff 05/11/2022}} \\
-exAL-M-T1 & \textbf{0.0049} & 0.0126 & 0.0140 & 0.0131 & 0.0121 & \textbf{0.0098} & \textbf{0.0044} \\
-AL-M-T1 & \textbf{0.0049} & \textbf{0.0111} & \textbf{0.0130} & \textbf{0.0127} & 0.0120 & 0.0100 & 0.0091 \\
-exAL-U-T1 & 0.0117 & 0.0318 & 0.0368 & 0.0240 & 0.0117 & 0.0244 & 0.0201 \\
-AL-U-T1 & 0.0116 & 0.0313 & 0.0356 & 0.0235 & \textbf{0.0114} & 0.0242 & 0.0227 \\
-\addlinespace[1pt]
-\multicolumn{8}{l}{\textit{Cutoff 12/25/2022}} \\
-exAL-M-T1 & \textbf{0.0569} & \textbf{0.1758} & \textbf{0.1971} & \textbf{0.2308} & \textbf{0.2494} & \textbf{0.2376} & 0.1480 \\
-AL-M-T1 & 0.1298 & 0.4368 & 0.5299 & \textbf{0.3773} & \textbf{0.2639} & 0.2556 & \textbf{0.0944} \\
-exAL-U-T1 & 0.1403 & \textbf{0.3706} & 0.4925 & 0.6082 & 0.6743 & 0.6210 & 0.2494 \\
-AL-U-T1 & 0.1440 & 0.3883 & 0.4996 & 0.6177 & 0.7366 & 0.7186 & 0.3549 \\
-\bottomrule
-\end{tabular}
-\end{center}
+\input{tables/generated_tex/he4_quantile_check_loss_response_table.tex}
 
-The main practical pattern is that the multivariate synthesis models dominate the more difficult windows, with \texttt{exAL-M-T1} especially strong in the demanding 12/21/2021 and 12/25/2022 panels, while the univariate references win only isolated cells. Together with the CRPS comparison in HE-2, these quantile diagnostics show that the forecasting advantage of the multivariate synthesis models is visible both at the full-distribution level and across the targeted quantile levels. These results are now summarized in the revised forecasting-validation section of the manuscript.
+The main practical pattern is that the multivariate synthesis models dominate the univariate references across most forecast windows and quantile levels. The \texttt{exAL-M-T1} model is especially strong through most of the first three cutoffs, while \texttt{AL-M-T1} is competitive in selected lower-tail or final-cutoff cells. Together with the CRPS comparison in HE-2, these quantile diagnostics show that the forecasting advantage of the multivariate synthesis models is visible both at the full-distribution level and across the targeted quantile levels. These results are now summarized in the revised forecasting-validation section of the manuscript.
 
 \end{responsebox}
 
@@ -372,7 +266,7 @@ As noted in HE-2, the five cutoffs were retained only when the forecast inputs, 
 
 \responseheading
 \begin{responsebox}
-We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at each cutoff is the natural reference. We therefore reran the forecasting analysis using only the latest available forecast ensemble, rather than combining earlier issuances. The substantive conclusions remained unchanged: the revised HE-2 comparison still shows \texttt{exAL-M-T1} as the best-performing model in all five cutoffs and better than \texttt{AL-M-T1} in all five. We therefore adopt the latest-forecast-only protocol throughout the revised forecasting analysis.
+We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at each cutoff is the natural reference. We therefore reran the forecasting analysis using only the latest available forecast ensemble, rather than combining earlier issuances. The revised HE-2 comparison shows the same main conclusion about the value of multivariate corrected synthesis with an active forecast-window transfer component: \texttt{exAL-M-T1} is best in the first four cutoffs, and \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. At that final cutoff, the raw NWS forecast product is best overall, which is now stated explicitly in the manuscript and response. We therefore adopt the latest-forecast-only protocol throughout the revised forecasting analysis.
 \end{responsebox}
 
 
