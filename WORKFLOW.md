@@ -4,7 +4,7 @@ This file defines the operating workflow for revision work across:
 
 - Evidence/results repo: `/data/muscat_data/jaguir26/project1_ucsc_phd`
 - Response workbook repo: `/data/muscat_data/jaguir26/Corrections---Project-1`
-- Revised manuscript repo: `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected`
+- Revised manuscript repo: `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2`
 
 ## Current source-of-truth rule
 
@@ -13,23 +13,23 @@ For the current revision cycle:
 - the workflow/evidence source of truth lives in:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd`
 - the manuscript-local freeze point for generated figures/tables/audits lives in:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/generated`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated`
 - the corrections letter should align to the revised manuscript repo above, not to the older `Environmetrics_paper_repo` path.
 
 Key revised-manuscript references:
 - manuscript provenance:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/FIGURE_TABLE_PROVENANCE.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/FIGURE_TABLE_PROVENANCE.md`
 - manuscript revision checklist:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/MANUSCRIPT_REVISION_CHECKLIST.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/MANUSCRIPT_REVISION_CHECKLIST.md`
 - generated-asset manifest:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/ARTICLE_GENERATED_ASSET_MANIFEST.json`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/ARTICLE_GENERATED_ASSET_MANIFEST.json`
 - generated asset index:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/generated/README.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/README.md`
 - generated figure selection + table includes:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/generated/article_asset_selection/selection_manifest.json`
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/generated/article_table_includes/README.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/article_asset_selection/selection_manifest.json`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/article_table_includes/README.md`
 - current HE2 historical-support audit snapshot:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected/generated/he2_historical_support_audit_20260507/historical_support_audit.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/he2_historical_support_audit_20260507/historical_support_audit.md`
 
 ## Canonical Tracker
 
@@ -47,7 +47,7 @@ Core fields:
 1. Move one row to `in_progress`.
 2. Capture evidence paths from `project1_ucsc_phd`.
 3. Draft exact response text in `main.tex` for that ID.
-4. Apply manuscript updates in `Evironmetrics---REVISED-DOC-Corrected`.
+4. Apply manuscript updates in `Evironmetrics---REVISED-DOC-Corrected-2`.
 5. Record figure/table references and target sections.
 6. Compile/check docs.
 7. Mark row `done` only when response + manuscript + evidence are all complete.

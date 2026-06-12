@@ -7,7 +7,7 @@ Publication-facing numeric cells are rendered with fixed 5 decimal places.
 
 Refresh source:
 
-- `Evironmetrics---REVISED-DOC-Corrected/scripts/sync_corrections_generated_table_includes.py`
+- `Evironmetrics---REVISED-DOC-Corrected-2/scripts/sync_corrections_generated_table_includes.py`
 
 Refresh targets:
 
