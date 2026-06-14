@@ -200,12 +200,14 @@ We use the following labels in the ablation study:
 \end{itemize}
 
 \medskip
-\noindent The table reports mean forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and the raw forecast products included as references. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
+\noindent The first table reports mean 28-day forecast-window CRPS for the full \texttt{exAL-M-T1} model, its component-wise ablations, and the raw GloFAS product as the horizon-compatible raw reference. The second table repeats the ablation comparison over the common eight-day NWS horizon and includes both raw GloFAS and raw NWS. Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 \input{tables/generated_tex/he3_ablation_crps_response_table.tex}
 
-Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the 28-day raw GloFAS reference in this ablation table, the full \texttt{exAL-M-T1} model is better at all five cutoffs. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
+\input{tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex}
+
+Across all five cutoffs and in both horizon contracts, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the 28-day raw GloFAS reference in the main ablation table, the full \texttt{exAL-M-T1} model is better at all five cutoffs. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
 
 \end{responsebox}
 
