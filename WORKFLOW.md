@@ -13,23 +13,32 @@ For the current revision cycle:
 - the workflow/evidence source of truth lives in:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd`
 - the manuscript-local freeze point for generated figures/tables/audits lives in:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/artifacts`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/figures`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/tables/generated_tex`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/reports/manuscript_asset_review`
 - the corrections letter should align to the revised manuscript repo above, not to the older `Environmetrics_paper_repo` path.
 
 Key revised-manuscript references:
 - manuscript provenance:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/FIGURE_TABLE_PROVENANCE.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/docs/figure_table_provenance.md`
 - manuscript revision checklist:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/MANUSCRIPT_REVISION_CHECKLIST.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/docs/manuscript_revision_checklist.md`
 - generated-asset manifest:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/ARTICLE_GENERATED_ASSET_MANIFEST.json`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/MANUSCRIPT_ASSET_MANIFEST.json`
 - generated asset index:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/README.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/artifacts/README.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/artifacts/artifact_inventory.csv`
 - generated figure selection + table includes:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/article_asset_selection/selection_manifest.json`
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/article_table_includes/README.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/reports/manuscript_figure_selection/selection_manifest.json`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/tables/generated_tex/README.md`
 - current HE2 historical-support audit snapshot:
-  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/generated/he2_historical_support_audit_20260507/historical_support_audit.md`
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/artifacts/he2_historical_support_audit/historical_support_audit.md`
+- current publication authority and next audit plan:
+  - `/data/muscat_data/jaguir26/project1_ucsc_phd/docs/current_publication_authority_cleanup_and_corrections_audit_plan_20260614.md`
+
+The old revised-article `generated/` and `DISC/` naming layers are retired.
+Do not use those paths for new response evidence.
 
 ## Canonical Tracker
 
@@ -60,7 +69,10 @@ Core fields:
 - Forecast covariates (including soil moisture and precipitation forecasts).
 - Updated discount-factor setup and Wishart epsilon sensitivity results.
 - Cross-link every claim to explicit figures/tables/evidence files.
-- Treat the revised article repo `generated/` directory as the manuscript-local evidence freeze point whenever the response letter references current figures/tables/audits.
+- Treat the revised article repo `artifacts/`, `figures/`,
+  `tables/generated_tex/`, and `reports/manuscript_asset_review/` directories
+  as the manuscript-local evidence freeze point whenever the response letter
+  references current figures/tables/audits.
 - When figures or model-derived tables change, refresh the revised article repo first via `scripts/refresh_all_generated_assets.py`; then re-read the refreshed article-side bundles before editing the corrections letter.
 
 ## Notes
