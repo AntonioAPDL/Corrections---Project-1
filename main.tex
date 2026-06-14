@@ -195,14 +195,14 @@ Together, these generated tables document the requested validation against simpl
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not show clearly enough which parts of the hierarchical specification contribute most to forecast skill. In the revised manuscript, we address this with a targeted ablation study of the selected extended-likelihood multivariate specification, \texttt{exAL-M-T1}. Each ablation removes one structural component at a time while keeping the cutoff dates, preprocessing, external inputs, and forecasting hyperparameters fixed, so differences in forecast-window CRPS can be attributed to the removed component rather than to a different forecasting setup.
+We agree that the original manuscript did not show clearly enough which parts of the specification contribute to forecast skill. We therefore added a targeted component ablation of the selected extended-likelihood multivariate specification, \texttt{exAL-M-T1}. Because this is a sensitivity analysis of the selected specification rather than a primary benchmark table, the revised manuscript reports it in the appendix. Each ablation removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, and selected hyperparameters fixed.
 
 We use the following labels in the ablation study:
 \begin{itemize}
 \item \texttt{exAL-M-T1} (full reference): trend + three retained seasonal harmonic pairs + transfer-function components, with the transfer function active in both fitting and forecasting;
 \item \texttt{exAL-M-T1-noTrend}: the full model without the trend state;
 \item \texttt{exAL-M-noTF}: the full model without transfer information in either fitting or the forecast window;
-\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: the full model with the first, second, or third retained seasonal harmonic pair removed from the seasonal state block.
+\item \texttt{exAL-M-T1-noH1}, \texttt{exAL-M-T1-noH2}, and \texttt{exAL-M-T1-noH3}: the full model with the first, second, or third retained seasonal harmonic pair removed from the seasonal state block. Here \texttt{noH3} refers to the retained noninteger frequency \(1/6.8068493\), not to a literal harmonic frequency of 3.
 \end{itemize}
 
 \medskip
@@ -213,7 +213,7 @@ We use the following labels in the ablation study:
 
 \input{tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex}
 
-Across all five cutoffs and in both horizon contracts, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the 28-day raw GloFAS reference in the main ablation table, the full \texttt{exAL-M-T1} model is better at all five cutoffs. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
+Within this fixed ablation matrix, the full reference row has the lowest CRPS among the ablation rows at all five cutoffs under both horizon contracts. The results provide a component-sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure in the selected specification.
 
 \end{responsebox}
 
