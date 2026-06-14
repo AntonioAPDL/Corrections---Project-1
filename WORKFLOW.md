@@ -36,6 +36,8 @@ Key revised-manuscript references:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/artifacts/he2_historical_support_audit/historical_support_audit.md`
 - current publication authority and next audit plan:
   - `/data/muscat_data/jaguir26/project1_ucsc_phd/docs/current_publication_authority_cleanup_and_corrections_audit_plan_20260614.md`
+- item-by-item response/manuscript crosswalk plan:
+  - `/data/muscat_data/jaguir26/Corrections---Project-1/CORRECTIONS_ARTICLE_CROSSWALK_AUDIT_PLAN_20260614.md`
 
 The old revised-article `generated/` and `DISC/` naming layers are retired.
 Do not use those paths for new response evidence.
