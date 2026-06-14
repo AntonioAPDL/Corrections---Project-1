@@ -168,17 +168,17 @@ exAL-M-T1 & Multivariate exDQLM (exAL likelihood) with transfer function active 
 \end{tabular}
 \end{center}
 
-In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS and NWS forecast products.
+In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS product over the 28-day evaluation window and against the raw NWS product in a separate eight-day NWS-horizon comparison.
 
-All Bayesian models and the two raw forecast products are evaluated on the same transformed discharge scale and under the same preprocessing rules. We use mean forecast-window CRPS as the principal cross-model validation metric and report quantile diagnostics separately.
+All Bayesian models and raw forecast products are evaluated on the same transformed discharge scale and under the same preprocessing rules within each horizon contract. We use mean forecast-window CRPS as the principal cross-model validation metric and report quantile diagnostics separately.
 
 \medskip
-\noindent The table reports mean forecast-window CRPS by cutoff for the nine Bayesian model families and the two raw forecast products. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
+\noindent The table reports mean 28-day forecast-window CRPS by cutoff for the nine Bayesian model families and the raw GloFAS product. NWS is omitted from the 28-day table because the archived NWS products provide eight valid daily leads for these origins. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 \input{tables/generated_tex/he2_benchmark_crps_response_table.tex}
 
-This comparison addresses the extended asymmetric Laplace question directly while preserving the raw operational baselines as references. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} in the first four cutoffs, whereas \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. At that final cutoff, the raw NWS forecast product has the lowest CRPS overall. Thus, the corrected Bayesian models provide the strongest corrected forecasts across the rolling-origin panel, but they do not uniformly dominate the best raw baseline in every cutoff.
+This comparison addresses the extended asymmetric Laplace question directly while preserving the raw operational baselines as references. Under the strongest multivariate transfer-function specification, \texttt{exAL-M-T1} has lower forecast-window CRPS than \texttt{AL-M-T1} in the first four cutoffs, whereas \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. A separate eight-day NWS-horizon comparison is now generated for the direct NWS reference, while NWS is omitted from the 28-day table to avoid mixing horizons.
 \end{responsebox}
 
 %
@@ -205,7 +205,7 @@ We use the following labels in the ablation study:
 
 \input{tables/generated_tex/he3_ablation_crps_response_table.tex}
 
-Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the raw forecast references in this ablation table, the full \texttt{exAL-M-T1} model is better than \texttt{RAW-GLOFAS} at all five cutoffs and better than \texttt{RAW-NWS} in the first four cutoffs; at 12/25/2022, \texttt{RAW-NWS} remains the best raw/reference entry, matching the exception noted in the revised forecast-comparison discussion. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
+Across all five cutoffs, the full model remains the best ablation configuration. Removing transfer information degrades forecast skill consistently, while the largest losses often come from removing the trend state or one seasonal harmonic pair, especially in the more difficult winter windows. Relative to the 28-day raw GloFAS reference in this ablation table, the full \texttt{exAL-M-T1} model is better at all five cutoffs. These ablation results indicate that the gain of \texttt{exAL-M-T1} comes from the combined contribution of transfer information, trend, and multi-frequency seasonality. They are now summarized in the revised forecasting-results section of the manuscript.
 
 \end{responsebox}
 
@@ -266,7 +266,7 @@ As noted in HE-2, the five cutoffs were retained only when the forecast inputs, 
 
 \responseheading
 \begin{responsebox}
-We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at each cutoff is the natural reference. We therefore reran the forecasting analysis using only the latest available forecast ensemble, rather than combining earlier issuances. The revised HE-2 comparison shows the same main conclusion about the value of multivariate corrected synthesis with an active forecast-window transfer component: \texttt{exAL-M-T1} is best in the first four cutoffs, and \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. At that final cutoff, the raw NWS forecast product is best overall, which is now stated explicitly in the manuscript and response. We therefore adopt the latest-forecast-only protocol throughout the revised forecasting analysis.
+We agree that, from an operational forecasting perspective, the most recent forecast ensemble available at each cutoff is the natural reference. We therefore reran the forecasting analysis using only the latest available forecast ensemble, rather than combining earlier issuances. The revised HE-2 comparison shows the same main conclusion about the value of multivariate corrected synthesis with an active forecast-window transfer component: \texttt{exAL-M-T1} is best in the first four 28-day cutoffs, and \texttt{AL-M-T1} is the best corrected Bayesian row at 12/25/2022. The raw NWS product is now evaluated only in the separate eight-day NWS-horizon comparison, while NWS is omitted from the 28-day table to avoid mixing horizons. We therefore adopt the latest-forecast-only protocol throughout the revised forecasting analysis.
 \end{responsebox}
 
 
@@ -282,7 +282,7 @@ This paper develops a Bayesian quantile regression approach, based on asymmetric
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. The revised manuscript addresses that directly by centering the forecasting analysis on multiple rolling-origin cutoffs over a 29-day horizon, comparing the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, reporting both CRPS and targeted quantile diagnostics, and using only the most recent forecast ensemble available at each cutoff.
+We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. The revised manuscript addresses that directly by centering the forecasting analysis on multiple rolling-origin cutoffs over a 28-day horizon for GloFAS and the Bayesian predictive distributions, adding a separate eight-day NWS-horizon comparison, comparing the proposed method against simpler Bayesian alternatives and raw forecast products, reporting both CRPS and targeted quantile diagnostics, and using only the most recent forecast ensemble available at each cutoff.
 
 We also revised how the contribution is stated. In the revised manuscript, the main contribution will be presented as the Bayesian quantile-based correction-and-synthesis framework together with its forecasting performance in this application, rather than dynamical error correction in the abstract. The remaining issues concerning motivation, model-to-results linkage, and presentation are addressed point by point below.
 \end{responsebox}
