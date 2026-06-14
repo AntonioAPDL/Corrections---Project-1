@@ -101,7 +101,7 @@ Dear Professor Fass\`o,
 
 We thank you and the reviewer for the careful reading of our manuscript and for the constructive suggestions. We found the comments very helpful and have revised the paper substantially in response.
 
-The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the strongest model specification. We also revised the manuscript to clarify the roles of the different data sources, streamline parts of the methodological exposition, and make the computational and reproducibility discussion more explicit.
+The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the selected extended-likelihood multivariate specification. We also revised the manuscript to clarify the roles of the different data sources, streamline parts of the methodological exposition, and make the computational and reproducibility discussion more explicit.
 
 Detailed point-by-point responses follow below.
 
@@ -109,7 +109,7 @@ Detailed point-by-point responses follow below.
 \begin{itemize}
 \item[] Rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
 \item[] Added forecast-window CRPS and targeted quantile diagnostics, and aligned the final forecasting protocol with the most recent forecast issuance available at each cutoff.
-\item[] Added a targeted ablation study of the strongest specification and clarified the forecasting contribution of the Bayesian quantile-based correction-and-synthesis framework.
+\item[] Added a targeted ablation study of the selected extended-likelihood multivariate specification and clarified the forecasting contribution of the Bayesian quantile-based correction-and-synthesis framework.
 \item[] Planned manuscript revisions clarify the roles of observations, retrospective products, and forecast products, tighten the methodological exposition, and expand the computational and reproducibility discussion.
 \end{itemize}
 
@@ -189,7 +189,7 @@ This comparison addresses the extended asymmetric Laplace question directly whil
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not show clearly enough which parts of the hierarchical specification contribute most to forecast skill. In the revised manuscript, we address this with a targeted ablation study of the best-performing model, \texttt{exAL-M-T1}. Each ablation removes one structural component at a time while keeping the cutoff dates, preprocessing, external inputs, and forecasting hyperparameters fixed, so differences in forecast-window CRPS can be attributed to the removed component rather than to a different forecasting setup.
+We agree that the original manuscript did not show clearly enough which parts of the hierarchical specification contribute most to forecast skill. In the revised manuscript, we address this with a targeted ablation study of the selected extended-likelihood multivariate specification, \texttt{exAL-M-T1}. Each ablation removes one structural component at a time while keeping the cutoff dates, preprocessing, external inputs, and forecasting hyperparameters fixed, so differences in forecast-window CRPS can be attributed to the removed component rather than to a different forecasting setup.
 
 We use the following labels in the ablation study:
 \begin{itemize}
