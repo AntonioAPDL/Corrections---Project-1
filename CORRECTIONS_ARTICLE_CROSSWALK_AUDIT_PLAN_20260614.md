@@ -152,7 +152,7 @@ Status legend:
 
 | ID | Current status | Evidence / manuscript anchors | Audit question | Confirmation gate |
 |---|---|---|---|---|
-| HE-1 computational cost and feasibility | `needs_manuscript_text` | Response `main.tex` around HE-1; manuscript abstract `53`, computation/inference `208-223`, code availability `451-455` | Response gives concrete runtime and complexity, but manuscript currently may not include the two-hour/100-min/20-min/64-core/503-GiB and refitting language. | Confirm exact runtime wording and where to place it, likely abstract plus posterior computation or forecasting design. |
+| HE-1 computational cost and feasibility | `done` | Response `main.tex` around HE-1; manuscript posterior computation `208-223`; article runtime manifest `artifacts/runtime_benchmark/runtime_manifest.json`; workflow contract `docs/he1_runtime_feasibility_contract_20260615.md` | The response and manuscript now report a representative total wall-clock runtime benchmark only. They use `runtime_sec_total` / `runtime_sec`, retain the 1620 completed interface-row versus 54 done/18 pending planned-run nuance, and avoid the unsupported 100-minute fitting / 20-minute post-processing split. | If the raw runtime worktree is mounted later, regenerate the compact runtime manifest from the source CSV before changing numerical claims. |
 | HE-2 validation against alternatives/raw products/exAL vs AL | `done` | Manuscript `348-363`; tables `tab:benchmark_crps_models`, `tab:benchmark_crps_models_nws_horizon`; response HE-2 generated 28-day table and HE-2 generated NWS-horizon table | Response now matches the horizon split: the 28-day table excludes NWS, the separate eight-day table includes NWS, and `N` rows are normal DLM baselines rather than quantile lanes. | Re-run the revised-article table sync script after any future calibration refresh so the response fragments stay generated from the manuscript table bodies. |
 | HE-3 ablation study | `done` | Manuscript main-text pointer near Forecast Validation Results; appendix `app:he3ablation`; tables `tab:he3_ablation_crps`, `tab:he3_ablation_crps_nws_horizon`; response HE-3 generated tables | Response and manuscript now place the ablation as an appendix sensitivity analysis, preserve both horizon contracts, and define `noH3` as the retained noninteger seasonal frequency \(1/6.8068493\). | Re-run article table generation and corrections-table sync after any future selected-model refresh. |
 | HE-4 CRPS and quantile diagnostics | `done` | Manuscript `223-238` and `351-365`; table `tab:he4_quantile_check_loss`; response HE-4 | CRPS is described as both a model-selection and out-of-sample forecast-validation score; quantile check-loss diagnostics are generated from the current HE2 publication manifest and reported for the four principal synthesis competitors. | Completed with restrained cutoff--quantile interpretation, no retained PIT analysis, and generated-table sync validation. |
@@ -224,8 +224,8 @@ Add an item-level note in the final response to the user with:
 We are ready to begin the item-by-item audit with the current authoritative
 results. The highest-risk items to inspect first are:
 
-1. HE-1, because the response contains concrete runtime details that must be
-   explicitly present in the manuscript or softened.
+1. HE-1, because the runtime claim has now been softened to a total wall-clock
+   benchmark and must stay tied to the compact runtime manifest.
 2. R1-M3, because the manuscript still has substantial mathematical and
    algorithmic detail; we need to decide what level is acceptable.
 3. R1-m5, because the no-censoring precipitation handling claim should be
