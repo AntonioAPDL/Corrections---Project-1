@@ -185,6 +185,15 @@ Status legend:
 | R1-m8 table captions mean vs median | `done` | Generated covariate-effects table, appendix gamma/sigma tables, posterior export README, workflow export helpers, and R1-m8 response | The corrected contract is mixed by table: transfer-function covariate effects report posterior means, while source-specific \(\gamma_j(\tau)\) and \(\sigma_j(\tau)\) appendix summaries report posterior medians. The captions, column headings, notes, and response now follow that source-table contract. | Closed with workflow R export tests, article table-label tests, and publication-freeze/cross-repo prose gates. |
 | R1-m9 figures explanation / constant variance vs variable predictive distributions | `done` | Manuscript selected-model dynamics and synthesis illustration; long-cycle appendix; historical-only synthesis appendix; response R1-m9 | The response and manuscript now distinguish fitted quantile-location/component uncertainty from the full synthesized posterior predictive distribution. Stable bands in the diagnostic figures are not presented as full forecast predictive distributions, while the synthesis envelope is allowed to vary with source corrections and forecast-window inputs. | Closed with article manifest/prose tests plus publication-freeze and cross-repo prose gates. |
 
+Consolidated remaining Reviewer 1 contract: R1-M2 through R1-M5 and
+R1-m1 through R1-m9 are now also protected by
+`/data/muscat_data/jaguir26/project1_ucsc_phd/docs/reviewer1_remaining_contracts_20260615.md`,
+the article companion note
+`/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/docs/reviewer1_remaining_contracts.md`,
+and the cross-repo `reviewer1_remaining_audit.csv` produced by
+`scripts/validate_revision_cross_repo_wiring.py`. This is an audit and
+drift-prevention layer only; it does not introduce new model output claims.
+
 ## Execution Order
 
 Work in this order so high-impact scientific claims settle before wording-only
