@@ -323,9 +323,9 @@ We agree. The revised manuscript no longer uses the staged A/B/C presentation as
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the manuscript currently contains more mathematical detail than is needed for a journal article, and we will simplify the presentation substantially. In particular, we will remove the detailed PIT development from the main text, since PITs are not used in the final reported evaluation and CRPS is the main criterion used for model comparison and forecast assessment.
+We agree. The revised manuscript now streamlines the mathematical exposition in the main text and keeps implementation-level detail in the appendices. The earlier PIT-centered development has been removed from the main text; the final forecast comparison uses CRPS as the primary full-distribution score and targeted quantile check loss as the quantile-level diagnostic. Posterior predictive synthesis is retained only as a concise selected-origin illustration, because it explains how the quantile-specific fits are combined into the displayed predictive distribution while the rolling-origin CRPS and check-loss tables provide the main validation evidence.
 
-More broadly, we will reduce intermediate derivational detail and keep the focus on the forecasting quantities that are actually used in the revised results section. For posterior predictive synthesis, we will retain only a concise description in the main text, because that step is part of the contribution of the paper; the quantile-crossing safeguard will be mentioned briefly as a robustness device rather than developed at length.
+Quantile crossing is no longer developed as a separate procedure in the main text. It is mentioned only briefly as a practical robustness consideration when discussing discount-factor choices. The MCMC and VB pseudocode remains in the appendices for reproducibility, but it is no longer used as the organizing narrative of the article.
 \end{responsebox}
 
 \commentheading{\RoneM{4}}
