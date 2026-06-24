@@ -20,6 +20,20 @@ Generated response fragments currently required by `main.tex`:
 - `tables/generated_tex/he3_ablation_crps_response_table.tex`
 - `tables/generated_tex/he4_quantile_check_loss_response_table.tex`
 
+For future HE2 publication-authority refreshes, do not hand-edit these numeric
+tables. Promote and validate the new authority in the workflow repo, refresh the
+revised article freeze, then regenerate the corrections fragments with:
+
+```bash
+python3 /data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2/scripts/sync_corrections_generated_table_includes.py \
+  --article-root /data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-Corrected-2 \
+  --corrections-root /data/muscat_data/jaguir26/Corrections---Project-1
+```
+
+The full cross-repo authority-refresh runbook is:
+
+- `/data/muscat_data/jaguir26/project1_ucsc_phd/docs/current_authority_refresh_runbook.md`
+
 ### Local
 If `latexmk` is available:
 

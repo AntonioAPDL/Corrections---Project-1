@@ -19,3 +19,8 @@ Refresh targets:
 
 The workflow-side cross-repo validator checks these fragments against the same
 source artifacts used by the revised article.
+
+For future HE2 publication-authority refreshes, do not hand-edit these
+numeric tables. Follow the workflow runbook first:
+
+- `/data/muscat_data/jaguir26/project1_ucsc_phd/docs/current_authority_refresh_runbook.md`
