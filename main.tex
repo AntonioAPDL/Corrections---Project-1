@@ -103,6 +103,8 @@ We thank you and the reviewer for the careful reading of our manuscript and for 
 
 The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted ablation study of the selected extended-likelihood multivariate specification. We also revised the manuscript to clarify the roles of the different data sources, streamline parts of the methodological exposition, and make the computational and reproducibility discussion more explicit.
 
+During the revision we also re-audited the retrospective and forecast-product archives used to construct the cutoff-specific input bundles. This audit identified a version-matching inconsistency in the historical support used by the original analysis. We rebuilt the affected rolling-origin bundles under a version-consistent contract, reran the affected model comparisons, and regenerated the manuscript-facing tables and figures from those corrected bundles.
+
 Detailed point-by-point responses follow below.
 
 \section*{Summary of Major Revisions}
@@ -144,7 +146,7 @@ Thank you for pointing this out. The revised manuscript now makes the computatio
 \begin{responsebox}
 We agree that the original manuscript did not validate the proposed forecasting framework strongly enough. In the revised manuscript, we address that directly through a five-cutoff rolling-origin out-of-sample evaluation. At each cutoff, we generate predictive distributions over the 28-day GloFAS/Bayesian forecast window and verify them against future USGS observations that were not used in model fitting. Because the archived NWS forecasts provide eight valid daily leads for these origins, we report NWS in a separate horizon-matched eight-day comparison.
 
-Constructing this validation required recovering and harmonizing historical deterministic forecast archives, retrospective products, and forecast covariates across institutions. In the course of this revision, we also corrected the earlier retrospective-input version mismatch so that the final comparisons use only version-consistent forecasting folds.
+Constructing this validation required recovering and harmonizing historical deterministic forecast archives, retrospective products, and forecast covariates across institutions. In the course of this revision, we also corrected the earlier retrospective and forecast-product version-matching issue so that the final comparisons use only version-consistent forecasting folds.
 
 To describe the models considered, we use the compact label \(L\)-\(S\)-\(T\). Here \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\), where N denotes Normal Dynamic Linear Model (NDLM), AL denotes Dynamic Quantile Linear Model (DQLM) with asymmetric Laplace likelihood, and exAL denotes exDQLM with extended asymmetric Laplace likelihood. The \(N\) rows are Gaussian DLM baselines scored through posterior predictive distributions, not fitted quantile-lane models. Next, \(S\in\{\mathrm{U},\mathrm{M}\}\), where U is univariate (no retrospective products or forecast ensembles from climate institutions) and M is multivariate (uses retrospective products and forecast ensembles from ECMWF/GloFAS and NWS). Finally, \(T\in\{\mathrm{T0},\mathrm{T1}\}\), where T0 means no transfer function during the forecast window and T1 means the transfer function remains active during the forecast window, using forecast precipitation and soil-moisture covariates from NOAA/GEFS.
 
@@ -260,7 +262,7 @@ We agree. We now state explicitly in the revised manuscript that the reusable ex
 \begin{responsebox}
 We agree that this needed to be clarified. The revised forecasting evaluation is out-of-sample and uses five rolling-origin cutoff-based forecasting folds.
 
-For each cutoff date \(\textbf{c}\), the model is fit using only observations and retrospective information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\) and retrospective/historical products available at \(\textbf{c}\). Forecasts are then generated over the post-cutoff forecast window using the latest forecast products issued at or before \(\textbf{c}\), together with the forecast-window precipitation and soil-moisture covariates staged in the same version-consistent origin bundle. Post-cutoff USGS observations remain verification only and are not used to fit or update the predictive distributions. The workflow-facing PCA slot is the canonical GDPC/PCA climate-index covariate sliced consistently to the cutoff-specific bundle; it is not treated as an operational forecast product or as a verification target.
+For each cutoff date \(\textbf{c}\), the model is fit using only observations and retrospective information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\) and retrospective/historical products available at \(\textbf{c}\). Forecasts are then generated over the post-cutoff forecast window using the latest forecast products issued at or before \(\textbf{c}\), together with the forecast-window precipitation and soil-moisture covariates staged in the same version-consistent origin bundle. Post-cutoff USGS observations remain verification only and are not used to fit or update the predictive distributions. The canonical GDPC climate-index covariate is sliced consistently to the cutoff-specific bundle; it is not treated as an operational forecast product or as a verification target.
 
 As noted in HE-2, the five cutoffs were retained only when the forecast inputs, retrospective products, and forecast covariates were all archive-feasible and version-consistent. The evaluation folds were therefore determined by timing and data availability, not by forecast performance.
 
@@ -375,7 +377,7 @@ We agree. This was a typographical error rather than intended terminology. The r
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The revised manuscript now clarifies that ERA5-Land inputs are reanalysis-based model products rather than direct observations or uncertainty-free measurements, and notes that ERA5/ERA5-Land variables may include short forecast components. In our application, precipitation is from PRISM and ERA5-Land enters as the soil-moisture covariate, so these inputs are treated as external covariates rather than verification observations.
+We agree. The revised manuscript now clarifies that ERA5-Land inputs are reanalysis-based model products rather than direct observations or uncertainty-free measurements, and notes that ERA5/ERA5-Land variables may include short forecast components. In our application, precipitation is from PRISM and ERA5-Land enters as the soil-moisture covariate in the historical transfer path, so these inputs are treated as external covariates rather than verification observations. In the forecast window, the transfer component uses staged GEFS precipitation and shallow soil-water forecast covariates from the same version-consistent origin bundle.
 \end{responsebox}
 
 \commentheading{\Ronem{4}}
@@ -393,7 +395,7 @@ We agree. The revised manuscript now separates the general methodology from the 
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The revised manuscript now states explicitly that precipitation is not handled through censoring, zero-inflation, or a separate occurrence/intensity model. Instead, precipitation enters as an external transfer covariate: zero-precipitation days are retained in the supplied covariate path, and precipitation intermittency enters through the transfer component and its deterministic engineered terms rather than through a separate precipitation model.
+We agree. The revised manuscript now states explicitly that precipitation is not handled through censoring, zero-inflation, or a separate occurrence/intensity model. Instead, precipitation enters as an external transfer covariate: zero-precipitation days are retained in the supplied covariate path, and precipitation intermittency enters through the transfer component and its deterministic engineered terms rather than through a separate precipitation model. The current forecast-window implementation passes deterministic summaries of the GEFS precipitation and soil-moisture forecast products into that transfer path; propagating the full uncertainty in these exogenous forecasts is a natural extension.
 \end{responsebox}
 
 \commentheading{\Ronem{6}}
