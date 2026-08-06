@@ -207,7 +207,7 @@ Together, these tables provide the requested validation against simpler Bayesian
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not clearly show which parts of the model specification contribute most to forecast performance. We therefore added a sensitivity analysis of the selected \texttt{exAL-M-T1} model that is reported in the Appendix (see Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark table, the revised manuscript reports it in the appendix. The ablation table is synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Within this fixed ablation matrix, each ablation removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, and selected hyperparameters fixed. This allows us to assess the individual contribution of the trend, transfer function, and seasonal components while keeping the remaining model components and analysis unchanged.
+We agree that the original manuscript did not clearly show how the selected specification depends on its main structural blocks. We therefore added a component-removal sensitivity analysis of the selected \texttt{exAL-M-T1} model in the Appendix (Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark comparison, the revised manuscript reports it in the appendix. The component-removal tables are synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Within this fixed sensitivity design, each reduced model removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, forecast horizons, and selected hyperparameters fixed. This assesses whether the retained trend, transfer-function, and seasonal components are supported without changing the remaining analysis.
 
 \textcolor{red}{More specifically, we compared the following models:}
 \begin{itemize}
@@ -218,14 +218,14 @@ We agree that the original manuscript did not clearly show which parts of the mo
 \end{itemize}
 
 \medskip
-\noindent \textcolor{red}{Table A1 reports mean 28-day forecast-window CRPS for the full \texttt{exAL-M-T1} model and reduced versions obtained by removing individual components, as well as} the raw GloFAS product as the horizon-compatible raw reference. \textcolor{red}{Table A2 repeats the same comparisons over the common eight-day NWS horizon and includes both raw GloFAS and raw NWS.} %Lower values are better, and within the ablation block the smallest value in each cutoff column is shown in bold.\par
+\noindent \textcolor{red}{Table A1 reports mean 28-day forecast-window CRPS for the full \texttt{exAL-M-T1} model and reduced versions obtained by removing individual components, as well as} the raw GloFAS product as the horizon-compatible raw reference. \textcolor{red}{Table A2 repeats the same component-removal comparisons over the common eight-day NWS horizon and includes both raw GloFAS and raw NWS.} %Lower values are better, and within the sensitivity block the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
 %\input{tables/generated_tex/he3_ablation_crps_response_table.tex}
 
 %\input{tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex}
 
-\textcolor{red}{For this study, the full reference model has the lowest CRPS among the full and reduced model specifications at all five cutoffs under both horizon contracts.} The results provide a component-sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure.
+\textcolor{red}{For this study, the full reference model has lower CRPS than each reduced model at all five cutoffs under both horizon contracts.} The results provide a component-removal sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure.
 \textcolor{red}{This sensitivity analysis complements the main model comparisons presented in response to HE-2.}
 
 
