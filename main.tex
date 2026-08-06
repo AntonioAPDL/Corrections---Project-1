@@ -414,7 +414,7 @@ We agree. This was a typographical error rather than intended terminology. The r
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The revised manuscript clarifies that ERA5-Land inputs are reanalysis-based model products rather than direct observations or uncertainty-free measurements, and notes that ERA5/ERA5-Land variables may include short forecast components. In our application, precipitation is from PRISM and ERA5-Land enters as the soil-moisture covariate in the historical transfer path, so these inputs are treated as external covariates rather than verification observations. In the forecast window, the transfer component uses staged GEFS precipitation and shallow soil-water forecast covariates \textcolor{red}{available at the forecast date.}
+We agree. The revised manuscript clarifies that ERA5-Land inputs are reanalysis-based model products rather than direct observations or uncertainty-free measurements, and notes that ERA5/ERA5-Land variables may include short forecast components. In our application, precipitation is from PRISM and ERA5-Land enters as the soil-moisture covariate in the historical transfer path, so these inputs are treated as external covariates rather than verification observations. In the forecast window, the transfer component uses GEFS ensemble-based precipitation and shallow soil-water covariates staged in the cutoff-specific origin bundle; these ensemble covariates are reduced to deterministic summaries before entering the model.
 \end{responsebox}
 
 \commentheading{\Ronem{4}}
@@ -432,7 +432,7 @@ We agree. The revised manuscript now separates the general methodology from the 
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-The revised manuscript now states explicitly that precipitation is not handled through censoring, zero-inflation, or a separate occurrence/intensity model. Instead, precipitation enters as an external transfer covariate: zero-precipitation days are retained in the supplied covariate path, and precipitation intermittency enters through the transfer component and its deterministic engineered terms rather than through a separate precipitation model. The current forecast-window implementation passes deterministic summaries of the GEFS precipitation and soil-moisture forecast products into that transfer path; propagating the full uncertainty in these exogenous forecasts is a natural extension.
+The revised manuscript now states explicitly that precipitation is not handled through censoring, zero-inflation, or a separate occurrence/intensity model. Instead, precipitation enters as an external transfer covariate: zero-precipitation days are retained in the supplied covariate path, and precipitation intermittency enters through the transfer component and its deterministic engineered terms rather than through a separate precipitation model. The current forecast-window implementation passes deterministic summaries of the GEFS ensemble-based precipitation and shallow soil-water forecast covariates into that transfer path; propagating the full uncertainty in these exogenous forecasts is a natural extension.
 \end{responsebox}
 
 \commentheading{\Ronem{6}}
