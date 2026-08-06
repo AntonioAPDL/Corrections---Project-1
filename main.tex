@@ -207,9 +207,7 @@ Together, these tables provide the requested validation against simpler Bayesian
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not  clearly show  which parts of the model specification contribute most to forecast performance. \textcolor{red}{We therefore added a sensitivity analysis of the selected \texttt{exAL-M-T1} model that is reported in the Appendix (see Tables A1 and A2). In this analysis, we remove one model component at a time and compare the resulting forecasts with those from the full model. All the comparisons use the same forecast dates, data, and pre-processing procedures. This allows us to assess the individual contribution of the trend, transfer function, and seasonal components while keeping the remaining model components and analysis unchanged.}
-%Because this is a sensitivity analysis rather than a primary benchmark table, the revised manuscript reports it in the appendix. 
-%The ablation table is synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Each ablation removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, and selected hyperparameters fixed within that matrix.
+We agree that the original manuscript did not clearly show which parts of the model specification contribute most to forecast performance. We therefore added a sensitivity analysis of the selected \texttt{exAL-M-T1} model that is reported in the Appendix (see Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark table, the revised manuscript reports it in the appendix. The ablation table is synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Within this fixed ablation matrix, each ablation removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, and selected hyperparameters fixed. This allows us to assess the individual contribution of the trend, transfer function, and seasonal components while keeping the remaining model components and analysis unchanged.
 
 \textcolor{red}{More specifically, we compared the following models:}
 \begin{itemize}
@@ -227,7 +225,7 @@ We agree that the original manuscript did not  clearly show  which parts of the 
 
 %\input{tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex}
 
-\textcolor{red}{For this study, the full reference model has the lowest CRPS among the full and reduce model specifications at all five cutoffs under both horizon contracts.} The results provide a component-sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure. 
+\textcolor{red}{For this study, the full reference model has the lowest CRPS among the full and reduced model specifications at all five cutoffs under both horizon contracts.} The results provide a component-sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure.
 \textcolor{red}{This sensitivity analysis complements the main model comparisons presented in response to HE-2.}
 
 
@@ -279,9 +277,9 @@ We also clarify that the repository contains the code and materials used to prod
 
 \responseheading
 \begin{responsebox}
-We agree that this needed to be clarified. The revised forecasting evaluation is out-of-sample and uses five rolling-origin cutoff-based forecasting folds.
+We agree that this needed to be clarified. The revised forecasting evaluation is out-of-sample and uses five cutoff-specific, rolling-origin forecast-window evaluations.
 
-For each cutoff date \(\textbf{c}\), the model is fit using only observations and retrospective information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\) and retrospective/historical products available at \(\textbf{c}\). Forecasts are then generated over the post-cutoff forecast window using the latest forecast products issued at or before \(\textbf{c}\), together with the forecast-window precipitation and soil-moisture covariates staged in the same version-consistent origin bundle. Post-cutoff USGS observations remain verification only and are not used to fit or update the predictive distributions. The canonical GDPC climate-index covariate is sliced consistently to the cutoff-specific bundle; it is not treated as an operational forecast product or as a verification target.
+For each cutoff date \(\textbf{c}\), we construct a version-consistent staged dataset. The model is fit using only observations and retrospective information available through \(\textbf{c}\): observed discharge up to \(\textbf{c}\) and retrospective/historical products available at \(\textbf{c}\). Forecasts are then generated over the post-cutoff forecast window using the latest forecast products issued at or before \(\textbf{c}\), together with the forecast-window precipitation and soil-moisture covariates staged in the same origin bundle. The quantile-based analysis requires seven quantile-specific fits at each cutoff, followed by posterior predictive synthesis before CRPS scoring. Post-cutoff USGS observations remain verification only and are not used to fit or update the predictive distributions. The canonical GDPC climate-index covariate is sliced consistently to the cutoff-specific bundle; it is not treated as an operational forecast product or as a verification target.
 
 As noted in HE-2, the five cutoffs were retained only when the forecast inputs, retrospective products, and forecast covariates were all archive-feasible and version-consistent. The evaluation folds were therefore determined by timing and data availability, not by forecast performance.
 
@@ -348,7 +346,7 @@ The revised introduction now separates these concepts before introducing the Bay
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The revised manuscript no longer \textcolor{red}{organizes the methodology around models A, B and C}. Instead, \textcolor{red}{Section 2 now}  presents a common state-space formulation and the \textcolor{red}{Section 3} explains how this formulation is applied to the San Lorenzo data. \textcolor{red}{Section 4 identifies the models in terms of \(L\)-\(S\)-\(T\) labels, which distinguish the likelihood family, the data source, and the} forecast-window transfer treatment. \textcolor{red}{Section 5} then focuses on the selected \textcolor{red}{exAL-M-T1} model specification, so the results are tied directly to the model components being varied or interpreted.
+We agree. The revised manuscript no longer organizes the methodology around models A, B, and C. Instead, Section 2 now presents a common state-space formulation, and Section 3 explains how this formulation is applied to the San Lorenzo data. Section 4 identifies the models in terms of \(L\)-\(S\)-\(T\) labels, which distinguish the likelihood family, source set, and forecast-window transfer treatment. Section 5 then focuses on the selected \texttt{exAL-M-T1} specification, so the results are tied directly to the model components being varied or interpreted.
 \end{responsebox}
 
 \commentheading{\RoneM{3}}
@@ -359,7 +357,7 @@ We agree. The revised manuscript no longer \textcolor{red}{organizes the methodo
 \begin{responsebox}
 We agree. The revised manuscript now streamlines the mathematical exposition in the main text and keeps implementation-level detail in the appendices. The earlier PIT-centered development has been removed from the main text; the final forecast comparison uses CRPS as the primary full-distribution score and targeted quantile check loss as the quantile-level diagnostic. We retained a compact posterior predictive synthesis subsection because the reader needs to know how the independently fitted quantile-specific models are turned into one predictive distribution for visualization and CRPS scoring. The validation evidence itself remains the rolling-origin CRPS and check-loss tables.
 
-Quantile crossing is no longer developed as a separate procedure in the main text. It is mentioned only briefly as a practical robustness consideration when discussing discount-factor choices. Details about the MCMC and VB algorithms are provided  in the Appendix rather than emphasized in the main presentation. 
+Quantile crossing is no longer developed as a separate procedure in the main text. It is mentioned only briefly as a practical robustness consideration when discussing discount-factor choices. Details about the MCMC and VB algorithms are provided in the Appendix rather than emphasized in the main presentation.
 \end{responsebox}
 
 \commentheading{\RoneM{4}}
@@ -382,7 +380,9 @@ Forecast performance is assessed directly on those forecast windows using CRPS t
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that fair assessment of this method must be organized around forecast origins rather than a conventional random split or a single split of the time series. The revised analysis uses five rolling-origin \textcolor{red}{evaluation periods,} which are the time-ordered analogue of cross-validation for the operational forecasting problem. \textcolor{red}{At each forecast date}, only information available at that time is used to fit and generate the predictive distribution, \textcolor{red}{while subsequent post-cutoff USGS observations are used only for verification.} A larger \textcolor{red}{number of forecast dates} would be useful in a future study, but each retained origin requires recovering a version-consistent bundle of observations, retrospective products, issued forecast products, and forecast-window covariates from evolving gridded archives, followed by seven quantile-specific fits and posterior predictive synthesis. We therefore use archive-feasible, version-consistent origins that span contrasting hydrological settings and avoid dense overlapping windows that would repeatedly score the same hydrological regime. The revised manuscript now makes this evaluation setup explicit.
+We agree that fair assessment of this method must be organized around forecast origins rather than a conventional random split or a single split of the time series. The revised analysis uses five cutoff-specific forecast-window evaluations. At each forecast date, only information available at that time is used to fit the quantile-specific models and synthesize the posterior predictive distribution, while subsequent post-cutoff USGS observations are used only for verification. A larger number of forecast dates would be useful in a future study, but each retained origin requires recovering a version-consistent bundle of observations, retrospective products, issued forecast products, and forecast-window covariates from evolving gridded archives, followed by seven quantile-specific fits and posterior predictive synthesis. We therefore use archive-feasible, version-consistent origins that span contrasting hydrological settings and avoid dense overlapping windows that would repeatedly score the same hydrological regime.
+
+The revised manuscript also clarifies the preliminary calibration of the transfer-persistence parameter \(\lambda\). This calibration is not a nested forecast-window tuning step: component discount factors were held fixed, candidate \(\lambda\) values were compared for the median-quantile model using CRPS over the pre-cutoff observational window at the December 25, 2022 origin, and the selected value \(\lambda=0.97\) was then held fixed for the reported forecast-window evaluations. The forecast-window CRPS tables therefore evaluate a fixed calibrated specification against held-out future USGS observations.
 \end{responsebox}
 
 \subsection{Reviewer 1 --- Minor comments }
@@ -441,7 +441,7 @@ The revised manuscript now states explicitly that precipitation is not handled t
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that \textcolor{red}{using forecast  issued at earlier times may reduce forecast performance}. As described in our response to \HE{7}, we revised the analysis to use only the most recent forecast ensemble available at each forecast date. The revised forecasting results reported in the manuscript now follow that latest-forecast-only protocol.
+We agree that using forecast issued at earlier times may reduce forecast performance. As described in our response to \HE{7}, we revised the analysis to use only the most recent forecast ensemble available at each forecast date. The revised forecasting results reported in the manuscript now follow that latest-forecast-only protocol.
 \end{responsebox}
 
 \commentheading{\Ronem{7}}
