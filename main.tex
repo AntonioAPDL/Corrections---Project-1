@@ -102,9 +102,6 @@ Dear Professor Fass\`o,
 We thank you and the reviewer for the careful reading of our manuscript and for the constructive suggestions.
 In response, we substantially expanded the forecast evaluation, clarified the roles of the different data sources, and streamlined the methodological presentation. The principal revisions are summarized below and described in detail in our point-by-point responses.
 
-
-Detailed point-by-point responses follow below.
-
 \section*{Summary of Major Revisions}
 \begin{itemize}
 \item We rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
@@ -112,6 +109,8 @@ Detailed point-by-point responses follow below.
 \item We added a focused analysis to assess the contribution of the selected extended-likelihood multivariate model and clarified how the Bayesian quantile-based correction-and-synthesis framework improves forecasting.
 \item The manuscript revisions clarify the roles of observations, retrospective products, and forecast products, tighten the methodological exposition, and expand the computational and reproducibility discussion.
 \end{itemize}
+
+Detailed point-by-point responses follow below.
 
 \newpage
 
@@ -134,7 +133,7 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 Thank you for raising this point. We now report the computational time and discuss the need for refitting in Section 2.4. For the single-site application, fitting the seven quantile-specific models in parallel and producing the forecasts required approximately two hours on a Linux server with 64 cores and 503 GiB of RAM. Because the available timing records do not reliably separate fitting from forecasting, we report the combined wall-clock time. The model must be refitted as new observations and forecast inputs become available. At the scale considered here, the measured runtime suggests that regular refitting is feasible once the data-processing pipeline has been established.
 
-The supporting runtime audit reports about two hours end-to-end using the populated \texttt{runtime\_sec\_total} and \texttt{runtime\_sec} fields. The same audit records 1620 completed measured interface rows, while the companion planned-run manifest preserves 54 completed and 18 pending planned run units, so these records do not support a separate fitting/forecasting decomposition.
+The available timing records, through the populated \texttt{runtime\_sec\_total} and \texttt{runtime\_sec} fields, support this about two hours end-to-end estimate but do not support a reliable decomposition between model fitting and forecasting/post-processing.
 
 The main computational bottleneck is repeated Kalman filtering and smoothing, with leading-order cost proportional to \((T+H)d^{3}\) per full pass, where \(T\) is the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension. However, the quantile-specific models can be fitted in parallel.
 \end{responsebox}
@@ -193,7 +192,7 @@ Together, these tables provide the requested validation against simpler Bayesian
 
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript did not clearly show how the selected specification depends on its main structural blocks. We therefore added a component-removal sensitivity analysis of the selected \texttt{exAL-M-T1} model in the Appendix (Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark comparison, the revised manuscript reports it in the appendix. The component-removal tables are synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Within this fixed sensitivity design, each reduced model removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, forecast horizons, and selected hyperparameters fixed. This assesses whether the retained trend, transfer-function, and seasonal components are supported without changing the remaining analysis.
+We agree that the original manuscript did not clearly show how the selected specification depends on its main structural blocks. We therefore added a component-removal sensitivity analysis of the selected \texttt{exAL-M-T1} model in the Appendix (Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark comparison, the revised manuscript reports it in the appendix. The appendix sensitivity analysis uses the same selected specification, cutoff dates, preprocessing, external inputs, likelihood, forecast horizons, and selected hyperparameters as the main validation comparison, while removing one structural component at a time. This fixed sensitivity design assesses whether the retained trend, transfer-function, and seasonal components are supported without changing the remaining analysis.
 
 More specifically, we compared the following models:
 \begin{itemize}
@@ -274,7 +273,7 @@ As noted in HE-2, the five cutoffs were retained only when the forecast inputs, 
 We agree that, from an operational forecasting perspective, the most recent forecast is the natural reference.
 
 We therefore repeated the analysis without combining forecasts issued at different times. For GloFAS, we use the daily forecast issued on the cutoff date. For NWS, we consider only information available by the cutoff and retain the most recent issuance for each target date and ensemble member before aggregating the forecasts to daily values. The revised manuscript uses this procedure throughout the forecasting analysis.
-This implements the latest available forecast ensemble rather than combining earlier issuances; historical weighted-daily file names that remain in some workflow manifests are workflow compatibility aliases, not active cross-issue weighting. Under this procedure, \texttt{exAL-M-T1} has the lowest 28-day CRPS in all five rolling-origin cutoffs. The 28-day comparison includes the raw GloFAS product but not raw NWS because the available NWS forecasts cover only eight days. We therefore report a separate comparison in which all forecasts are evaluated
+This implements the latest available forecast ensemble rather than combining earlier issuances. The reported publication matrices do not average older issuances, even where historical workflow file names retain older descriptive labels. Under this procedure, \texttt{exAL-M-T1} has the lowest 28-day CRPS in all five rolling-origin cutoffs. The 28-day comparison includes the raw GloFAS product but not raw NWS because the available NWS forecasts cover only eight days. We therefore report a separate comparison in which all forecasts are evaluated
 over the common eight-day horizon.
 
 \end{responsebox}
@@ -288,14 +287,13 @@ Reviewer 1 Comments to the Author
 
 This paper develops a Bayesian quantile regression approach, based on asymmetric Laplace distributions, to predict and forecast streamflow in the Santa Cruz region of the US. The work appears strong in the development of the Bayesian models and the novelty in the extension of inference methods is accepted. However, the improvement of forecasts through dynamical error correction is a common strategy and the novelty of this part may need to be elucidated further. The paper is framed as a forecasting paper, however the forecasting component is limited and robust forecast evaluation is absent. I recommend that some substantial revisions, mainly structural, are required before proceeding with publication. My comments below don’t cover everything, but are intended as a push into reshaping:
 \end{commentblock}
+\commentheading{\RoneO}
 \responseheading
 \begin{responsebox}
 We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. We have substantially revised the application to include five out-of-sample forecast periods, comparisons with simpler Bayesian models and raw GloFAS and NWS forecasts, and evaluations based on CRPS and quantile-specific check loss. We also revised the analysis to use only the most recent forecast ensemble available at each forecast date.
 
 
-We have also clarified the methodological contribution. We do not claim that dynamic forecast correction is itself new; however, the
-proposed framework introduces several new components. First, it uses a shared latent quantile process to link observations with retrospective products and operational forecast ensembles, while learning source-specific, time-varying discrepancies. Second, it carries source corrections learned from retrospective products into the forecast-period source structure and combines the quantile-specific forecasts into a single predictive distribution. Third, it develops a variational Bayes procedure based on Laplace–Delta approximations for the extended dynamic quantile linear model, providing a practical alternative to
-full MCMC.
+We have also clarified the methodological contribution. We do not claim that dynamic forecast correction is itself new. The proposed framework links observations, retrospective products, and operational forecast ensembles through a shared latent quantile process while learning source-specific, time-varying discrepancies. It carries source corrections learned from retrospective products into the forecast-period source structure, combines the quantile-specific forecasts into a single predictive distribution, and uses a variational Bayes procedure based on Laplace--Delta approximations for the extended dynamic quantile linear model.
 
 The revised manuscript now does this by centering the forecasting analysis on multiple rolling-origin cutoffs, comparing the proposed method against simpler Bayesian alternatives and raw forecast products, reporting both CRPS and targeted quantile diagnostics, and presenting the contribution as a correction-and-synthesis framework supported by rolling-origin forecast evaluation and selected-model interpretation rather than treating dynamic discrepancy correction alone as the central novelty.
 \end{responsebox}
@@ -341,7 +339,7 @@ Quantile crossing is no longer developed as a separate procedure in the main tex
 \begin{responsebox}
 We agree that the original manuscript placed too much emphasis on the 2022-12-25 to 2023-01-22 forecast window. In the revised manuscript, the forecasting evaluation is expanded to five rolling-origin out-of-sample cutoffs representing different hydrological conditions. These periods were selected based on the availability of compatible archived forecast products. The evidence is no longer tied to a single moderate-flood episode, although the evaluation is not presented as a continuous 2023-present hindcast; rather, the retained cutoffs offer a controlled rolling-origin comparison over version-consistent forecast origins.
 
-Forecast performance is assessed directly on those forecast windows using CRPS together with targeted quantile diagnostics. The 2022-12-25 synthesis figure is retained as a representative selected-model illustration at one forecast origin, with the same caption convention as the appendix cutoff-synthesis panels: observed pre-origin USGS, held-out verification USGS, displayed synthesized quantile curves, and the central 95\% posterior predictive credible band from the synthesized distribution. The associated quantile-dynamic and long-cycle component figures diagnose fitted posterior behavior and are not counted as additional forecast-validation evidence. Consistent with the streamlining described in Response R1-M3, we do not retain a separate PIT analysis in the main text because PIT is not part of the final revised comparison.
+Forecast performance is assessed directly on those forecast windows using CRPS together with targeted quantile diagnostics. The 2022-12-25 synthesis figure is retained as a representative selected-model illustration at one forecast origin, with the same caption convention as the appendix cutoff-synthesis panels: observed pre-origin USGS, held-out verification USGS, displayed synthesized quantile curves, and the central 95\% posterior predictive credible band from the synthesized distribution. The validation evidence is the multi-cutoff CRPS and check-loss tables; the associated quantile-dynamic and long-cycle component figures are selected-model diagnostics. Consistent with the streamlining described in Response R1-M3, we do not retain a separate PIT analysis in the main text because PIT is not part of the final revised comparison.
 \end{responsebox}
 
 \commentheading{\RoneM{5}}
@@ -420,7 +418,7 @@ We agree that using forecasts issued at earlier times may reduce forecast perfor
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree. The revised manuscript no longer uses the vague ``General Results'' organization and separates the material by inferential role. The application setup now appears in \emph{Application Data and Forecasting Design}, the out-of-sample evidence is reported in \emph{Forecast Validation Results}, and the posterior dynamics, covariate effects, and representative synthesis figure are placed in \emph{Interpretation of the Selected Specification}. The interpretation section is explicitly described as selected-model diagnosis and illustration rather than as a second forecast-validation exercise.
+We agree. The revised manuscript no longer uses the vague ``General Results'' organization and separates the material by inferential role. The application setup now appears in \emph{Application Data and Forecasting Design}, the out-of-sample evidence is reported in \emph{Forecast Validation Results}, and the posterior dynamics, covariate effects, and representative synthesis figure are placed in \emph{Interpretation of the Selected Specification}. The interpretation section is explicitly described as selected-model diagnosis and illustration, so selected-model diagnostics are separated from the forecast-validation tables.
 \end{responsebox}
 
 \commentheading{\Ronem{8}}

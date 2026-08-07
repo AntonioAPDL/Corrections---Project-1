@@ -10,14 +10,18 @@ This repo contains the LaTeX workbook used to coordinate point-by-point response
 ## Build
 
 ### Overleaf
-- Upload `main.tex` (and keep it as the project entrypoint), plus the tracked
-  generated response-table fragments under `tables/generated_tex/`.
+- Upload `main.tex` and keep it as the project entrypoint.
 - Compile with pdfLaTeX (TeX Live 2025).
 
-Generated response fragments currently required by `main.tex`:
+Generated response fragments are tracked under `tables/generated_tex/` as
+synchronized validation/provenance artifacts. They are not currently inserted
+into `main.tex`; the response letter instead points readers to the corresponding
+tables in the revised manuscript.
 
 - `tables/generated_tex/he2_benchmark_crps_response_table.tex`
+- `tables/generated_tex/he2_benchmark_crps_nws_horizon_response_table.tex`
 - `tables/generated_tex/he3_ablation_crps_response_table.tex`
+- `tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex`
 - `tables/generated_tex/he4_quantile_check_loss_response_table.tex`
 
 For future HE2 publication-authority refreshes, do not hand-edit these numeric
