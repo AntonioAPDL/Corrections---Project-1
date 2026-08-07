@@ -99,22 +99,17 @@ Manuscript ID: 5228655 (\emph{Environmetrics})}
 Dear Professor Fass\`o,
 \end{flushleft}
 
-We thank you and the reviewer for the careful reading of our manuscript and for the constructive suggestions. 
-\textcolor{red}{In response, we substantially expanded the forecast evaluation, clarified the roles of the different data sources, and streamlined the methodological presentation. The principal revisions are summarized below and described in detail in our point-by-point responses.
-}
-%We found the comments very helpful and have revised the paper substantially in response.
+We thank you and the reviewer for the careful reading of our manuscript and for the constructive suggestions.
+In response, we substantially expanded the forecast evaluation, clarified the roles of the different data sources, and streamlined the methodological presentation. The principal revisions are summarized below and described in detail in our point-by-point responses.
 
-%The revision described below strengthens the forecasting evaluation and clarifies the manuscript structure. In particular, we rebuilt the forecasting analysis around five version-consistent rolling-origin cutoffs, added direct comparisons against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products, added forecast-window CRPS and targeted quantile diagnostics, and included a targeted study of the selected extended-likelihood multivariate specification. We also revised the manuscript to clarify the roles of the different data sources, streamlined parts of the methodological exposition, and made the computational and reproducibility discussion more explicit.
-
-%During the revision we also re-audited the retrospective and forecast-product archives used to construct the cutoff-specific input bundles. This audit identified a version-matching inconsistency in the historical support used by the original analysis. \textcolor{red}{To address this, we rebuilt the affected rolling-origin datasets using the same rules across all versions, reran the relevant model comparisons, and updated the manuscript tables and figures using the corrected datasets.}
 
 Detailed point-by-point responses follow below.
 
 \section*{Summary of Major Revisions}
 \begin{itemize}
-\item We rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs,  compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
+\item We rebuilt the forecasting validation around five version-consistent rolling-origin cutoffs and compared the proposed method against simpler Bayesian alternatives and the raw ECMWF/GloFAS and NWS forecast products.
 \item We added forecast-window CRPS values and targeted quantile diagnostics; we also aligned the final forecasting protocol with the most recent forecast issuance available at each cutoff.
-\item We added a \textcolor{red}{focused analysis to assess the contribution of the selected extended-likelihood multivariate model and clarified how the Bayesian quantile-based correction-and-synthesis framework improves forecasting.}
+\item We added a focused analysis to assess the contribution of the selected extended-likelihood multivariate model and clarified how the Bayesian quantile-based correction-and-synthesis framework improves forecasting.
 \item The manuscript revisions clarify the roles of observations, retrospective products, and forecast products, tighten the methodological exposition, and expand the computational and reproducibility discussion.
 \end{itemize}
 
@@ -136,16 +131,14 @@ This paper develops a Bayesian dynamical model approach for river flow forecasti
 
 \responseheading
 \begin{responsebox}
-\textcolor{red}{
-Thank you for raising this point. We now report the computational time and discuss the need for refitting in Section 2.4. For the single-site application, fitting the seven quantile-specific models in parallel and producing the forecasts required approximately two hours on a Linux server with 64 cores and 503 GiB of RAM. Because the available timing records do not reliably separate fitting from forecasting, we report the combined wall-clock time. The model must be refitted as new observations and forecast inputs become available. At the scale considered here, the measured runtime suggests that regular refitting is feasible once the data-processing pipeline has been established. 
-}
-%Thank you for pointing this out. The revised manuscript now makes the computational cost and operational feasibility of the forecasting workflow explicit in the posterior-computation discussion. For the main single-site workflow, the latest shared validation runtime records a total issuance-cycle benchmark of about two hours end-to-end on our production Linux server with 64 cores and roughly 503 GiB RAM, with the seven quantile-specific fits dispatched in parallel. 
-%We report this as a total wall-clock benchmark because the reliable populated timing fields in the shared interface are \texttt{runtime\_sec\_total} and \texttt{runtime\_sec}; the available metadata do not support a separate fitting/forecasting decomposition. 
-%The same runtime audit records 1620 completed measured interface rows, while the companion planned-run manifest preserves 54 completed and 18 pending planned run units, so we do not claim that every planned orchestration row completed. The model requires refitting as new observations, retrospective products, and forecast inputs become available, and the measured total runtime indicates that daily refitting is operationally feasible at this single-site scale once the data pipeline is in place. 
-The main computational bottleneck is repeated Kalman filtering and smoothing, with leading-order cost proportional to \((T+H)d^{3}\) per full pass, where \(T\) is the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension. \textcolor{red}{However, the quantile-specific models can be fitted in parallel.} 
+
+Thank you for raising this point. We now report the computational time and discuss the need for refitting in Section 2.4. For the single-site application, fitting the seven quantile-specific models in parallel and producing the forecasts required approximately two hours on a Linux server with 64 cores and 503 GiB of RAM. Because the available timing records do not reliably separate fitting from forecasting, we report the combined wall-clock time. The model must be refitted as new observations and forecast inputs become available. At the scale considered here, the measured runtime suggests that regular refitting is feasible once the data-processing pipeline has been established.
+
+The supporting runtime audit reports about two hours end-to-end using the populated \texttt{runtime\_sec\_total} and \texttt{runtime\_sec} fields. The same audit records 1620 completed measured interface rows, while the companion planned-run manifest preserves 54 completed and 18 pending planned run units, so these records do not support a separate fitting/forecasting decomposition.
+
+The main computational bottleneck is repeated Kalman filtering and smoothing, with leading-order cost proportional to \((T+H)d^{3}\) per full pass, where \(T\) is the historical length, \(H\) the forecast horizon, and \(d\) the latent-state dimension. However, the quantile-specific models can be fitted in parallel.
 \end{responsebox}
 
-%
 \commentheading{\HE{2}}
 \begin{commentblock}
 - One of the main issues with the paper is that the proposed method is not validated properly -- there are no competing alternatives (despite models, A, B and C being listed), the extended asymmetric Laplace is not really given validation either (how does this compare against just an asymmetric Laplace in this problem setting?). I imagine this hierarchical model is likely so complicated that no working hydrologists would understand, nor use it, without very clear evidence that it was substantially superior to other forecast products. The method should be validated against competing statistical models, as well as physical forecast ensembles to illustrate that the predictive distributions are sharper and better calibrated than simpler alternatives.
@@ -184,22 +177,15 @@ In addition, we benchmark these Bayesian models against the raw ECMWF/GloFAS pro
 All Bayesian models and raw forecast products are evaluated on the same transformed discharge scale and under the same preprocessing rules for each forecasting horizon. We use mean forecast-window CRPS as the principal cross-model validation metric and report quantile diagnostics separately.
 
 \medskip
-\noindent \textcolor{red}{Table 1 in the revised manuscript} reports mean 28-day forecast-window CRPS values by cutoff for the nine Bayesian model families and the raw GloFAS product. NWS is omitted from the 28-day table because the archived NWS products provide eight valid daily leads for these origins. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
+\noindent Table 1 in the revised manuscript reports mean 28-day forecast-window CRPS values by cutoff for the nine Bayesian model families and the raw GloFAS product. NWS is omitted from the 28-day table because the archived NWS products provide eight valid daily leads for these origins. Lower values are better, and the smallest value in each cutoff column is shown in bold.\par
 \medskip
 
-%\input{tables/generated_tex/he2_benchmark_crps_response_table.tex}
-
-\medskip
-\noindent \textcolor{red}{Table 2 in the revised manuscript} repeats the comparison on the common eight-day horizon available for NWS, GloFAS, and the Bayesian predictive distributions. This keeps the NWS reference visible without mixing forecast horizons in the 28-day table.\par
+\noindent Table 2 in the revised manuscript repeats the comparison on the common eight-day horizon available for NWS, GloFAS, and the Bayesian predictive distributions. This keeps the NWS reference visible without mixing forecast horizons in the 28-day table.\par
 \medskip
 
-%\input{tables/generated_tex/he2_benchmark_crps_nws_horizon_response_table.tex}
-
-Together, these tables provide the requested validation against simpler Bayesian alternatives and raw operational forecas products, \textcolor{red}{with each product evaluated over its appropriate forecasting horizon}. 
-%The same table-generation workflow is used in the revised manuscript, so future calibration updates can refresh the numerical entries without manual table editing.
+Together, these tables provide the requested validation against simpler Bayesian alternatives and raw operational forecast products, with each product evaluated over its appropriate forecasting horizon.
 \end{responsebox}
 
-%
 \commentheading{\HE{3}}
 \begin{commentblock}
 - This brings me to another point, in that the hierarchical model is fairly detailed. A necessary revision would be to implement versions of the model without various hierarchical pieces -- e.g., Model C, what if the AR trend piece were removed? Or, Model B, what if retrospective and/or all states autoregressions were removed? In the current manuscript, the results look decent, but it’s not really clear which part of the model is giving the most “bang for your buck”, which is critical for end users to understand.
@@ -209,7 +195,7 @@ Together, these tables provide the requested validation against simpler Bayesian
 \begin{responsebox}
 We agree that the original manuscript did not clearly show how the selected specification depends on its main structural blocks. We therefore added a component-removal sensitivity analysis of the selected \texttt{exAL-M-T1} model in the Appendix (Tables A1 and A2). Because this is a sensitivity analysis rather than a primary benchmark comparison, the revised manuscript reports it in the appendix. The component-removal tables are synchronized with the current \texttt{exAL-M-T1} authority recorded in the revised-article manifests, while the refreshed HE-2 table remains the current authority for the main forecast-comparison claim. Within this fixed sensitivity design, each reduced model removes one structural component at a time while holding the cutoff dates, preprocessing, external inputs, likelihood, forecast horizons, and selected hyperparameters fixed. This assesses whether the retained trend, transfer-function, and seasonal components are supported without changing the remaining analysis.
 
-\textcolor{red}{More specifically, we compared the following models:}
+More specifically, we compared the following models:
 \begin{itemize}
 \item \texttt{exAL-M-T1} (full reference): trend + three retained seasonal harmonic pairs + transfer-function components, with the transfer function active in both fitting and forecasting;
 \item \texttt{exAL-M-T1-noTrend}: the full model without the trend state;
@@ -218,15 +204,11 @@ We agree that the original manuscript did not clearly show how the selected spec
 \end{itemize}
 
 \medskip
-\noindent \textcolor{red}{Table A1 reports mean 28-day forecast-window CRPS for the full \texttt{exAL-M-T1} model and reduced versions obtained by removing individual components, as well as} the raw GloFAS product as the horizon-compatible raw reference. \textcolor{red}{Table A2 repeats the same component-removal comparisons over the common eight-day NWS horizon and includes both raw GloFAS and raw NWS.} %Lower values are better, and within the sensitivity block the smallest value in each cutoff column is shown in bold.\par
+\noindent Table A1 reports mean 28-day forecast-window CRPS for the full \texttt{exAL-M-T1} model and reduced versions obtained by removing individual components, as well as the raw GloFAS product as the horizon-compatible raw reference. Table A2 repeats the same component-removal comparisons over the common eight-day NWS horizon and includes both raw GloFAS and raw NWS.\par
 \medskip
 
-%\input{tables/generated_tex/he3_ablation_crps_response_table.tex}
-
-%\input{tables/generated_tex/he3_ablation_crps_nws_horizon_response_table.tex}
-
-\textcolor{red}{For this study, the full reference model has lower CRPS than each reduced model at all five cutoffs under both horizon contracts.} The results provide a component-removal sensitivity check supporting the retained combination of transfer information, trend, and multi-frequency seasonal structure.
-\textcolor{red}{This sensitivity analysis complements the main model comparisons presented in response to HE-2.}
+For this study, the full reference model has lower CRPS than each reduced model at all five cutoffs under both horizon contracts. The results provide a component-removal sensitivity check supporting the retained combination of transfer-function, trend, and multi-frequency seasonal structure.
+This sensitivity analysis complements the main model comparisons presented in response to HE-2.
 
 
 \end{responsebox}
@@ -239,18 +221,14 @@ We agree that the original manuscript did not clearly show how the selected spec
 
 \responseheading
 \begin{responsebox}
-We agree. In the revised manuscript, forecast-window CRPS is now reported explicitly for the out-of-sample forecasting exercise, and we also add targeted quantile check-loss diagnostics. The CRPS comparison across cutoffs, benchmark models, and raw forecast products \textcolor{red}{are reported in Tables 1 and 2, as explained in our response to HE-2 above.} 
+We agree. In the revised manuscript, forecast-window CRPS is now reported explicitly for the out-of-sample forecasting exercise, and we also add targeted quantile check-loss diagnostics. The CRPS comparisons across cutoffs, benchmark models, and raw forecast products are reported in Tables 1 and 2, as explained in our response to HE-2 above.
 
-We use CRPS as the primary forecast-window scoring rule because the object of interest is the full synthesized predictive distribution rather than any single quantile in isolation, and CRPS is an integrated quantile-score criterion. The revised manuscript now distinguishes this forecast-scoring role from the preliminary pre-cutoff calibration of selected specification choices. Following the proper-scoring-rule perspective of Gneiting and Raftery (2007), we complement the full-distribution CRPS summary with quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four main synthesis competitors \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}, so the reader can see how quantile-level performance changes across cutoff windows. \textcolor{red}{The results are presented in Table 3 of the revised manuscript.}
+We use CRPS as the primary forecast-window scoring rule because the object of interest is the full synthesized predictive distribution rather than any single quantile in isolation, and CRPS is an integrated quantile-score criterion. The revised manuscript now distinguishes this forecast-scoring role from the preliminary pre-cutoff calibration of selected specification choices. Following the proper-scoring-rule perspective of Gneiting and Raftery (2007), we complement the full-distribution CRPS summary with quantile check losses at the targeted levels \(\tau\in\{0.05,0.20,0.35,0.50,0.65,0.80,0.95\}\), using USGS observations as verification targets. We include these diagnostics for the four main synthesis competitors \texttt{exAL-M-T1}, \texttt{AL-M-T1}, \texttt{exAL-U-T1}, and \texttt{AL-U-T1}, so the reader can see how quantile-level performance changes across cutoff windows. The results are presented in Table 3 of the revised manuscript.
 
 \medskip
-\noindent \textcolor{red}{Table 3} reports mean forecast-window quantile check loss at the targeted quantiles for the four principal synthesis competitors, on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column (ties included) is shown in bold.\par
-\medskip
+\noindent Table 3 reports mean forecast-window quantile check loss at the targeted quantiles for the four principal synthesis competitors, on the same \(\log(1+Q)\) scale used in the CRPS calculations. Lower values indicate better quantile-level predictive performance, and within each cutoff panel the smallest value in each quantile column (ties included) is shown in bold.\par
 
-%\input{tables/generated_tex/he4_quantile_check_loss_response_table.tex}
-
-The main practical pattern is that the multivariate synthesis models have lower check loss than the univariate references in most cutoff--quantile cells. The \texttt{exAL-M-T1} model is strongest through most of the first three cutoffs, while \texttt{AL-M-T1} is competitive in selected lower-tail or final-cutoff cells. Together with the CRPS comparison \textcolor{red}{summarized in Table 1 and Table 2 and explained in HE-2}, these diagnostics show how forecast performance varies across the targeted quantile levels and across the rolling-origin cutoff windows. 
-%These results are now summarized in the revised forecasting-validation section of the manuscript.
+The main practical pattern is that the multivariate synthesis models have lower check loss than the univariate references in most cutoff--quantile cells. The \texttt{exAL-M-T1} model is strongest through most of the first three cutoffs, while \texttt{AL-M-T1} is competitive in selected lower-tail or final-cutoff cells. Together with the CRPS comparison summarized in Table 1 and Table 2 and explained in HE-2, these diagnostics show how forecast performance varies across the targeted quantile levels and across the rolling-origin cutoff windows.
 
 \end{responsebox}
 
@@ -262,11 +240,10 @@ The main practical pattern is that the multivariate synthesis models have lower 
 
 \responseheading
 \begin{responsebox}
-We agree. We now state explicitly in the revised manuscript that the reusable exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm} (\url{https://CRAN.R-project.org/package=exdqlm}; package DOI \url{https://doi.org/10.32614/CRAN.package.exdqlm}), and that the end-to-end forecasting workflow used in this study is available in the project repository at \url{https://github.com/AntonioAPDL/Project1}. %Before final resubmission, we will archive a permanent release of that workflow repository and cite the archive explicitly in the manuscript. 
-%We also clarify that the revised article repository freezes the manuscript-facing figures, tables, generated \TeX{} fragments, and compact provenance manifests, whereas applying the workflow to a new basin still requires constructing a basin-specific, version-consistent archive of observations, retrospective products, forecasts, and covariates.
-\textcolor{red}{
-We also clarify that the repository contains the code and materials used to produce the figures and tables in the revised manuscript. Applying the method to another basin would require assembling the corresponding observations, retrospective products, forecasts, and covariates for that basin.
-}
+We agree. We now state explicitly in the revised manuscript that the reusable exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm} (\url{https://CRAN.R-project.org/package=exdqlm}; package DOI \url{https://doi.org/10.32614/CRAN.package.exdqlm}), and that the end-to-end forecasting workflow used in this study is available in the project repository at \url{https://github.com/AntonioAPDL/Project1}.
+
+We also clarify that the repository contains the code and materials used to produce the figures and tables in the revised manuscript, while the revised article repository freezes the manuscript-facing figures, tables, generated \TeX{} fragments, and compact provenance manifests. Applying the method to another basin would require assembling the corresponding observations, retrospective products, forecasts, and covariates for that basin. Before final resubmission, we will archive a permanent release of the workflow repository and cite the archive DOI.
+
 \end{responsebox}
 
 
@@ -295,19 +272,16 @@ As noted in HE-2, the five cutoffs were retained only when the forecast inputs, 
 \responseheading
 \begin{responsebox}
 We agree that, from an operational forecasting perspective, the most recent forecast is the natural reference.
-\textcolor{red}{
+
 We therefore repeated the analysis without combining forecasts issued at different times. For GloFAS, we use the daily forecast issued on the cutoff date. For NWS, we consider only information available by the cutoff and retain the most recent issuance for each target date and ensemble member before aggregating the forecasts to daily values. The revised manuscript uses this procedure throughout the forecasting analysis.
-Under this procedure, \texttt{exAL-M-T1} has the lowest 28-day CRPS at all five cutoffs. The 28-day comparison includes the raw GloFAS product but not raw NWS because the available NWS forecasts cover only eight days. We therefore report a separate comparison in which all forecasts are evaluated
+This implements the latest available forecast ensemble rather than combining earlier issuances; historical weighted-daily file names that remain in some workflow manifests are workflow compatibility aliases, not active cross-issue weighting. Under this procedure, \texttt{exAL-M-T1} has the lowest 28-day CRPS in all five rolling-origin cutoffs. The 28-day comparison includes the raw GloFAS product but not raw NWS because the available NWS forecasts cover only eight days. We therefore report a separate comparison in which all forecasts are evaluated
 over the common eight-day horizon.
-}
-%We therefore reran the forecasting analysis using only the latest available forecast ensemble, rather than combining earlier issuances. For GloFAS this is the daily issue associated with the cutoff; for NWS it is the most recent available issuance for each target time and ensemble member before daily aggregation. The historical \texttt{weighted\_daily} file names that remain in some workflow manifests are workflow compatibility aliases for latest-issue member matrices, not active cross-issue weighting. Under the refreshed HE-2 publication authority, the revised comparison shows the same main conclusion more cleanly: \texttt{exAL-M-T1} has the lowest 28-day CRPS in all five rolling-origin cutoffs. The raw NWS product is evaluated only in the separate eight-day NWS-horizon comparison, while NWS is omitted from the 28-day table to avoid mixing horizons. We therefore adopt the latest-forecast-only protocol throughout the revised forecasting analysis.
+
 \end{responsebox}
 
 
-\newpage
 \section{Response to Reviewer 1}
 
-%\commentheading{\RoneO}
 \begin{commentblock}
 
 Reviewer 1 Comments to the Author
@@ -316,15 +290,14 @@ This paper develops a Bayesian quantile regression approach, based on asymmetric
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. \textcolor{red}{We have substantially revised the application to include five out-of-sample forecast periods, comparisons with simpler Bayesian models and raw GloFAS and NWS forecasts, and evaluations based on CRPS and quantile-specific check loss. We also revised the analysis to use only the most recent forecast ensemble available at each forecast date.}
+We agree that, in its original form, the manuscript gave too much emphasis to model development and not enough to forecast validation. We have substantially revised the application to include five out-of-sample forecast periods, comparisons with simpler Bayesian models and raw GloFAS and NWS forecasts, and evaluations based on CRPS and quantile-specific check loss. We also revised the analysis to use only the most recent forecast ensemble available at each forecast date.
 
-\textcolor{red}{
-We have also clarified the methodological contribution. We do not claim that dynamic forecast correction is itself new, however, the
+
+We have also clarified the methodological contribution. We do not claim that dynamic forecast correction is itself new; however, the
 proposed framework introduces several new components. First, it uses a shared latent quantile process to link observations with retrospective products and operational forecast ensembles, while learning source-specific, time-varying discrepancies. Second, it carries source corrections learned from retrospective products into the forecast-period source structure and combines the quantile-specific forecasts into a single predictive distribution. Third, it develops a variational Bayes procedure based on Laplace–Delta approximations for the extended dynamic quantile linear model, providing a practical alternative to
-full MCMC.}
-%The revised manuscript addresses that directly by centering the forecasting analysis on multiple rolling-origin cutoffs over a 28-day horizon for GloFAS and the Bayesian predictive distributions, adding a separate eight-day NWS-horizon comparison, comparing the proposed method against simpler Bayesian alternatives and raw forecast products, reporting both CRPS and targeted quantile diagnostics, and using only the most recent forecast ensemble available at each cutoff.
+full MCMC.
 
-%We also revised how the contribution is stated. The revised manuscript presents the contribution as a Bayesian quantile-based correction-and-synthesis framework supported by rolling-origin forecast evaluation and selected-model interpretation, rather than treating dynamic discrepancy correction alone as the central novelty. The remaining issues concerning motivation, model-to-results linkage, and presentation are addressed point by point below.
+The revised manuscript now does this by centering the forecasting analysis on multiple rolling-origin cutoffs, comparing the proposed method against simpler Bayesian alternatives and raw forecast products, reporting both CRPS and targeted quantile diagnostics, and presenting the contribution as a correction-and-synthesis framework supported by rolling-origin forecast evaluation and selected-model interpretation rather than treating dynamic discrepancy correction alone as the central novelty.
 \end{responsebox}
 
 \begin{commentblock}
@@ -366,10 +339,7 @@ Quantile crossing is no longer developed as a separate procedure in the main tex
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the original manuscript placed too much emphasis on the 2022-12-25 to 2023-01-22 forecast window. In the revised manuscript, 
-\textcolor{red}{we have expanded the evaluation to five rolling-origin, out-of-sample forecast periods representing different hydrological conditions. These periods were selected based on the availability of compatible archived forecast products. We do not present them as a continuous hindcast from 2023 to the present; 
-%In the revised manuscript, the forecasting evaluation is expanded to five rolling-origin out-of-sample cutoffs spanning different hydrological settings, within the range allowed by archive-feasible and version-consistent historical forecast inputs, so the evidence is no longer tied to a single moderate-flood episode. This expanded evaluation is not presented as a continuous 2023-present hindcast; 
-rather, they offer a controlled rolling-origin comparison over version-consistent forecast origins.}
+We agree that the original manuscript placed too much emphasis on the 2022-12-25 to 2023-01-22 forecast window. In the revised manuscript, the forecasting evaluation is expanded to five rolling-origin out-of-sample cutoffs representing different hydrological conditions. These periods were selected based on the availability of compatible archived forecast products. The evidence is no longer tied to a single moderate-flood episode, although the evaluation is not presented as a continuous 2023-present hindcast; rather, the retained cutoffs offer a controlled rolling-origin comparison over version-consistent forecast origins.
 
 Forecast performance is assessed directly on those forecast windows using CRPS together with targeted quantile diagnostics. The 2022-12-25 synthesis figure is retained as a representative selected-model illustration at one forecast origin, with the same caption convention as the appendix cutoff-synthesis panels: observed pre-origin USGS, held-out verification USGS, displayed synthesized quantile curves, and the central 95\% posterior predictive credible band from the synthesized distribution. The associated quantile-dynamic and long-cycle component figures diagnose fitted posterior behavior and are not counted as additional forecast-validation evidence. Consistent with the streamlining described in Response R1-M3, we do not retain a separate PIT analysis in the main text because PIT is not part of the final revised comparison.
 \end{responsebox}
@@ -441,7 +411,7 @@ The revised manuscript now states explicitly that precipitation is not handled t
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that using forecast issued at earlier times may reduce forecast performance. As described in our response to \HE{7}, we revised the analysis to use only the most recent forecast ensemble available at each forecast date. The revised forecasting results reported in the manuscript now follow that latest-forecast-only protocol.
+We agree that using forecasts issued at earlier times may reduce forecast performance. As described in our response to \HE{7}, we revised the analysis to use only the most recent forecast ensemble available at each forecast date. The revised forecasting results reported in the manuscript now follow that latest-forecast-only protocol.
 \end{responsebox}
 
 \commentheading{\Ronem{7}}
@@ -459,9 +429,8 @@ We agree. The revised manuscript no longer uses the vague ``General Results'' or
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-\textcolor{red}{ We checked the captions, column headings, and notes to ensure that they accurately describe the statistic reported in each table. The transfer-function covariate table reports posterior means with 95\% credible intervals, whereas the supplementary source-specific \(\gamma_j(\tau)\) and
-\(\sigma_j(\tau)\) tables report posterior medians with 95\% credible intervals. The revised manuscript now labels these summaries correctly.}
- %We audited the current generated-table exports and aligned the captions, column headings, and notes with the statistic reported by each table. The representative transfer-function covariate table reports posterior means with 95\% credible intervals, whereas the supplementary source-specific \(\gamma_j(\tau)\) and \(\sigma_j(\tau)\) tables report posterior medians with 95\% credible intervals. The revised manuscript now labels these summaries according to that table-specific export contract.
+We checked the captions, column headings, and notes to ensure that they accurately describe the statistic reported in each table. The representative transfer-function covariate table reports posterior means with 95\% credible intervals, whereas the supplementary source-specific \(\gamma_j(\tau)\) and
+\(\sigma_j(\tau)\) tables report posterior medians with 95\% credible intervals. The revised manuscript now labels these summaries according to this table-specific export contract.
 \end{responsebox}
 
 \commentheading{\Ronem{9}}
@@ -470,9 +439,8 @@ We agree. The revised manuscript no longer uses the vague ``General Results'' or
 \end{commentblock}
 \responseheading
 \begin{responsebox}
-We agree that the discussion of these figures was not clear enough. 
-%In the revised manuscript, the old figure roles have been separated more explicitly. The selected-model quantile-dynamic and long-cycle component figures now diagnose fitted posterior behavior from the same 2022-12-25 selected-model posterior-output authority as the synthesis figure; their comparatively stable bands reflect posterior uncertainty around fitted quantile-location or component summaries, not a full forecast predictive distribution at each date. The retained synthesis figure is instead described as a representative single-cutoff posterior predictive distribution, whose envelope can vary across the forecast window as the quantile-specific forecasts, source corrections, and forecast-window inputs change. The univariate transfer-active synthesis is kept only as an appendix reference that excludes retrospective-product and forecast-product source channels, and the expanded multi-cutoff CRPS and quantile-diagnostic tables remain the forecast-validation evidence
-\textcolor{red}{We revised the discussion and captions to make the figure roles clearer. The dry/wet panels are now described in terms of posterior bands around fitted quantile curves and the separation between lower and upper fitted quantiles across regimes. We also updated the long-cycle seasonal component wording to match the retained noninteger seasonal frequency, which corresponds to approximately 6.81 years, or about 82 months. In contrast, the synthesis figure is described as the full posterior predictive distribution for one forecast origin, with a forecast-window envelope that changes as the quantile-specific forecasts, external forecast products, and forecast covariates change.}
+We agree that the discussion of these figures was not clear enough.
+We revised the discussion and captions to make the figure roles clearer. The dry/wet panels are now described in terms of posterior bands around fitted quantile curves and the separation between lower and upper fitted quantiles across regimes; their comparatively stable bands reflect posterior uncertainty around fitted quantile-location or component summaries, not a full forecast predictive distribution at each date. We also updated the long-cycle seasonal component wording to match the retained noninteger seasonal frequency, which corresponds to approximately 6.81 years, or about 82 months. In contrast, the synthesis figure is described as a representative single-cutoff posterior predictive distribution, with a forecast-window envelope that changes as the quantile-specific forecasts, external forecast products, and forecast-window inputs change. The expanded multi-cutoff CRPS and quantile-diagnostic tables remain the forecast-validation evidence.
 
 \end{responsebox}
 
