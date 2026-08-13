@@ -182,9 +182,7 @@ All Bayesian models and raw forecast products are evaluated on the same transfor
 \noindent Table 2 in the revised manuscript repeats the comparison on the common eight-day horizon available for NWS, GloFAS, and the Bayesian predictive distributions. This keeps the NWS reference visible without mixing forecast horizons in the 28-day table.\par
 \medskip
 
-Together, these tables provide the requested validation against simpler Bayesian alternatives and raw operational forecast products, with each product evaluated over its appropriate forecasting horizon.
-
-{\bf I think we should say here what the conclusion of this comparison is: A statistical model that includes historical records and incorporates information from deterministic forecasts will do better than the deterministic forecast alone, both in terms of predictive power and in the ability to quantify the uncertainty for those predictions.}
+Together, these tables provide the requested validation against simpler Bayesian alternatives and raw operational forecast products, with each product evaluated over its appropriate forecasting horizon. The main conclusion is that the source-aware multivariate synthesis improves the 28-day GloFAS-horizon comparison by using historical observations, retrospective products, and issued forecast products to produce full posterior predictive distributions rather than relying on a single raw product trajectory. The separate eight-day table keeps the NWS comparison on its available horizon and shows that gains over the raw products and simpler Bayesian alternatives are horizon- and origin-dependent rather than uniform across every comparison.
 \end{responsebox}
 
 \commentheading{\HE{3}}
@@ -241,9 +239,9 @@ The main practical pattern is that the multivariate synthesis models have lower 
 
 \responseheading
 \begin{responsebox}
-We agree. We now state explicitly in the revised manuscript that the reusable exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm} (\url{https://CRAN.R-project.org/package=exdqlm}; package DOI \url{https://doi.org/10.32614/CRAN.package.exdqlm}), and that the end-to-end forecasting workflow used in this study is available in the project repository at \url{https://github.com/AntonioAPDL/Project1}.
+We agree. We now state explicitly in the revised manuscript that the reusable exDQLM estimation routines are available through the CRAN R package \texttt{exdqlm}, currently version 1.1.0 (\url{https://CRAN.R-project.org/package=exdqlm}; package DOI \url{https://doi.org/10.32614/CRAN.package.exdqlm}), and are described in the accompanying software paper by De Leon, Barata, Prado, and Sans{\'o} (arXiv:2607.22760; \url{https://doi.org/10.48550/arXiv.2607.22760}). The end-to-end forecasting workflow used in this study is available in the project repository at \url{https://github.com/AntonioAPDL/Project1}.
 
-We also clarify that the repository contains the code and materials used to produce the figures and tables in the revised manuscript, while the revised article repository freezes the manuscript-facing figures, tables, generated \TeX{} fragments, and compact provenance manifests. Applying the method to another basin would require assembling the corresponding observations, retrospective products, forecasts, and covariates for that basin. Before final resubmission, we will archive a permanent release of the workflow repository and cite the archive DOI.
+We also clarify that the repository contains the code and materials used to produce the figures and tables in the revised manuscript, while the revised article repository freezes the manuscript-facing figures, tables, generated \TeX{} fragments, and compact provenance manifests. For a current operational application at another basin, the main additional work is staging that basin's observations, current forecast products, and forecast covariates through the relevant agency data interfaces. Reproducing the retrospective validation study is more demanding because it requires a basin-specific, version-consistent archive of historical observations, retrospective products, issued forecast products, and forecast-window covariates. Before final resubmission, we will archive a permanent release of the workflow repository and cite the archive DOI.
 
 \end{responsebox}
 
