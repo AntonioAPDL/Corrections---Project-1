@@ -1,11 +1,14 @@
-# Point-by-Point Response Workbook
+# Point-by-Point Response Letter
 
-This repo contains the LaTeX workbook used to coordinate point-by-point responses to reviewer comments.
+This repo contains the LaTeX source for the revised point-by-point response to
+the editor and reviewers.
 
-## Revision Control Files
+## Main Files
 
-- `tracker_master.csv`: canonical per-comment tracker (ID-level status across response/manuscript/evidence).
-- `WORKFLOW.md`: strict operating protocol to synchronize implementation evidence, response letter text, and manuscript edits.
+- `main.tex`: response-letter source used by Overleaf
+- `figures/`: response-only version-coverage timeline figures
+- `tables/generated_tex/`: generated response table fragments synchronized from
+  the revised article repository
 
 ## Build
 
